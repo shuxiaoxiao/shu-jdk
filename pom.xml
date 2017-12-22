@@ -1,7 +1,19 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.shuframework</groupId>
-  <artifactId>shu-jdk</artifactId>
-  <version>0.0.1</version>
-  <description>不同jdk的例子</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.shuframework</groupId>
+	<artifactId>shu-jdk</artifactId>
+	<version>0.0.1</version>
+	<description>不同jdk的例子</description>
+
+	<dependencies>
+		
+		<!-- 正常情况应该只有test才用，但是现在为了方便在main里面也允许使用 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<!-- <scope>test</scope> -->
+			<version>4.12</version>
+		</dependency>
+	</dependencies>
 </project>
