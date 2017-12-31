@@ -4,9 +4,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * 反射的Utils函数集合. 提供访问私有变量,获取泛型类型Class,提取集合中元素的属性等Utils函数.
@@ -67,7 +64,7 @@ public class ReflectionUtil {
 	/**
 	 * 循环向上转型,获取类的DeclaredField.
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	protected static Field getDeclaredField(final Class clazz, final String fieldName) {
 		for (Class superClass = clazz; superClass != Object.class; superClass = superClass.getSuperclass()) {
 			try {
@@ -96,7 +93,7 @@ public class ReflectionUtil {
 	 * @return the first generic declaration, or Object.class if cannot be
 	 *         determined
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public static Class getSuperClassGenricType(final Class clazz) {
 		return getSuperClassGenricType(clazz, 0);
 	}
@@ -113,7 +110,7 @@ public class ReflectionUtil {
 	 *         determined
 	 */
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public static Class getSuperClassGenricType(final Class clazz, final int index) {
 
 		Type genType = clazz.getGenericSuperclass();

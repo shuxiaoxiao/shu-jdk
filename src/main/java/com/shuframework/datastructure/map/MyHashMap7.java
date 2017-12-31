@@ -221,6 +221,7 @@ public class MyHashMap7<K, V> {
 		threshold = newThr;
 
 		// @SuppressWarnings({"rawtypes","unchecked"})
+		@SuppressWarnings("unchecked")
 		MyMapNode<K, V>[] newTab = new MyMapNode[newCap];
 		// 原来的oldTab， 赋值给newTab
 

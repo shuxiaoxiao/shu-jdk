@@ -44,7 +44,8 @@ public class ArrayUtil {
      * @param newLength
      * @return
      */
-    public static <T> T[] copyArr(T[] original, int newLength) {
+    @SuppressWarnings("unchecked")
+	public static <T> T[] copyArr(T[] original, int newLength) {
     	return (T[]) copyArr(original, newLength, original.getClass());
     }
     
@@ -55,10 +56,11 @@ public class ArrayUtil {
      * @param newType
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static <T> T[] copyArr(T[] original, int newLength, Class<? extends T[]> newType) {
     	if(original == null) return null;
     	
-    	T[] newArr = ((Object)newType == (Object)Object[].class)
+		T[] newArr = ((Object)newType == (Object)Object[].class)
     	            ? (T[]) new Object[newLength]
     	            : (T[]) Array.newInstance(newType.getComponentType(), newLength);
     	            

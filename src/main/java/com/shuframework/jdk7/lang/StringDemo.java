@@ -100,11 +100,11 @@ public class StringDemo {
 	public void isEmpty() {
 		String s1 = " ";
 		String s2 = "";
-		String s3 = null;
+//		String s3 = null;
 		System.out.println("isEmpty:" + s1.isEmpty());//false
 		System.out.println("isEmpty:" + s2.isEmpty());//true
 		//对象都不存在，所以不能调用方法，空指针异常
-		System.out.println("isEmpty:" + s3.isEmpty());//NullPointerException
+//		System.out.println("isEmpty:" + s3.isEmpty());//NullPointerException
 	}
 	
 	/**

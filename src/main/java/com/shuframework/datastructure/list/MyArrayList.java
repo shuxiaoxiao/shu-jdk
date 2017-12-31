@@ -94,6 +94,7 @@ public class MyArrayList<E> {
 	 * @param @return    设定文件
 	 * @return E    返回类型
 	 */
+	@SuppressWarnings("unchecked")
 	public E set(int index, E e) {
 		rangeCheck(index);
 
@@ -109,6 +110,7 @@ public class MyArrayList<E> {
 	 * @return E    返回类型
 	 */
 	//TODO 有问题
+	@SuppressWarnings("unchecked")
 	public E remove(int index) {
 		rangeCheck(index);
 		// 在删除前，将值保留
@@ -124,6 +126,7 @@ public class MyArrayList<E> {
 	 * @param @param index 索引位置
 	 * @return E    返回类型
 	 */
+	@SuppressWarnings("unchecked")
 	public E get(int index) {
 		rangeCheck(index);
 		return (E) elementData[index];
