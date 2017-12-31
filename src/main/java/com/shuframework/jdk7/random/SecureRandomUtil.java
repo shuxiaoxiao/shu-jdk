@@ -3,6 +3,8 @@ package com.shuframework.jdk7.random;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import com.shuframework.jdk7.lang.StringUtil;
+
 /**
  * 安全性很高的随机数
  * @author shu
@@ -22,9 +24,8 @@ public class SecureRandomUtil {
 		}
 	}
 	
-	/** int类型的长度限制为10 */
+//	/** int类型的长度限制为10 */
 	private static final int LIMIT_INT_LENGTH = 9;
-	
 	
 	/**
 	 * 返回的范围是[0,num)
@@ -37,15 +38,14 @@ public class SecureRandomUtil {
 		return secureRandom.nextInt(seedNum);
 	}
 	
-	
 	/**
 	 * 返回的范围是[-2^31, (2^31 - 1))，可能产生负数
 	 * @return
 	 */
+	@Deprecated
 	public static int random2Int(){
 		return secureRandom.nextInt();
 	}
-	
 	
 	/**
 	 * 返回的范围是[start, end)
@@ -83,7 +83,6 @@ public class SecureRandomUtil {
 		return random(start, end);
 	}
 	
-	
 	/**
 	 * 返回的几位数之间的值, length范围 [1, +∞) <br>
 	 * 如length=1,返回[0, 10) 即0-9之间的值<br>
@@ -117,6 +116,23 @@ public class SecureRandomUtil {
 		return randomId;
 	}
 	
-	//TODO 补零的方法未加
+	/**
+	 * 返回的几位数的值, 位数不够则补零, length范围 [1,10) <br>
+	 * 如length=1,返回[0, 10) 即0-9之间的值<br>
+	 * 如length=2,返回[00, 100) 即00-99之间的值<br>
+	 * 如length=3,返回[000, 1000) 即000-999之间的值<br>
+	 * 
+	 * @param length	几位数
+	 * @return String
+	 */
+	public static String randomFillZeroHasLimit(int length) {
+		if (length > 0 && length < 10) {
+			int end = (int) Math.pow(10, length);
+			int num = random(end);
+			return StringUtil.fillLeftZero(num, length);
+		} else {
+			throw new IllegalArgumentException("超过范围, length范围是[1,10)");
+		}
+	}
 	
 }

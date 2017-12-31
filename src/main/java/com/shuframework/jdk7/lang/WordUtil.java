@@ -39,7 +39,7 @@ public class WordUtil {
 //		}
 		//split 的多分隔符实现，采用的实际是正则表达式, \\为转义符, |为连接接符类似+
 		for (char c : delimiters) {
-			delimiter = delimiter + "\\" + c + "|";
+			delimiter = delimiter + "\\\\" + c + "|";
 		}
 		//去掉最后的一个连接符
 		delimiter = delimiter.substring(0, delimiter.length() -1);

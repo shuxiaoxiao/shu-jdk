@@ -67,7 +67,7 @@ public class StringUtil {
 	public static String fillLeftZero(int num, int length) {
 		return String.format("%0" + length + "d", num);
 	}
-
+	
     /**
      * <p>Joins the elements of the provided array into a single String
      * containing the provided list of elements.</p>
@@ -89,7 +89,7 @@ public class StringUtil {
      * @param separator  the separator character to use
      * @return the joined String, {@code null} if null array input
      */
-    public static String join(final Object[] array, final char separator) {
+    public static String join(final Object[] array, final String separator) {
         if (array == null) {
             return null;
         }
@@ -114,7 +114,7 @@ public class StringUtil {
      * @param endIndex 		the index to stop joining from 
      * @return the joined String, {@code null} if null array input
      */
-    public static String join(final Object[] array, final char separator, final int startIndex, final int endIndex) {
+    public static String join(final Object[] array, final String separator, final int startIndex, final int endIndex) {
         if (array == null) {
             return null;
         }
@@ -125,7 +125,8 @@ public class StringUtil {
         final StringBuilder buf = new StringBuilder(noOfItems * 16);
         for (int i = startIndex; i < endIndex; i++) {
             if (i > startIndex) {
-                buf.append(separator);
+                buf.append(separator);	//得到的格式：1,2,3
+//                buf.append(separator + " "); //得到的格式：1, 2, 3 
             }
             Object obj = array[i];
             if (obj != null) {
