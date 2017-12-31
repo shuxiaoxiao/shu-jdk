@@ -25,9 +25,9 @@ public class MyHashMap7<K, V> {
 
 	/** MyHashMap具体的大小 */
 	int size;
-	/** 修改次数 */
-	int resizeCount;
 	/** 扩容次数 */
+	int resizeCount;
+	/** 修改次数 */
 	int modCount;
 	/** 扩容后的长度 */
 	int threshold;
