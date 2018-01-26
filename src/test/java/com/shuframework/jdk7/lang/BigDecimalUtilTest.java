@@ -8,6 +8,7 @@ public class BigDecimalUtilTest {
 
 	@Test
 	public void test() {
+		@SuppressWarnings("deprecation")
 		BigDecimal sum = BigDecimalUtil.add("2", "3");
 //		BigDecimal sum = BigDecimalUtil.add("2", "3", "5");
 		System.out.println(sum);

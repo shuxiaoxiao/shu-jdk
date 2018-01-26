@@ -8,9 +8,10 @@
 修改内容如下：(此处列出顺序为更新顺序，下面的笔记是自然排序)
 
 > jdk7以及之前版本的内容，主要是 **lang(语言基础包)、 collection(集合)**、 innerclass(内部类)、  enum(枚举)、annotation(注解)、genericity(泛型)、io(IO流)、 **reflect(反射)**、 socket(网络编程)、 **thread(多线程)、classloader(类加载器)、proxy(动态代理)** 
+jmail 需要导入javax.mail的依赖, 所以暂时不写入
 
 ###   collection 集合
-
+ collection 包括list、set、queue, map其实不在collection下, 但是为了方便就放在一起了。 
 
 
 ###    exception 异常
@@ -103,4 +104,7 @@ ThreadRandomUtil：多线程并发生成随机数
 ## com.shuframework.designpattern
 
 > 设计模式，主要是(单例)、 (工厂)、 (装饰)、 (代理)、 (适配)等23种
+ 单例   singleton
+工厂  factory
+适配  adapter
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.shuframework.jdk7.enums.DateEnum;
+import com.shuframework.jdk7.lang.DateEnum;
 
 /**
  * 例子测试

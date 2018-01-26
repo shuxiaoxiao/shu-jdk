@@ -10,122 +10,21 @@ import java.util.Date;
  * @author shu
  */
 public class DateUtil {
-//	/**日期格式为yyyy-MM-dd HH:mm:ss.SSS*/
-//	public static final String YMD_HMS_S ="yyyy-MM-dd HH:mm:ss.SSS";
-//	/**日期格式为yyyy-MM-dd HH:mm:ss*/
-//	public static final String YMD_HMS ="yyyy-MM-dd HH:mm:ss";
-//	/**日期格式为yyyy-MM-dd*/
-//	public static final String YMD ="yyyy-MM-dd";
-//	public static final int YEAR = 1;
-//	public static final int MOUTH = 2;
-//	public static final int WEEK_OF_YEAR = 3;
-//	public static final int WEEK_OF_MONTH = 4;
-	/**天*/
-	public static final int DAY = 5;
-	/**时(12小时制)*/
-	public static final int HOUR = 10;
-	/**时(24小时制)*/
-	public static final int HOUR_OF_DAY = 11;
-	/**分钟*/
-	public static final int MINUTE = 12;
-	/**秒*/
-	public static final int SECOND = 13;
-	/**毫秒*/
-	public static final int MILLISECOND = 14;
+	
+	//这块的常量修改为枚举了
+//	/**天*/
+//	public static final int DAY = 5;
+//	/**时(12小时制)*/
+//	public static final int HOUR = 10;
+//	/**时(24小时制)*/
+//	public static final int HOUR_OF_DAY = 11;
+//	/**分钟*/
+//	public static final int MINUTE = 12;
+//	/**秒*/
+//	public static final int SECOND = 13;
+//	/**毫秒*/
+//	public static final int MILLISECOND = 14;
 
-	
-	/**
-	 * time1与time2的时间差，返回单位是毫秒数 <br>
-	 * 返回值大于0, 表示time1 > time2 
-	 * 返回值等于0, 表示time1 = time2 
-	 * 返回值小于0, 表示time1 < time2 
-	 * 
-	 * @param time1	当前时间
-	 * @param time2	比较时间
-	 * @return
-	 */
-	public static long timeDiff(Date time1, Date time2) {
-		return time1.getTime() - time2.getTime();
-	}
-	
-	/**
-	 * time1与time2的时间差,设定了type则根据其返回<br/>
-	 * 结果都是整型,默认的取整方式(向上取整),如0.6返回是0
-	 * @param time1	当前时间
-	 * @param time2	比较时间
-	 * @param type	获取时间类型——DateUtil.DAY(天)、DateUtil.HOUR(小时)、DateUtil.MINUTE(分钟)、DateUtil.SECOND(秒)
-	 * @return
-	 */
-	public static long timeDiff(Date time1, Date time2, int type) {
-		long times = time1.getTime() - time2.getTime();
-		switch (type) {
-			case DateUtil.DAY:
-				times = times / 1000 /3600 /24;
-				break;
-			case DateUtil.HOUR:
-				times = times / 1000 /3600;
-				break;
-			case DateUtil.MINUTE:
-				times = times / 1000 /60;
-				break;
-			case DateUtil.SECOND:
-				times = times / 1000;
-				break;
-		}
-		return times;
-	}
-	
-	/**
-	 * time1与time2的时间差，没有type返回单位是毫秒数,设定了type则根据其返回,结果都是整型,依据四舍五入
-	 * 
-	 * @param time1	当前时间
-	 * @param time2	比较时间
-	 * @param type	获取时间类型——DateUtil.DAY(天)、DateUtil.HOUR(小时)、DateUtil.MINUTE(分钟)、DateUtil.SECOND(秒)
-	 * @return
-	 */
-	public static long timeDiff2(Date time1, Date time2, int type) {
-		long times = time1.getTime() - time2.getTime();
-		switch (type) {
-		case DateUtil.DAY:
-			times = (long) (times / 1000.0 /3600 /24 + 0.5);
-			break;
-		case DateUtil.HOUR:
-			times = (long) (times / 1000.0 /3600 + 0.5);
-			break;
-		case DateUtil.MINUTE:
-			times = (long) (times / 1000.0 /60 + 0.5);
-			break;
-		case DateUtil.SECOND:
-			times = (long) (times / 1000.0 + 0.5);
-			break;
-		}
-		return times;
-	}
-	
-	/**
-	 * time1与time2的时间差，没有type返回单位是毫秒数,设定了type则根据其返回
-	 * 
-	 * @param time1	当前时间
-	 * @param time2	比较时间
-	 * @param type	获取时间类型——DateUtil.HOUR(小时)、DateUtil.MINUTE(分钟)、DateUtil.SECOND(秒)
-	 * @return
-	 */
-	public static double timeDiff2Double(Date time1, Date time2, int type) {
-		double times = time1.getTime() - time2.getTime();
-		switch (type) {
-		case DateUtil.HOUR:
-			times = times / 1000.0 /3600;
-			break;
-		case DateUtil.MINUTE:
-			times = times / 1000.0 /60;
-			break;
-		case DateUtil.SECOND:
-			times = times / 1000.0;
-			break;
-		}
-		return times;
-	}
-	
 	/**
 	 * 获取日期的年份
 	 * 
@@ -152,7 +51,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * 获取日期的天数
+	 * 获取日期的天数(月份的第几天)
 	 * 
 	 * @param date	日期对象
 	 * @return
@@ -161,6 +60,19 @@ public class DateUtil {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
 		return c.get(Calendar.DATE);
+	}
+
+	/**
+	 * 获取某个日期该月有多少天
+	 * 如 1月 是31天
+	 * 
+	 * @param date	日期对象
+	 * @return
+	 */
+	public static int getActualDaysOfMonth(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		return c.getActualMaximum(Calendar.DATE);
 	}
 	
 	/**
@@ -213,26 +125,159 @@ public class DateUtil {
 	}
 	
 	/**
+	 * 返回true表示 time1在time2前（time1与time2一样返回是false）
+	 * @param time1
+	 * @param time2
+	 * @return
+	 */
+	public static boolean isBefore(Date time1, Date time2) {
+		long times = timeDiff(time1, time2);
+		if(times > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * 返回true表示 time1在time2后（time1与time2一样返回是false）
+	 * @param time1
+	 * @param time2
+	 * @return
+	 */
+	public static boolean isAfter(Date time1, Date time2) {
+		long times = timeDiff(time1, time2);
+		if(times < 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * time1与time2的时间差，返回单位是毫秒数 <br>
+	 * 返回值大于0, 表示time1 > time2 
+	 * 返回值等于0, 表示time1 = time2 
+	 * 返回值小于0, 表示time1 < time2 
+	 * 
+	 * @param time1	当前时间
+	 * @param time2	比较时间
+	 * @return
+	 */
+	public static long timeDiff(Date time1, Date time2) {
+		return time1.getTime() - time2.getTime();
+	}
+	
+	/**
+	 * time1与time2的时间差,设定了type则根据其返回<br/>
+	 * 结果都是整型,默认的取整方式(向上取整),如0.6返回是0
+	 * @param time1	当前时间
+	 * @param time2	比较时间
+	 * @param dateEnum	获取时间类型——DateEnum.DAY(天)、DateEnum.HOUR24(小时)、DateEnum.MINUTE(分钟)、DateEnum.SECOND(秒)
+	 * @return
+	 */
+	public static long timeDiff(Date time1, Date time2, DateEnum dateEnum) {
+		long times = time1.getTime() - time2.getTime();
+		switch (dateEnum) {
+			case DAY:
+				times = times / 1000 / 3600 / 24;
+				break;
+			case HOUR24:
+				times = times / 1000 / 3600;
+				break;
+			case MINUTE:
+				times = times / 1000 / 60;
+				break;
+			case SECOND:
+				times = times / 1000;
+				break;
+			default:
+				// 默认是毫秒
+				break;
+		}
+		return times;
+	}
+	
+	/**
+	 * time1与time2的时间差，没有type返回单位是毫秒数,设定了type则根据其返回,结果都是整型,依据四舍五入
+	 * 
+	 * @param time1	当前时间
+	 * @param time2	比较时间
+	 * @param dateEnum	获取时间类型——DateEnum.DAY(天)、DateEnum.HOUR24(小时)、DateEnum.MINUTE(分钟)、DateEnum.SECOND(秒)
+	 * @return
+	 */
+	public static long timeDiff2(Date time1, Date time2, DateEnum dateEnum) {
+		long times = time1.getTime() - time2.getTime();
+		switch (dateEnum) {
+			case DAY:
+				times = (long) (times / 1000.0 /3600 /24 + 0.5);
+				break;
+			case HOUR24:
+				times = (long) (times / 1000.0 /3600 + 0.5);
+				break;
+			case MINUTE:
+				times = (long) (times / 1000.0 /60 + 0.5);
+				break;
+			case SECOND:
+				times = (long) (times / 1000.0 + 0.5);
+				break;
+			default:
+				// 默认是毫秒
+				break;
+		}
+		return times;
+	}
+	
+	/**
+	 * time1与time2的时间差，没有type返回单位是毫秒数,设定了type则根据其返回
+	 * 
+	 * @param time1	当前时间
+	 * @param time2	比较时间
+	 * @param dateEnum	获取时间类型——DateEnum.DAY(天)、DateEnum.HOUR24(小时)、DateEnum.MINUTE(分钟)、DateEnum.SECOND(秒)
+	 * @return
+	 */
+	public static double timeDiff2Double(Date time1, Date time2, DateEnum dateEnum) {
+		double times = time1.getTime() - time2.getTime();
+		switch (dateEnum) {
+			case HOUR24:
+				times = times / 1000.0 /3600;
+				break;
+			case MINUTE:
+				times = times / 1000.0 /60;
+				break;
+			case SECOND:
+				times = times / 1000.0;
+				break;
+			default:
+				break;
+		}
+		return times;
+	}
+	
+	
+	/**
 	 * 指定date 增加天数、小时、分钟或秒数
 	 * @param date
 	 * @param num 数值，天数、小时、分钟或秒数，可以是负值
-	 * @param type	类型——DateUtil.DAY(天)、DateUtil.HOUR(小时)、DateUtil.MINUTE(分钟)、DateUtil.SECOND(秒)
+	 * @param dateEnum	类型——DateEnum.DAY(天)、DateEnum.HOUR24(小时)、DateEnum.MINUTE(分钟)、DateEnum.SECOND(秒)
 	 */
-	private static Date addDayOrHourOrMinuteOrSecond(Date date, int num, int type) {
+	private static Date addDayOrHourOrMinuteOrSecond(Date date, int num, DateEnum dateEnum) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
-		switch (type) {
-			case DateUtil.DAY:
+		switch (dateEnum) {
+			case DAY:
 				c.add(Calendar.DAY_OF_MONTH, num);
 				break;
-			case DateUtil.HOUR:
+			case HOUR24:
 				c.add(Calendar.HOUR, num);
 				break;
-			case DateUtil.MINUTE:
+			case MINUTE:
 				c.add(Calendar.MINUTE, num);
 				break;
-			case DateUtil.SECOND:
+			case SECOND:
 				c.add(Calendar.SECOND, num);
+				break;
+			default:
 				break;
 		}
 		
@@ -241,11 +286,27 @@ public class DateUtil {
 	
 	/**
 	 * 指定date 增加days天，可以是负值
+	 * @param days
+	 */
+	public static Date addDay(int days) {
+		return addDayOrHourOrMinuteOrSecond(new Date(), days, DateEnum.DAY);
+	}
+	
+	/**
+	 * 指定date 增加days天，可以是负值
 	 * @param date
 	 * @param days
 	 */
 	public static Date addDay(Date date, int days) {
-		return addDayOrHourOrMinuteOrSecond(date, days, DateUtil.DAY);
+		return addDayOrHourOrMinuteOrSecond(date, days, DateEnum.DAY);
+	}
+	
+	/**
+	 * 指定date 增加hour小时，可以是负值
+	 * @param hours
+	 */
+	public static Date addHour(int hours) {
+		return addDayOrHourOrMinuteOrSecond(new Date(), hours, DateEnum.HOUR24);
 	}
 	
 	/**
@@ -254,7 +315,15 @@ public class DateUtil {
 	 * @param hours
 	 */
 	public static Date addHour(Date date, int hours) {
-		return addDayOrHourOrMinuteOrSecond(date, hours, DateUtil.HOUR);
+		return addDayOrHourOrMinuteOrSecond(date, hours, DateEnum.HOUR24);
+	}
+	
+	/**
+	 * 指定date 增加minutes分钟，可以是负值
+	 * @param minutes
+	 */
+	public static Date addMinute(int minutes) {
+		return addDayOrHourOrMinuteOrSecond(new Date(), minutes, DateEnum.MINUTE);
 	}
 	
 	/**
@@ -263,7 +332,15 @@ public class DateUtil {
 	 * @param minutes
 	 */
 	public static Date addMinute(Date date, int minutes) {
-		return addDayOrHourOrMinuteOrSecond(date, minutes, DateUtil.MINUTE);
+		return addDayOrHourOrMinuteOrSecond(date, minutes, DateEnum.MINUTE);
+	}
+	
+	/**
+	 * 指定date 增加seconds秒，可以是负值
+	 * @param seconds
+	 */
+	public static Date addSecond(int seconds) {
+		return addDayOrHourOrMinuteOrSecond(new Date(), seconds, DateEnum.SECOND);
 	}
 	
 	/**
@@ -272,19 +349,16 @@ public class DateUtil {
 	 * @param seconds
 	 */
 	public static Date addSecond(Date date, int seconds) {
-		return addDayOrHourOrMinuteOrSecond(date, seconds, DateUtil.SECOND);
+		return addDayOrHourOrMinuteOrSecond(date, seconds, DateEnum.SECOND);
 	}
 
+	
 	/**
-	 * 获取某个日期该月有多少天
-	 * 
-	 * @param date	日期对象
+	 * 获取当前日期的开始时间
 	 * @return
 	 */
-	public static int getDaysOfMonth(Date date) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
-		return c.getActualMaximum(Calendar.DATE);
+	public static Date getStartTime() {
+		return getStartTime(new Date());
 	}
 	
 	/**
@@ -294,13 +368,41 @@ public class DateUtil {
 	 * @param date	日期对象
 	 * @return
 	 */
-	public static Date getStartTimeOfDate(Date date) {
+	public static Date getStartTime(Date date) {
+//		Calendar c = Calendar.getInstance();
+//		c.setTime(date);
+//		c.set(Calendar.HOUR_OF_DAY, 0);
+//		c.set(Calendar.MINUTE, 0);
+//		c.set(Calendar.SECOND, 0);
+//		return c.getTime();
+		return getStartTime(date, 0);
+	}
+	
+	/**
+	 * 获取某个日期加上days 的开始时间<br/>
+	 * 如"2016-6-6 10:10:10" 调用getStartTime(date, 2) 即后天的开始时间
+	 * 返回"2016-6-8 0:00:00"
+	 * 
+	 * @param date
+	 * @param addDays
+	 * @return
+	 */
+	public static Date getStartTime(Date date, int addDays) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
+		c.add(Calendar.DAY_OF_MONTH, addDays);
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		return c.getTime();
+	}
+	
+	/**
+	 * 获得当前日期的结束时间
+	 * @return
+	 */
+	public static Date getEndTime() {
+		return getEndTime(new Date());
 	}
 	
 	/**
@@ -311,16 +413,7 @@ public class DateUtil {
 	 * @param date	日期对象
 	 * @return
 	 */
-	public static Date getEndTimeOfDate(Date date) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
-		c.set(Calendar.HOUR_OF_DAY, 24);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-		return c.getTime();
-	}
-//	//与上面的效果相同
-//	public static Date getEndTime(Date date) {
+	public static Date getEndTime(Date date) {
 //		Calendar c = Calendar.getInstance();
 //		c.setTime(date);
 //		c.add(Calendar.DAY_OF_MONTH, 1);
@@ -328,7 +421,38 @@ public class DateUtil {
 //		c.set(Calendar.MINUTE, 0);
 //		c.set(Calendar.SECOND, 0);
 //		return c.getTime();
+		return getStartTime(date, 1);
+	}
+//	//与上面的效果相同
+//	public static Date getEndTime(Date date) {
+//		Calendar c = Calendar.getInstance();
+//		c.setTime(date);
+//		c.set(Calendar.HOUR_OF_DAY, 24);
+//		c.set(Calendar.MINUTE, 0);
+//		c.set(Calendar.SECOND, 0);
+//		return c.getTime();
 //	}
+
+	/**
+	 * 获取某个日期加上days 的结束时间<br/>
+	 * 如"2016-6-6 10:10:10" 调用getEndTime(date, 2) 即后天的结束时间
+	 * 返回"2016-6-9 0:00:00"
+	 * 
+	 * @param date
+	 * @param addDays
+	 * @return
+	 */
+	public static Date getEndTime(Date date, int addDays) {
+//		Calendar c = Calendar.getInstance();
+//		c.setTime(date);
+//		c.add(Calendar.DAY_OF_MONTH, (days + 1));
+//		c.set(Calendar.HOUR_OF_DAY, 0);
+//		c.set(Calendar.MINUTE, 0);
+//		c.set(Calendar.SECOND, 0);
+//		return c.getTime();
+		return getStartTime(date, addDays + 1);
+	}
+
 	
 	/**
 	 * 获取某个日期指定月份第一天的日期<br/>
@@ -424,39 +548,41 @@ public class DateUtil {
 	}
 	
 	/**
-	 * 获取某个日期下个月的第一天<br/>
-	 * 如"2016-6-6 10:10:10",返回"2016-7-1 0:00:00"
+	 * 获取某个日期 添加月的第一天<br/>
+	 * 如"2016-6-6 10:10:10" getFirstDayByAddMonth(date, 1), 返回"2016-7-1 0:00:00"
+	 * 如"2016-6-6 10:10:10" getFirstDayByAddMonth(date, -1), 返回"2016-5-1 0:00:00"
 	 * 
 	 * @param date	日期对象
+	 * @param addMonth	添加的月份数字
 	 * @return
 	 */
-	public static Date getFirstDayOfNextMonth(Date date) {
+	public static Date getFirstDayByAddMonth(Date date, int addMonth) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
-		c.add(Calendar.MONTH, 1);
+		c.add(Calendar.MONTH, addMonth);
 		c.set(Calendar.DAY_OF_MONTH, 1);
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		return c.getTime();
 	}
-
-	/**
-	 * 获取某个日期上个月的第一天<br/>
-	 * 如"2016-6-6 10:10:10",返回"2016-5-1 0:00:00"
-	 * 
-	 * @param date	日期对象
-	 * @return
-	 */
-	public static Date getFirstDayOfLastMonth(Date date) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
-		c.add(Calendar.MONTH, -1);
-		c.set(Calendar.DAY_OF_MONTH, 1);
-		c.set(Calendar.HOUR_OF_DAY, 0);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
-		return c.getTime();
-	}
+//
+//	/**
+//	 * 获取某个日期上个月的第一天<br/>
+//	 * 如"2016-6-6 10:10:10",返回"2016-5-1 0:00:00"
+//	 * 
+//	 * @param date	日期对象
+//	 * @return
+//	 */
+//	public static Date getFirstDayOfLastMonth(Date date) {
+//		Calendar c = Calendar.getInstance();
+//		c.setTime(date);
+//		c.add(Calendar.MONTH, -1);
+//		c.set(Calendar.DAY_OF_MONTH, 1);
+//		c.set(Calendar.HOUR_OF_DAY, 0);
+//		c.set(Calendar.MINUTE, 0);
+//		c.set(Calendar.SECOND, 0);
+//		return c.getTime();
+//	}
 
 }
