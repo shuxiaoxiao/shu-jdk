@@ -5,6 +5,8 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.shuframework.jdk7.collection.ArrayUtil;
+
 public class ArrayUtilTest {
 
 	Object[] objArr = null;

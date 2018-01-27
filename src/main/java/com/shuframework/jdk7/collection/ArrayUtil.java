@@ -1,6 +1,8 @@
-package com.shuframework.jdk7.lang;
+package com.shuframework.jdk7.collection;
 
 import java.lang.reflect.Array;
+
+import com.shuframework.jdk7.lang.StringUtil;
 
 /**
  * 数组工具类, 可以直接使用java.util.Arrays;
