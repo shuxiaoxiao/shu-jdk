@@ -14,9 +14,9 @@ public class ArrayListDemo {
 	
 	@Before
 	public void add() {
-		strList = new ArrayList<>();
+		strList = new ArrayList<>(5);
 		strList.add("aa");
-		strList.add("ab");
+		strList.add(2, "ab");//越界, size没到, 5表示的是初始长度
 		strList.add("bb");
 		
 		strList2 = new ArrayList<>();

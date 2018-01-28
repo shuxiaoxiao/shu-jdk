@@ -11,30 +11,29 @@ public class MyArrayListTest {
 	Object[] strArr = null;
 
 	@Before
-	public void add() {
+	public void init() {
 		strList = new MyArrayList<>(3);
-		System.out.println("init前："+strList.resizeCount);
-		strList.add("a1");
-		strList.add("a2");
-		strList.add("a3");
-		strList.add("a4");
-		strList.add("a5");
-//		strList.add("a6");
-//		strList.add("a7");
-		System.out.println("init后："+strList.resizeCount);
-		
-		strArr = strList.toArray();
-		System.out.println("s1:"+ Arrays.toString(strArr));
+//		strList.add("a1");
+//		strList.add("a2");
+//		strList.add("a3");
+//		System.out.println("size：" + strList.size() + ", length：" + strList.length());
+		System.out.println("初始化:" + strList.toString());
 	}
 
 	@Test
-	public void test() {
-		int index = 2;
-//		strList.remove(index);
-		strList.add(index, "b1");
-		System.out.println("s2:"+ strList);
-//		strList.arrayCopy(index, strArr, "up");
-//		System.out.println("s2:"+ Arrays.toString(strArr));
+	public void add_test() {
+		strList.add("b1");
+//		int index = 1;
+//		strList.add(index, "b1");
+		System.out.println("add:"+ strList);
+//		System.out.println("size：" + strList.size() + ", length：" + strList.length());
+	}
+	
+	@Test
+	public void remove_test() {
+		int index = 1;
+		strList.remove(index);
+		System.out.println("remove:"+ strList);
 	}
 	
 	@Test

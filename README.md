@@ -116,6 +116,20 @@ ThreadRandomUtil：多线程并发生成随机数
 
 > 数据结构，主要是 (数组)、 (链表)、 (栈)、 (队列)、 (哈希表)、 (红黑树)
 
+MyFixedArray （固定数组）
+
+MyArrayList （可变长数组类似ArrayList）
+
+MyLinkList （链表）
+
+MyStack （栈）
+
+MyArrayQueue （数组队列）
+
+MyHashMap
+
+
+
 
 
 ## com.shuframework.arithmetic

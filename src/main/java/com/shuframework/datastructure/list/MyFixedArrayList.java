@@ -4,14 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 可变长的集合
- * 	与固定长集合(MyFixedArrayList)的区别在于add时需要判断长度, 超过了需要复制内容且扩容, 其他都是一样
- * 
- * 如果想要用foreach循环则需要implements Iterable<E>的public Iterator<E> iterator()
+ * 固定长度的集合, 通过size（真实长度）和length（初始长度）来判断数组是否已满
  * @author shu
  *
  */
-public class MyArrayList<E> {
+public class MyFixedArrayList<E> {
 	
 	/**数据的默认长度为10*/
 	private final static int DEFAULT_CAPACITY = 10;
@@ -19,12 +16,10 @@ public class MyArrayList<E> {
 	
 	/**表示数组的实际长度*/
 	private int size;
-	/** 扩容次数 */
-	private int resizeCount;
 	
 	private Object[] elementData;
 
-	public MyArrayList(int initialCapacity) {
+	public MyFixedArrayList(int initialCapacity) {
 		if (initialCapacity < 0)
 			throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
 		else if (initialCapacity == 0) {
@@ -34,42 +29,19 @@ public class MyArrayList<E> {
 		}
 	}
 	
-	public MyArrayList() {
+	public MyFixedArrayList() {
 		this(DEFAULT_CAPACITY);
 	}
-	
-//	/**返回数组长度*/
-//	public int length() {
-//		return elementData.length;
-//	}
 	
 	/**返回数组长度*/
 	public int size() {
 		return size;
 	}
 	
-	/**返回数组扩容次数*/
-	public int resizeCount() {
-		return resizeCount;
-	}
-	
 	/**遍历数组，返回格式[x1,x2]*/
 	public String toString() {
-		//初始化的数组
-//		return Arrays.toString(elementData);
-//		//真正的
-		 int max = size - 1;
-        if (max == -1)
-            return "[]";
-
-        StringBuilder b = new StringBuilder();
-        b.append('[');
-        for (int i = 0; ; i++) {
-            b.append(String.valueOf(elementData[i]));
-            if (i == max)
-                return b.append(']').toString();
-            b.append(", ");
-        }
+//		return "MyArrayList [" + Arrays.toString(elementData) + "]";
+		return Arrays.toString(elementData);
 	}
 	
 	/** 转成数组 */
@@ -104,8 +76,7 @@ public class MyArrayList<E> {
 	 * @param @param e 值
 	 */
 	public boolean add(E e) {
-//		rangeCheck(size);
-		ensureCapacity(size + 1); 
+		rangeCheck(size);
 		elementData[size++] = e;
 		return true;
 	}
@@ -118,13 +89,11 @@ public class MyArrayList<E> {
 	 */
 	public boolean add(int index, E e) {
 		rangeCheck(index);
-		ensureCapacity(size + 1);
 		// index前面部分不动，[index+1, size] 的部分后移
 		int copyLength = (elementData.length - 1) - index;
 		if (copyLength > 0) {
 			System.arraycopy(elementData, index, elementData, index + 1, copyLength);
 		}
-
 		elementData[index] = e;
 		size++; // 长度累加
 		return true;
@@ -153,7 +122,6 @@ public class MyArrayList<E> {
 	 * @param @param index	索引位置
 	 * @return E    返回类型
 	 */
-	//TODO 有问题
 	@SuppressWarnings("unchecked")
 	public E remove(int index) {
 		rangeCheck(index);
@@ -223,31 +191,24 @@ public class MyArrayList<E> {
 
         size = 0;
     }
-	
-	
-	/**
-	 * 检查数组长度是否超过默认值，
-	 * 如果超过则改变其长度，原数据保持不变, 新长度是(oldCapacity * 3) / 2 + 1
-	 * 
-	 * @Title: ensureCapacity
-	 * @param @param minCapacity    有效数据的长度
-	 */
-	private void ensureCapacity(int minCapacity) {
-		int oldCapacity = elementData.length;
-		if (minCapacity > oldCapacity) {
-			resizeCount++;//记录扩容次数
-			int newCapacity = (oldCapacity * 3) / 2 + 1; //与下面的扩容效果相同
-//			int newCapacity = oldCapacity + (oldCapacity / 2) + 1;
-			if (newCapacity < minCapacity){
-				newCapacity = minCapacity;
-			}
-			// 复制数组，并扩大其长度
-			elementData = Arrays.copyOf(elementData, newCapacity);
-			//这种会数组越界
-//			System.arraycopy(elementData, 0, elementData, 0, newCapacity);
-		}
-	}
-	
+    
+    /**
+     * 是否空
+     * @return
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    
+    /**
+     * 是否已满, 满了返回true
+     * @return
+     */
+    public boolean isFull() {
+    	return size == elementData.length;
+    }
+    
+    
 	/**
 	 * 检查index 是否合法
 	 * @Title: RangeCheck
@@ -255,11 +216,44 @@ public class MyArrayList<E> {
 	 * @return void    返回类型
 	 */
 	private void rangeCheck(int index) {
-		//固定数组这里的size用length, 可变长数组用size也可行
-//		int length = elementData.length;
-		if (index >= size || index < 0) {
-			throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+		//固定数组这里的size用length
+		int length = elementData.length;
+		if (index >= length || index < 0) {
+			throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + length);
 		}
 	}
-
+	
+//	/**
+//	 * 调整数组数据及长度(有bug)
+//	 * @Title: arrayCopy
+//	 * @param @param index	索引
+//	 * @param @param arr	数组对象
+//	 * @param @param state    up表示数组往前移动,down表示数组往后移动
+//	 * @return void    返回类型
+//	 */
+//	public void arrayCopy(int index, Object[] arr, String state) {
+//		//length表示需要复制数组的长度
+////		System.arraycopy(Object src,  int  srcPos,
+////                Object dest, int destPos,
+////                int length);
+//		if ("up".equals(state)) {
+//			// 前移, 最后一位前移时下标是size-2
+//			for (int i = index; i < size; i++) {
+//				if(i == size - 1){
+////					arr[i] = null;
+//					size--;
+//				}else{
+//					arr[i] = arr[i + 1];
+//				}
+//			}
+//			
+//		} else if ("down".equals(state)) {
+//			// 后移
+//			for (int i = size; i > index; i--) {
+//				arr[i] = arr[i - 1];
+//			}
+//			size++;
+//		}
+//	}
+	
 }

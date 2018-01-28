@@ -73,4 +73,77 @@ public class ArrayUtil {
     	
     	return newArr;
     }
+    
+    /**
+     * 向前strp步复制
+     * @param array
+     * @param index
+     * @return
+     */
+	public static <T> void forwardCopy(T[] array, int index, int step) {
+		int size = array.length;
+		if (index >= size || index < 0) {
+			throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+		}
+		int copyLength = (size - step) - index;
+		System.arraycopy(array, index + step, array, index, copyLength);
+	}
+	
+	/**
+	 * 向前复制（删除）
+	 * @param array
+	 * @param index
+	 * @return
+	 */
+	public static <T> void forwardCopy(T[] array, int index) {
+//		int size = array.length;
+//		if (index >= size || index < 0) {
+//			throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+//		}
+//		int copyLength = (size - 1) - index;
+//		System.arraycopy(array, index + 1, array, index, copyLength);
+		forwardCopy(array, index, 1);
+		//其原理是把后一个下标值给当前, 正序循环是前一个值就不会变了
+		for (int i = index; i < array.length - 1; i++) {
+			array[i] = array[i + 1];
+		}
+	}
+	
+	/**
+	 * 向后复制（新增）
+	 * @param array
+	 * @param index
+	 * @return
+	 */
+	public static <T> void backwardsCopy(T[] array, int index, int step) {
+		int size = array.length;
+		if (index >= size || index < 0) {
+			throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+		}
+		int copyLength = (size - step) - index;
+		System.arraycopy(array, index, array, index + step, copyLength);
+	}
+	
+	/**
+	 * 向后复制（新增）
+	 * @param array
+	 * @param index
+	 * @return
+	 */
+	public static <T> void backwardsCopy(T[] array, int index) {
+//		int size = array.length;
+//		if (index >= size || index < 0) {
+//			throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+//		}
+//		int copyLength = (size - 1) - index;
+//		System.arraycopy(array, index, array, index + 1, copyLength);
+		backwardsCopy(array, index, 1);
+		//原理 把前一个下标值给当前, 倒序循环是前一个值就不会变了
+//		for(int i = array.length - 1; i > index; i--){
+//			array[i] = array[i - 1];
+//		}
+		
+	}
+	
+	
 }
