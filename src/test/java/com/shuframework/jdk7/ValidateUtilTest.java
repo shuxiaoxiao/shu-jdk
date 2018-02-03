@@ -11,7 +11,24 @@ import org.junit.Test;
 
 public class ValidateUtilTest {
 
-
+	@Test
+	public void match_test2() {
+//		String regex = "^\\/?\\w+/get\\w*$";
+		String str = "/sysUser/queryPersonInfoDetail";
+//		String str = "sysUser/get";
+//		String str = "/get";
+		System.out.println(ValidateUtil.matchMethod("query", str));
+	}
+	
+	@Test
+	public void match_test() {
+		String regex = "^\\/?\\w+/get\\w*$";
+//		String str = "/sysUser/getPersonInfoDetail";
+//		String str = "sysUser/get";
+		String str = "/get";
+		System.out.println(ValidateUtil.match(regex, str));
+	}
+	
 	@Test
 	public void isInteger_test() {
 		String numStr1 = "0";
