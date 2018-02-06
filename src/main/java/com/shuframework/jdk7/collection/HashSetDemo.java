@@ -7,6 +7,12 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Set集合的特点：无序(存储顺序和取出顺序不一致), 唯一
+ * 
+ * @author shu
+ *
+ */
 public class HashSetDemo {
 
 	Set<String> strSet = null;
@@ -21,8 +27,8 @@ public class HashSetDemo {
 	@Before
 	public void add() {
 		strSet = new HashSet<String>();
-		strSet.add("aa");
 		strSet.add("bb");
+		strSet.add("aa");
 		strSet.add("cc");
 	}
 	

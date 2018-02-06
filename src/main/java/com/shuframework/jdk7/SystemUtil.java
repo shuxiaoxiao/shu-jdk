@@ -1,8 +1,5 @@
 package com.shuframework.jdk7;
 
-import java.util.List;
-import java.util.Map;
-
 import com.shuframework.jdk7.lang.DateFormatUtil;
 import com.shuframework.jdk7.lang.StringUtil;
 import com.shuframework.jdk7.random.RandomUtil;
@@ -101,6 +98,7 @@ public class SystemUtil {
 	/**
 	 * 文件重命名（20位+后缀），组成格式：当前日期（yyMMddHHmmssSSS）+ 5位随机数
 	 * null表示重命名失败，无后缀
+	 * （由于依赖生成id 所以没放入StringUtil）
 	 * 
 	 * @param oldFilename
 	 */

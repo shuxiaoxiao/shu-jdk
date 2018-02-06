@@ -58,7 +58,7 @@ public class MyArrayList<E> {
 		//初始化的数组
 //		return Arrays.toString(elementData);
 //		//真正的
-		 int max = size - 1;
+		int max = size - 1;
         if (max == -1)
             return "[]";
 
@@ -73,11 +73,24 @@ public class MyArrayList<E> {
 	}
 	
 	/** 转成数组 */
-    public Object[] getArray() {
+	@Deprecated
+	public Object[] getArray() {
         return Arrays.copyOf(elementData, size);
     }
+	//java.lang.ClassCastException
+//    public E[] getArray() {
+//    	return (E[]) Arrays.copyOf(elementData, size);
+//    }
     
-    /** 转成数组 */
+    /** 
+     * 转成数组(推荐)
+     * 使用例子：	
+     * 	MyArrayList<String> strList = null;
+     * 	String[] arr2 = new String[strList.size()];
+     * 	fixedArrayList.toArray(arr2);
+     * 
+     * @param destArr
+     */
     public void toArray(E[] destArr) {
 //    	Object[] destArr = new Object[size];
 //    	System.arraycopy(elementData, 0, destArr, 0, size);

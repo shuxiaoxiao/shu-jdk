@@ -45,11 +45,24 @@ public class MyFixedArrayList<E> {
 	}
 	
 	/** 转成数组 */
-    public Object[] getArray() {
+	@Deprecated
+	public Object[] getArray() {
         return Arrays.copyOf(elementData, size);
     }
+	//java.lang.ClassCastException
+//    public E[] getArray() {
+//    	return (E[]) Arrays.copyOf(elementData, size);
+//    }
     
-    /** 转成数组 */
+    /** 
+     * 转成数组(推荐)
+     * 使用例子：	
+     * 	MyFixedArrayList<String> fixedArrayList = null;
+     * 	String[] arr2 = new String[fixedArrayList.size()];
+     * 	fixedArrayList.toArray(arr2);
+     * 
+     * @param destArr
+     */
     public void toArray(E[] destArr) {
 //    	Object[] destArr = new Object[size];
 //    	System.arraycopy(elementData, 0, destArr, 0, size);

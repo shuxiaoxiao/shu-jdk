@@ -12,7 +12,30 @@ import org.junit.Test;
 public class ValidateUtilTest {
 
 	@Test
-	public void match_test2() {
+	public void matchRegex_test() {
+		//true
+//		String str = "/sysUser/queryPersonInfoDetail";
+//		String str = "sysUser,get,dd,aa,bb,cc";
+//		String str = "sysUser,get";
+//		String str = "get";
+		//false
+//		String str = "sysUser,get,dd,aa,bb,cc,";
+//		String str = "sysUser,get,";
+		String str = "get,";
+		System.out.println(ValidateUtil.matchRegex(",", str));
+	}
+	
+	@Test
+	public void matchRegex_test2() {
+//		String str = "/sysUser/queryPersonInfoDetail";
+		String str = "sysUser,#get";
+//		String str = "get";
+//		String str = "get,#";
+		System.out.println(ValidateUtil.matchRegex(",#", str));
+	}
+	
+	@Test
+	public void matchMethod_test() {
 //		String regex = "^\\/?\\w+/get\\w*$";
 		String str = "/sysUser/queryPersonInfoDetail";
 //		String str = "sysUser/get";

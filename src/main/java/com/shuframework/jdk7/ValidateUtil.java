@@ -13,6 +13,15 @@ import java.util.regex.Pattern;
  * 	推荐使用 hibernate-validator
  * 	自我实现：http://blog.csdn.net/wiker_yong/article/details/17040485
  * 
+ * <pre>
+ * ? 	0, 1
+ * * 	0, n
+ * + 	1, n
+ * \d  	数字：[0-9]
+ * \w 	单词字符：[a-zA-Z_0-9]
+ * \\ 表示转义 
+ * <pre>
+ * 
  * @author shu
  *
  */
@@ -206,14 +215,6 @@ public class ValidateUtil {
 	
 	
 /////////====== 类似表单校验 ======
-	/*
-	 * ? 	0, 1 
-	 * * 	0, n
-	 * + 	1, n
-	 * \d  	数字：[0-9]
-	 * \w 	单词字符：[a-zA-Z_0-9]
-	 * \\ 表示转义 
-	 */
 	
 	/** 整数 */
 	private static final String V_INTEGER = "^-?[1-9]\\d*$";
@@ -630,10 +631,36 @@ public class ValidateUtil {
 	 * 如 user/get*; /user/get*的方法
 	 * 
 	 * @param key
+	 * @param str
 	 * @return
 	 */
 	public static boolean matchMethod(String key, String str) {
 		String regex = "^\\/?\\w+/" + key + "\\w*$";
+		return match(regex, str);
+	}
+	
+	/**
+	 * 匹配含regexKey分隔符的字符串
+	 * 
+	 * <pre>
+	 * regexKey为"," str为"x1,x2"	 	 返回true
+	 * regexKey为"," str为"x1,x2,"	 返回fasle
+	 * regexKey为"," str为"x1"  		 返回true
+	 * </pre>
+	 * 
+	 * @param regexKey
+	 * @param str
+	 * @return
+	 */
+	public static boolean matchRegex(String regexKey, String str) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("^\\w+");
+		//regexKey为空 ^\\w+$
+		//regexKey不为空 ^\\w+(\\" + regexKey + "\\w+)+$
+		if(isNotEmpty(regexKey)){
+			sb.append("(\\" + regexKey + "\\w+)+");
+		}
+		String regex = sb.append("$").toString();
 		return match(regex, str);
 	}
   

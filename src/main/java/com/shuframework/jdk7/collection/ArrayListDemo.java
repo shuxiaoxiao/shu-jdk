@@ -7,6 +7,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * List集合的特点：有序(存储顺序和取出顺序一致), 可重复。
+ * 
+ * @author shu
+ *
+ */
 public class ArrayListDemo {
 
 	List<String> strList = null;

@@ -31,16 +31,16 @@ public class StringUtil {
 		//当str = null时为true，后面的不执行了，所以str = null时不会执行trim()，所以就没问题
 		return str == null || str.trim().length() == 0;
 	}
-	
-	/**
-	 * 判断是否不为null或非空串（去空格了），是返回 true
-	 * @param str
-	 * @return
-	 */
-	public static boolean isNotEmpty(String str){
-		
-		return !isEmpty(str);
-	}
+//	
+//	/**
+//	 * 判断是否不为null或非空串（去空格了），是返回 true
+//	 * @param str
+//	 * @return
+//	 */
+//	public static boolean isNotEmpty(String str){
+//		
+//		return !isEmpty(str);
+//	}
 	
 	/**
 	 * 转换空串，如str是空串或null 则转成num，不为空就是本身
@@ -101,13 +101,6 @@ public class StringUtil {
      * Joins the elements of the provided array into a single String containing the provided list of elements.
      * </p>
      *
-     * <pre>
-     * StringUtil.join(null, *)            = null
-     * StringUtil.join([], *)              = ""
-     * StringUtil.join([null], *)          = ""
-     * StringUtil.join([1, 2, 3], ';')  	= "1;2;3"
-     * </pre>
-     *
      * @param array 		数组
      * @param separator 	分隔符
      * @param startIndex 	the first index to start joining from
@@ -124,9 +117,10 @@ public class StringUtil {
         }
         final StringBuilder buf = new StringBuilder(noOfItems * 16);
         for (int i = startIndex; i < endIndex; i++) {
+        	//这个判断, 巧妙的实现了去头去尾
             if (i > startIndex) {
                 buf.append(separator);	//得到的格式：1,2,3
-//                buf.append(separator + " "); //得到的格式：1, 2, 3 
+//                buf.append(',').append(' '); //得到的格式：1, 2, 3 
             }
             Object obj = array[i];
             if (obj != null) {

@@ -13,6 +13,7 @@ import org.junit.Test;
  * B:比较器排序
  * 
  * TreeSet集合的特点：排序和唯一
+ * 	存储顺序和取出顺序不一致, 但是其实在add 时会做排序, 所以存储顺序有取出顺序其实一样
  * 
  * 通过观察TreeSet的add()方法，我们知道最终要看TreeMap的put()方法。
  */

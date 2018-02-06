@@ -22,14 +22,6 @@ public class ArrayUtilTest {
 	}
 	
 	@Test
-	public void toString_test() {
-		String objArrStr = ArrayUtil.toString(objArr);
-		String intArrStr = ArrayUtil.toString(intArr);
-		System.out.println(objArrStr);	//[2,4,str,3,6]
-		System.out.println(intArrStr);	//[2,4,8,3,6]
-	}
-	
-	@Test
 	public void copy_test() {
 		//[2, 4, 8, 3, 6, 0, 0, 0]
 		System.out.println("copy前：" + Arrays.toString(intArr));	
@@ -88,9 +80,9 @@ public class ArrayUtilTest {
 		String[] newStrArr = ArrayUtil.copyArr(strArr, 8);
 		Integer[] newIntArr = ArrayUtil.copyArr(intArr, 8);
 		Object[] newObjArr = ArrayUtil.copyArr(objArr, 8);
-		System.out.println(ArrayUtil.toString(newStrArr));
-		System.out.println(ArrayUtil.toString(newIntArr));
-		System.out.println(ArrayUtil.toString(newObjArr));
+		System.out.println(Arrays.toString(newStrArr));
+		System.out.println(Arrays.toString(newIntArr));
+		System.out.println(Arrays.toString(newObjArr));
 		System.out.println("--------------");
 		Integer[] newIntArr2 = Arrays.copyOf(intArr, 3);
 		Integer[] newIntArr3 = Arrays.copyOf(intArr, 8);
