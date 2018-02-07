@@ -14,15 +14,19 @@ public class ValidateUtilTest {
 	@Test
 	public void matchRegex_test() {
 		//true
-//		String str = "/sysUser/queryPersonInfoDetail";
-//		String str = "sysUser,get,dd,aa,bb,cc";
-//		String str = "sysUser,get";
-//		String str = "get";
+		String str1 = "sysUser,get,dd,aa,bb,cc";
+		String str2 = "sysUser,get";
+		String str3 = "get";
 		//false
-//		String str = "sysUser,get,dd,aa,bb,cc,";
-//		String str = "sysUser,get,";
-		String str = "get,";
-		System.out.println(ValidateUtil.matchRegex(",", str));
+		String str11 = "sysUser,get,dd,aa,bb,cc,";
+		String str12 = "sysUser,get,";
+		String str13 = "get,";
+		System.out.println(ValidateUtil.matchRegex(",", str1));
+		System.out.println(ValidateUtil.matchRegex(",", str2));
+		System.out.println(ValidateUtil.matchRegex(",", str3));
+		System.out.println(ValidateUtil.matchRegex(",", str11));
+		System.out.println(ValidateUtil.matchRegex(",", str12));
+		System.out.println(ValidateUtil.matchRegex(",", str13));
 	}
 	
 	@Test

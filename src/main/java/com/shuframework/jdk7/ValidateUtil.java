@@ -654,13 +654,10 @@ public class ValidateUtil {
 	 */
 	public static boolean matchRegex(String regexKey, String str) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("^\\w+");
+		sb.append("^\\w+(\\" + regexKey + "\\w+)*$");
 		//regexKey为空 ^\\w+$
 		//regexKey不为空 ^\\w+(\\" + regexKey + "\\w+)+$
-		if(isNotEmpty(regexKey)){
-			sb.append("(\\" + regexKey + "\\w+)+");
-		}
-		String regex = sb.append("$").toString();
+		String regex = sb.toString();
 		return match(regex, str);
 	}
   

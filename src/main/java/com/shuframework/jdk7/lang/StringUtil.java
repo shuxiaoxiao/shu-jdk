@@ -68,6 +68,7 @@ public class StringUtil {
 		return String.format("%0" + length + "d", num);
 	}
 	
+	
     /**
      * <p>Joins the elements of the provided array into a single String
      * containing the provided list of elements.</p>
