@@ -112,6 +112,7 @@ public class ExerciseExample {
 	@Test
 	public void reverse_2() {
 		String str = "abc";
+//		String str = "aababcabcdabcde";
 		StringBuilder sb = new StringBuilder(str);
 		
 		System.out.println(sb.reverse().toString());//cba

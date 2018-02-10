@@ -1,5 +1,6 @@
 package com.shuframework.jdk7.collection;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -133,33 +134,31 @@ public class ArrayConvertUtil {
     	return Arrays.asList(array);
     }
     
-    /**
-     * 数组转成可变长度的集合 (用String做例子, 实质是创建集合循环add)
-     * 
-     * @param array
-     * @return
-     */
-    private static List<String> array2ListOfVar(final String[] array) {
-    	int size = Math.min(array.length * 2, 10);
-    	List<String> list = new ArrayList<>(size);
-    	for (String value : list) {
-    		list.add(value);
-		}
-    	return list;
-    }
-    
+//    /**
+//     * 数组转成可变长度的集合 (实质是创建集合循环add)
+//     * 
+//     * @param array
+//     * @param list
+//     * @return
+//     */
+//    public static <T> void array2ListOfVar(final T[] array, List<T> list) {
+//    	for (T value : array) {
+//    		list.add(value);
+//    	}
+//    }
     /**
      * 数组转成可变长度的集合 (实质是创建集合循环add)
      * 
      * @param array
-     * @param list
      * @return
      */
-    public static <T> void array2ListOfVar(final T[] array, List<T> list) {
-    	//todo 此处可能用反射可以解决外部创建list的问题
+    public static <T> List<T> array2ListOfVar(final T[] array) {
+    	int size = Math.min(array.length * 2, 10);
+    	List<T> list = new ArrayList<>(size);
     	for (T value : array) {
     		list.add(value);
     	}
+    	return list;
     }
     
     /**
@@ -189,13 +188,21 @@ public class ArrayConvertUtil {
     
     /**
      * 集合转成数组 (使用的是集合自带的方法)
+     * <pre>
+     * String[] strArr = ArrayConvertUtil.collection2Array(strList, String[].class);
+     * </pre>
      * 
      * @param collection
-     * @param array
+     * @param classType
      */
-    public static <T> void collection2Array(final Collection<?> collection, T[] array) {
-    	//todo 此处可能用反射可以解决外部创建array的问题
-    	collection.toArray(array);
+    @SuppressWarnings("unchecked")
+    public static <T> T[] collection2Array(final Collection<T> collection, Class<? extends T[]> classType) {
+    	int newLength = collection.size();
+//    	T[] newArr = ((Object)classType == (Object)Object[].class)
+//	            ? (T[]) new Object[newLength]
+//	            : (T[]) Array.newInstance(classType.getComponentType(), newLength);
+		T[] newArr = (T[]) Array.newInstance(classType.getComponentType(), newLength);
+    	return collection.toArray(newArr);
     }
     
     //不推荐, 这种方法转换后可能还需要进行强转
@@ -254,6 +261,7 @@ public class ArrayConvertUtil {
      * 字符串 转成固定长度的集合
      * 
      * @param str
+     * @param separator
      * @return
      */
     public static List<String> str2ListOfFixed(final String str, String separator) {
@@ -274,17 +282,14 @@ public class ArrayConvertUtil {
     
     /**
      * 字符串 转成可变长度的集合
+     * 
      * @param str
+     * @param separator
      * @return
      */
     public static List<String> str2ListOfVar(final String str, String separator) {
     	String[] strArr = str2Array(str, separator);
     	List<String> list = array2ListOfVar(strArr);
-//    	int size = Math.min(strArr.length * 2, 10);
-//    	List<String> list = new ArrayList<>(size);
-//    	for (String value : strArr) {
-//    		list.add(value);
-//		}
     	return list;
     }
     

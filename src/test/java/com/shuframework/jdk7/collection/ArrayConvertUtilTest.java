@@ -73,6 +73,33 @@ public class ArrayConvertUtilTest {
 		System.out.println(strSet.toString());
 	}
 	
+	@Test
+	public void collection2Array_test1() {
+		List<Object> strList = new ArrayList<>(); 
+		strList.add("a1");
+		strList.add("a3");
+		strList.add("a4");
+		strList.add("a5");
+		strList.add("a2");
+		
+//		String[] strArr = ArrayConvertUtil.collection2Array(strList, String[].class);
+		Object[] strArr = ArrayConvertUtil.collection2Array(strList, Object[].class);
+		System.out.println(ArrayConvertUtil.toString(strArr));
+		
+//		//set 无序
+//		Set<String> strSet = new HashSet<>(); 
+//		strSet.add("a1");
+//		strSet.add("b4");
+//		strSet.add("a3");
+//		strSet.add("a2");
+//		strSet.add("a5");
+////		strSet.add("cc");
+////		strSet.add("aa");
+////		strSet.add("bb");
+//		String str5 = ArrayConvertUtil.toString(strSet);
+//		System.out.println(str5);
+	}
+	
 	
 	@Test
 	public void array2Str_test1() {
@@ -93,11 +120,21 @@ public class ArrayConvertUtilTest {
 		System.out.println(list);
 	}
 	
+//	@Test
+//	public void array2ListOfVar_test1() {
+//		String[] strArr = {"a1", "a3", "a4", "a2", "a5"};
+//		List<String> list = new ArrayList<>();
+//		ArrayConvertUtil.array2ListOfVar(strArr, list);
+//		//[a1, a3, a4, a2, a5]
+//		list.add("a6");//[a1, a3, a4, a2, a5, a6]
+////		list.set(2, "a6");//[a1, a3, a6, a2, a5, a6]
+//		System.out.println(list);
+//	}
+	
 	@Test
-	public void array2ListOfVar_test1() {
+	public void array2ListOfVar_test2() {
 		String[] strArr = {"a1", "a3", "a4", "a2", "a5"};
-		List<String> list = new ArrayList<>();
-		ArrayConvertUtil.array2ListOfVar(strArr, list);
+		List<String> list = ArrayConvertUtil.array2ListOfVar(strArr);
 		//[a1, a3, a4, a2, a5]
 		list.add("a6");//[a1, a3, a4, a2, a5, a6]
 //		list.set(2, "a6");//[a1, a3, a6, a2, a5, a6]

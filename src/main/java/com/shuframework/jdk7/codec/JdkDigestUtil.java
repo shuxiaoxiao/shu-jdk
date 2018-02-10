@@ -26,9 +26,9 @@ public class JdkDigestUtil {
      * @return 
      * @throws Exception 
      */  
-    public static byte[] decryptBASE64(String key) throws Exception {  
+    public static byte[] decodeBASE64(String key) throws Exception {  
         return (new BASE64Decoder()).decodeBuffer(key);  
-    }  
+    }
   
     /** 
      * BASE64加密 
@@ -37,7 +37,7 @@ public class JdkDigestUtil {
      * @return 
      * @throws Exception 
      */  
-    public static String encryptBASE64(byte[] key) throws Exception {  
+    public static String encodeBASE64(byte[] key) throws Exception {  
         return (new BASE64Encoder()).encodeBuffer(key);  
     } 
 	

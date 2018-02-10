@@ -2,24 +2,29 @@ package com.shuframework.jdk7.io;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+
 
 /**
  * 判断文件，建议直接调用file.exists()
  * 读文件 read 
  * 写文件 write 
  * 复制文件 copy 
+ * 文件操作 递归新增、递归删除（这里的递归是针对文件夹）
  * 
  * @author shuheng
  *
@@ -226,6 +231,85 @@ public class FileUtil {
 		}
 		input.close();
 		output.close();
+	}
+	
+	/**
+	 * 对象深度复制
+	 * 注意obj 必须实现Serializable接口 
+	 * 
+	 * @param obj
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static Object deepCopy(Object obj) throws IOException, ClassNotFoundException {
+		// 先序列化，写入到流里
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		ObjectOutputStream objOutput = new ObjectOutputStream(output);
+		objOutput.writeObject(obj);
+		
+		// 然后反序列化，从流里读取出来，即完成复制
+		ByteArrayInputStream input = new ByteArrayInputStream(output.toByteArray());
+		ObjectInputStream objInput = new ObjectInputStream(input);
+		
+		return objInput.readObject();
+	}
+	
+
+	/**
+	 * 图片BASE64 编码
+	 * 
+	 * @param picPath
+	 * @return
+	 * @throws IOException 
+	 */
+	public static String getPicBASE64(String picPath) throws IOException {
+		FileInputStream fis = new FileInputStream(picPath);
+		byte[] bytes = new byte[fis.available()];
+		fis.read(bytes);
+		String content = new sun.misc.BASE64Encoder().encode(bytes); // 具体的编码方法
+		fis.close();
+		
+		return content;
+	}
+
+	/**
+	 * 图片BASE64 编码
+	 * 
+	 * @param base64str
+	 * @param outPicPath
+	 * @throws IOException 
+	 */
+	public static void getPicFromBASE64(String base64str, String outPicPath) throws IOException {
+		byte[] result = new sun.misc.BASE64Decoder().decodeBuffer(base64str.trim());
+		FileOutputStream fos = new FileOutputStream(outPicPath); // r,rw,rws,rwd
+		fos.write(result);
+		fos.close();
+	}
+	
+	/**
+	 * 递归删除文件或 删除单个文件
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public static boolean deleteFile(File file) {
+		File[] files = file.listFiles();
+		if (file.isDirectory() && files != null) {
+			for (int i = 0, size = files.length; i < size; i++) {
+				File subFile = files[i];
+				if (subFile.isDirectory()){
+					deleteFile(subFile);
+				}else{
+					subFile.delete();
+				}
+			}
+		} else if (file.isFile() || (file.isDirectory() && files == null)) {
+			file.delete();
+		} else{
+			return false;
+		}
+		return true;
 	}
 	
 }

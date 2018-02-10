@@ -1,4 +1,4 @@
-package com.shuframework.jdk7.collection;
+package com.shuframework.jdk7.collection.demo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,6 +9,18 @@ import org.junit.Test;
 
 /**
  * List集合的特点：有序(存储顺序和取出顺序一致), 可重复。
+ * 
+ * List集合的特有功能：
+ * 	A:添加功能
+ * 		void add(int index,Object element):在指定位置添加元素
+ * 	B:获取功能
+ * 		Object get(int index):获取指定位置的元素
+ * 	C:列表迭代器
+ * 		ListIterator listIterator()：List集合特有的迭代器
+ * 	D:删除功能
+ * 		Object remove(int index)：根据索引删除元素,返回被删除的元素
+ * 	E:修改功能
+ * 		Object set(int index,Object element):根据索引修改元素，返回被修饰的元素
  * 
  * @author shu
  *
@@ -22,7 +34,8 @@ public class ArrayListDemo {
 	public void add() {
 		strList = new ArrayList<>(5);
 		strList.add("aa");
-		strList.add(2, "ab");//越界, size没到, 5表示的是初始长度
+//		strList.add(2, "ab");//越界, size没到, 5表示的是初始长度
+		strList.add("ab");
 		strList.add("bb");
 		
 		strList2 = new ArrayList<>();
@@ -56,30 +69,49 @@ public class ArrayListDemo {
 		System.out.println("移除后：" + strList);//[ab, bb]
 	}
 	
-	//boolean removeAll(Collection c):移除一个集合的元素
+	//boolean removeAll(Collection c):移除一个集合的元素 (与第一个集合有相同的就会被移除,第二集合不变。成功一个就返回true)
 	@Test
 	public void removeAll() {
-		System.out.println("移除前：" + strList);//[aa, ab, bb]
-		strList.removeAll(strList2);
-		System.out.println("移除后：" + strList);//[ab, bb]
+		System.out.println("移除前strList：" + strList);//[aa, ab, bb]
+		System.out.println("移除前strList2：" + strList2);//[aa, cc, ca, cb]
+		boolean removeAll = strList.removeAll(strList2);
+		System.out.println(removeAll);//true
+		
+		System.out.println("移除后strList：" + strList);//[ab, bb]
+		System.out.println("移除后strList2：" + strList2);//[aa, cc, ca, cb]
 	}
 	
 	// boolean contains(Object o)：判断集合中是否包含指定的元素
 	//底层是o.equals(elementData[index]) 注意如果移除对象时, 需要重写equals方法
 	@Test
 	public void contains() {
-		System.out.println("移除前：" + strList);//[aa, ab, bb]
+		System.out.println(strList);//[aa, ab, bb]
 		boolean contains = strList.contains("aa");
 		System.out.println(contains);//true
 	}
 	
-	//boolean containsAll(Collection c)：判断集合中是否包含指定的集合元素
-	//只有包含所有的元素，才叫包含
+	//boolean containsAll(Collection c)：判断集合中是否包含指定的集合元素 (只有包含所有的元素，才叫包含)
+	//底层依赖contains方法, 所以是对象需要重写equals方法
 	@Test
 	public void containsAll() {
-		System.out.println("移除前：" + strList);//[aa, ab, bb]
+		System.out.println("strList：" + strList);//[aa, ab, bb]
+		System.out.println("strList2：" + strList2);//[aa, cc, ca, cb]
 		boolean contains = strList.containsAll(strList2);
 		System.out.println(contains);//false
+	}
+	
+	//boolean retainAll(Collection c):两个集合都有的元素
+	//假设有两个集合A，B。A对B做交集，最终的结果保存在A中，B不变。
+	//返回值表示的是A是否发生过改变。
+	@Test
+	public void retainAll() {
+		System.out.println("strList：" + strList);//[aa, ab, bb]
+		System.out.println("strList2：" + strList2);//[aa, cc, ca, cb]
+		boolean retains = strList.retainAll(strList2);
+		System.out.println(retains);//true
+		
+		System.out.println("移除后strList：" + strList);//[ab]
+		System.out.println("移除后strList2：" + strList2);//[aa, cc, ca, cb]
 	}
 	
 	@Test
@@ -113,21 +145,24 @@ public class ArrayListDemo {
 		if (it == null || !it.hasNext()) {
 			System.out.println("[]");
 		}else{
-			StringBuilder sb1 = new StringBuilder();
-			sb1.append('[');
+			StringBuilder sb = new StringBuilder();
+			sb.append('[');
 			while (true) {
 				//获取到元素, 判断是否是最后, 是则拼接"]", 不是则拼接", "
-				sb1.append(it.next());
+				sb.append(it.next());
 				if(!it.hasNext()){
-					sb1.append(']');
+					sb.append(']');
 					break;
 				}
-				sb1.append(", ");
+				sb.append(", ");
 			}
-			System.out.println(sb1.toString());
+			System.out.println(sb.toString());
 		}
-		
-		System.out.println("-----------");
+	}
+	
+	/** 集合有get() */
+	@Test
+	public void myToString2() {
 		int max = strList.size();
 		if (max == 0) {
 			System.out.println("[]");

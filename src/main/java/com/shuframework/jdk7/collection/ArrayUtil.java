@@ -10,7 +10,8 @@ import java.lang.reflect.Array;
 public class ArrayUtil {
     
     /**
-     * 数组复制,如果长度比之前大，赋值为空
+     * 数组复制,如果长度比之前大，多的长度内容赋值为空
+     * 
      * @param array
      * @param newLength
      * @return
@@ -21,6 +22,7 @@ public class ArrayUtil {
     }
     
     /**
+     * 数组复制,如果长度比之前大，多的长度内容赋值为空
      * 
      * @param original
      * @param newLength
@@ -39,14 +41,15 @@ public class ArrayUtil {
     	for (int i = 0; i < length; i++) {
     		newArr[i] = original[i];
 		}
-    	
     	return newArr;
     }
     
     /**
      * 向前strp步复制
+     * 
      * @param array
      * @param index
+     * @param step
      * @return
      */
 	public static <T> void forwardCopy(T[] array, int index, int step) {
@@ -60,6 +63,7 @@ public class ArrayUtil {
 	
 	/**
 	 * 向前复制（删除）
+	 * 
 	 * @param array
 	 * @param index
 	 * @return
@@ -81,8 +85,10 @@ public class ArrayUtil {
 	
 	/**
 	 * 向后复制（新增）
+	 * 
 	 * @param array
 	 * @param index
+	 * @param step
 	 * @return
 	 */
 	public static <T> void backwardsCopy(T[] array, int index, int step) {
@@ -96,6 +102,7 @@ public class ArrayUtil {
 	
 	/**
 	 * 向后复制（新增）
+	 * 
 	 * @param array
 	 * @param index
 	 * @return
@@ -113,7 +120,6 @@ public class ArrayUtil {
 //		for(int i = array.length - 1; i > index; i--){
 //			array[i] = array[i - 1];
 //		}
-		
 	}
 	
 	

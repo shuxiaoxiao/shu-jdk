@@ -1,4 +1,4 @@
-package com.test;
+package com.shuframework.test;
 
 import java.util.ArrayList;
 import java.util.Collections;

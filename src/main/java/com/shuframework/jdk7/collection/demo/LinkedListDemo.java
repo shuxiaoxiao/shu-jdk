@@ -1,4 +1,4 @@
-package com.shuframework.jdk7.collection;
+package com.shuframework.jdk7.collection.demo;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -7,8 +7,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-/*
- * LinkedList 与ArrayListDemo里面的
+/**
+ * LinkedListDemo 与ArrayListDemo里面的非特有方法使用是一样
+ * 
  * LinkedList的特有功能：
  * 注意是LinkedList strLinkedList = new LinkedList<>(); 这样子类对象特有方法才能调用
  * 		A:添加功能
@@ -20,6 +21,7 @@ import org.junit.Test;
  * 		C:删除功能
  * 			public Object removeFirst()
  * 			public Object removeLast()
+ * 
  */
 public class LinkedListDemo {
 
