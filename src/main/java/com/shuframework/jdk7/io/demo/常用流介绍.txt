@@ -1,0 +1,46 @@
+
+字节流
+InputStream / OutputStream
+	|--FileInputStream / FileOutputStream
+	
+	|--BufferedInputStream / BufferedOutputStream
+		缓冲区类(高效类)  构造方法可以指定缓冲区的大小，但是我们一般用不上，因为默认缓冲区大小就足够了。
+	
+
+	|--DataInputStream / DataOutputStream  数据流
+		可以实现基本数据的存储与恢复 (读写基本数据类型的数据)
+		readByte()/readShort()/readInt() 等
+		writeByte()/writeShort()/writeInt() 等
+			
+内存流  程序结束，数据就从内存中消失（不会有文件生成）
+	|--ByteArrayInputStream / ByteArrayOutputStream
+		字节数组 输入（输出） 用于处理临时存储信息的，程序结束，数据就从内存中消失
+	|--CharArrayReader / CharArrayWriter
+		字符数组 输入（输出） 
+	|--StringReader / StringWriter
+		字符串 输入（输出） 
+
+
+	SequenceInputStream  合并流
+		把多个输入流的数据写到一个输出流中
+
+	|--ObjectInputStream / ObjectOutputStream  对象流
+
+
+	
+	
+转换流	
+	(1)字节流操作中文数据不是特别的方便，所以就出现了转换流。
+	 	 转换流的作用就是把字节流转换字符流来使用。
+	(2)转换流其实是一个字符流
+		字符流 = 字节流 + 编码表
+		
+字符流
+Reader / Writer
+	|--InputStreamReader / OutputStreamWriter
+		|--FileReader / FileWriter
+		
+	|--BufferedReader / BufferedWriter
+		|--LineNumberReader
+	
+	

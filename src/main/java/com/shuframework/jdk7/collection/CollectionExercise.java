@@ -12,6 +12,7 @@ import java.util.TreeMap;
 import org.junit.Test;
 
 import com.shuframework.jdk7.random.RandomUtil;
+import com.shuframework.testmodel.BookInfo2;
 
 /**
  * 集合的练习
@@ -155,57 +156,59 @@ public class CollectionExercise {
 	}
 	
 	
-//	/**
-//	 * list比较(第二种方法)【了解】
-//	 */
-//	@Test
-//	public void compare_list_obj2() {
-//		BookTemp b1 = new BookTemp(1L, "a1");
-//		BookTemp b2 = new BookTemp(2L, "a2");
-//		BookTemp b3 = new BookTemp(3L, "a3");
-//		BookTemp b11 = new BookTemp(11L, "b1");
-//		BookTemp b12 = new BookTemp(12L, "b2");
-////		BookTemp b13 = new BookTemp(13L, "b3");
-//		
-//		List<BookTemp> oldList = null;
-//		List<BookTemp> newList = null;
-//		oldList = new ArrayList<>();
-//		oldList.add(b1);
-//		oldList.add(b2);
-//		oldList.add(b3);
-//		
-//		newList = new ArrayList<>();
-//		newList.add(b1);
-//		newList.add(b2);
-//		newList.add(b11);
-//		newList.add(b12);
-//		
-//		//浅度copy 底层是set方法, 如果是添加对象则修改其属性还是会变的
-//////		List<String> tempList = new ArrayList<>(oldList.size());//这个只是设置length 不是size
-////		List<BookTemp> tempList = new ArrayList<>(Arrays.asList(new BookTemp[oldList.size()]));
-////		Collections.copy(tempList, oldList);
-////		oldList.get(2).setName("c1");//改变集合元素的值对tempList有影响
-//		//浅度copy 底层是add方法
-//		List<BookTemp> tempList = new ArrayList<>();
-//		tempList.addAll(oldList);
-////		oldList.set(2, b13);//这个改变对tempList没影响
-////		tempList.set(2, b13);//这个改变对oldList没影响
+	/**
+	 * list比较(第二种方法)【了解】
+	 */
+	@Test
+	public void compare_list_obj2() {
+		//BookInfo对象没有重写equals()和hashCode()
+//		BookInfo book1 = new BookInfo(1, "a1");
+		BookInfo2 b1 = new BookInfo2(1, "a1");
+		BookInfo2 b2 = new BookInfo2(2, "a2");
+		BookInfo2 b3 = new BookInfo2(3, "a3");
+		BookInfo2 b11 = new BookInfo2(11, "b1");
+		BookInfo2 b12 = new BookInfo2(12, "b2");
+//		BookInfo2 b13 = new BookInfo2(13L, "b3");
+		
+		List<BookInfo2> oldList = null;
+		List<BookInfo2> newList = null;
+		oldList = new ArrayList<>();
+		oldList.add(b1);
+		oldList.add(b2);
+		oldList.add(b3);
+		
+		newList = new ArrayList<>();
+		newList.add(b1);
+		newList.add(b2);
+		newList.add(b11);
+		newList.add(b12);
+		
+		//浅度copy 底层是set方法, 如果是添加对象则修改其属性还是会变的
+////		List<String> tempList = new ArrayList<>(oldList.size());//这个只是设置length 不是size
+//		List<BookInfo2> tempList = new ArrayList<>(Arrays.asList(new BookInfo2[oldList.size()]));
+//		Collections.copy(tempList, oldList);
 //		oldList.get(2).setName("c1");//改变集合元素的值对tempList有影响
-////		b3.setName("c1");//改变集合元素的值对tempList有影响
-//		
-//		/*
-//		 * 老的集合如果包含, 说明是原有的, 则表示修改部分
-//		 * 如果不包含, 说明是新增的
-//		 * 老的集合还剩下的就是需要删除的
-//		 */
-//		oldList.retainAll(newList);
-//		newList.removeAll(oldList);
-//		tempList.removeAll(oldList);
-//		
-//		System.out.println("saveList：" + newList);
-//		System.out.println("updateList：" + oldList);
-//		System.out.println("deleteList：" + tempList);
-//	}
+		//浅度copy 底层是add方法
+		List<BookInfo2> tempList = new ArrayList<>();
+		tempList.addAll(oldList);
+//		oldList.set(2, b13);//这个改变对tempList没影响
+//		tempList.set(2, b13);//这个改变对oldList没影响
+		oldList.get(2).setName("c1");//改变集合元素的值对tempList有影响
+//		b3.setName("c1");//改变集合元素的值对tempList有影响
+		
+		/*
+		 * 老的集合如果包含, 说明是原有的, 则表示修改部分
+		 * 如果不包含, 说明是新增的
+		 * 老的集合还剩下的就是需要删除的
+		 */
+		oldList.retainAll(newList);
+		newList.removeAll(oldList);
+		tempList.removeAll(oldList);
+		
+		System.out.println("saveList：" + newList);
+		System.out.println("updateList：" + oldList);
+		System.out.println("deleteList：" + tempList);
+	}
 	
 	/**
 	 * 获取字符串中每一个字母出现的次数要求结果:a(5)b(4)c(3)d(2)e(1)
@@ -267,66 +270,3 @@ public class CollectionExercise {
 	
 	
 }
-
-
-//class BookTemp {
-//	private Long id;
-//	private String name;
-//	
-//	public Long getId() {
-//		return id;
-//	}
-//	public void setId(Long id) {
-//		this.id = id;
-//	}
-//	public String getName() {
-//		return name;
-//	}
-//	public void setName(String name) {
-//		this.name = name;
-//	}
-//	
-//	public BookTemp() {}
-//	
-//	public BookTemp(Long id, String name) {
-//		this.id = id;
-//		this.name = name;
-//	}
-//	
-//	@Override
-//	public int hashCode() {
-//		final int prime = 31;
-//		int result = 1;
-//		result = prime * result + ((id == null) ? 0 : id.hashCode());
-//		result = prime * result + ((name == null) ? 0 : name.hashCode());
-//		return result;
-//	}
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		BookTemp other = (BookTemp) obj;
-//		if (id == null) {
-//			if (other.id != null)
-//				return false;
-//		} else if (!id.equals(other.id))
-//			return false;
-//		if (name == null) {
-//			if (other.name != null)
-//				return false;
-//		} else if (!name.equals(other.name))
-//			return false;
-//		return true;
-//	}
-//	
-//	@Override
-//	public String toString() {
-//		return "BookTemp [id=" + id + ", name=" + name + "]";
-//	}
-//	
-//}
-

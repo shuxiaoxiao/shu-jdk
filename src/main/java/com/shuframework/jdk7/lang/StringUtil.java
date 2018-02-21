@@ -7,8 +7,13 @@ package com.shuframework.jdk7.lang;
  */
 public class StringUtil {
 	
+	/** 前缀 */
+	public final static String TYPE_PREFIX = "prefix";
+	/** 后缀 */
+	public final static String TYPE_SUFFIX = "suffix";
+	
 	/**
-	 * 获得文件后缀,""表示无后缀,如返回doc 或 xls等
+	 * 获得文件后缀, ""表示无后缀,如返回doc 或 xls等
 	 * @param str
 	 * @return
 	 */
@@ -21,6 +26,80 @@ public class StringUtil {
 			return "";
 		}
 	}
+	
+	/**
+	 * 获得文件后缀, ""表示无后缀,如返回.doc 或.xls等
+	 * @param str
+	 * @return
+	 */
+	public static String getSuffixHasPoint(String str) {
+		int index = str.lastIndexOf(".");
+		if (index != -1) {
+			String suffix = str.substring(index);
+			return suffix;
+		} else {
+			return "";
+		}
+	}
+	
+	/**
+	 * 添加addName的前缀或后缀
+	 * 
+	 * @param oldFileName
+	 * @param addName
+	 * @param type  TYPE_PREFIX(前缀)、TYPE_SUFFIX(后缀)
+	 * @return
+	 */
+	public static String renameByAdd(String oldFileName, String addName, String type) {
+		String newName = "";
+		if(TYPE_PREFIX.equals(type)){
+			newName = addName + oldFileName;
+		}
+		if(TYPE_SUFFIX.equals(type)){
+			//截取后缀
+			String suffix = "";
+			String temp = oldFileName;
+			int index = oldFileName.lastIndexOf(".");
+			if (index != -1) {
+				temp = oldFileName.substring(0, index);
+				suffix = oldFileName.substring(index);
+			}
+			newName = temp + addName + suffix;
+		}
+		return newName;
+	}
+	
+	/**
+	 * 添加addName的前缀或后缀
+	 * 
+	 * @param oldFileName
+	 * @param removeName
+	 * @param type  TYPE_PREFIX(前缀)、TYPE_SUFFIX(后缀)
+	 * @return
+	 */
+	public static String renameByRemove(String oldFileName, String removeName, String type) {
+		String newName = "";
+		if(TYPE_PREFIX.equals(type)){
+			newName = oldFileName.substring(removeName.length());
+		}
+		if(TYPE_SUFFIX.equals(type)){
+			//截取后缀
+			String suffix = "";
+			String temp = oldFileName;
+			int index = oldFileName.lastIndexOf(".");
+			if (index != -1) {
+				temp = oldFileName.substring(0, index);
+				suffix = oldFileName.substring(index);
+			}
+			//截掉temp中的removeName
+			int endIndex = temp.length() - removeName.length();
+			temp = temp.substring(0, endIndex);
+			newName = temp + suffix;
+		}
+		return newName;
+	}
+	//SystemUtil.getNewFilename  获得新的文件名
+	
 	
 	/**
 	 * 判断是否为null或空串（去空格了），是返回 true

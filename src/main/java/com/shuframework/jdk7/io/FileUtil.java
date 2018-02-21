@@ -1,5 +1,7 @@
 package com.shuframework.jdk7.io;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -16,8 +18,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.io.Writer;
 
+import com.shuframework.jdk7.constant.CharsetConstant;
 
 /**
  * 判断文件，建议直接调用file.exists()
@@ -30,6 +34,8 @@ import java.io.Writer;
  *
  */
 public class FileUtil {
+	
+	private static final String DEFAULT_ENCODING = CharsetConstant.CHARSET_UTF8;
 	
 //	/**
 //	 * 这个方法建议直接调用file.exists()
@@ -50,6 +56,18 @@ public class FileUtil {
 //		return new File(filePath).exists();
 //	}
 
+	
+	/**
+	 * 读操作 字节流（二进制流）, 默认是utf-8编码
+	 * 
+	 * @param input
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readByBinary(InputStream input) throws IOException {
+		return readByBinary(input, DEFAULT_ENCODING);
+	}
+	
 	/**
 	 * 读操作 字节流（二进制流）
 	 * 
@@ -58,7 +76,7 @@ public class FileUtil {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String readToStringByBinary(InputStream input, String encoding)
+	public static String readByBinary(InputStream input, String encoding)
 			throws IOException {
 //		// 创建字节输入流对象
 //		FileInputStream fis = new FileInputStream(filePath);
@@ -77,6 +95,18 @@ public class FileUtil {
 
 		return sb.toString();
 	}
+	
+	/**
+	 * 读操作 字节流（二进制流）, 默认是utf-8编码
+	 * 
+	 * @param filePath
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readByBinary(String filePath) throws IOException {
+		return readByBinary(filePath, DEFAULT_ENCODING);
+	}
+	
 	/**
 	 * 读操作 字节流（二进制流）
 	 * 
@@ -85,28 +115,27 @@ public class FileUtil {
 	 * @return
 	 * @throws IOException
 	 */
-	public static String readToStringByBinary(String filePath, String encoding)
+	public static String readByBinary(String filePath, String encoding)
 			throws IOException {
 		FileInputStream input = new FileInputStream(filePath);
-		return readToStringByBinary(input, encoding);
+		return readByBinary(input, encoding);
 	}
 
-	
 	/**
 	 * 读操作 字符流
 	 * 
-	 * @param filePath
+	 * @param reader
 	 * @return
 	 * @throws IOException
 	 */
-	public static String readToStringByText(String filePath) throws IOException {
+	public static String readByText(Reader reader) throws IOException {
 		// 创建字符缓冲输入流对象
-		BufferedReader reader = new BufferedReader(new FileReader(filePath));
+		BufferedReader bfReader = new BufferedReader(reader);
 		
 		StringBuffer sb = new StringBuffer();
 		String s =null;//存放一行内容
 		//BufferedReader的readLine方法
-		while ((s = reader.readLine()) != null) {
+		while ((s = bfReader.readLine()) != null) {
 			sb.append(s).append("\n");
 		}
 //		//BufferedReader的read方法
@@ -116,17 +145,39 @@ public class FileUtil {
 //		while ((len = br.read(chs)) != -1) {
 //			sb.append(new String(chs, 0, len));
 //		}
-
 		// 释放资源
-		reader.close();
+		bfReader.close();
 		return sb.toString();
+	}
+	
+	/**
+	 * 读操作 字符流
+	 * 
+	 * @param filePath
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readByText(String filePath) throws IOException {
+		FileReader reader = new FileReader(filePath);
+		return readByText(reader);
 	}
 
 	
 	/**
+	 * 写操作 字节流（二进制流）, 默认是utf-8编码
+	 * 
+	 * @param outStream 注意构建时 data是追加还是从头加
+	 * @param data
+	 * @throws IOException
+	 */
+	public static void writeByBinary(OutputStream outStream, String data) throws IOException {
+		writeByBinary(outStream, data, DEFAULT_ENCODING);
+	}
+	
+	/**
 	 * 写操作 字节流（二进制流）
 	 * 
-	 * @param outStream
+	 * @param outStream 注意构建时 data是追加还是从头加
 	 * @param data
 	 * @param encoding
 	 * @throws IOException
@@ -144,29 +195,54 @@ public class FileUtil {
 	}
 	
 	/**
+	 * 写操作 字节流（二进制流）, data是追加在文件内容后面, 默认是utf-8编码
+	 * 
+	 * @param filePath
+	 * @param data
+	 * @throws IOException
+	 */
+	public static void writeByBinary(String filePath, String data) throws IOException {
+		writeByBinary(filePath, data, true, DEFAULT_ENCODING);
+	}
+	
+	/**
+	 * 写操作 字节流（二进制流）, 默认是utf-8编码
+	 * 
+	 * @param filePath
+	 * @param data
+	 * @param isAppend  data是追加还是从头加
+	 * @throws IOException
+	 */
+	public static void writeByBinary(String filePath, String data, boolean isAppend) throws IOException {
+		writeByBinary(filePath, data, isAppend, DEFAULT_ENCODING);
+	}
+	
+	/**
 	 * 写操作 字节流（二进制流）
 	 * 
 	 * @param filePath
 	 * @param data
-	 * @param encoding
+	 * @param isAppend  data是追加还是从头加
+	 * @param encoding  编码
 	 * @throws IOException
 	 */
-	public static void writeByBinary(String filePath, String data, String encoding) throws IOException {
-		FileOutputStream fos = new FileOutputStream(filePath);
+	public static void writeByBinary(String filePath, String data, boolean isAppend, String encoding) throws IOException {
+		//true 表示append, 即data 追加在文件内容后面
+		FileOutputStream fos = new FileOutputStream(filePath, isAppend);
 		writeByBinary(fos, data, encoding);
 	}
 	
 	/**
 	 * 写操作 字符流
 	 * 
-	 * @param filePath
+	 * @param writer 注意构建时 data是追加还是从头加
 	 * @param data
 	 * @throws IOException
 	 */
 	public static void writeByText(Writer writer, String data) throws IOException {
-//		BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
 		BufferedWriter bw = new BufferedWriter(writer);
-
+//		//根据系统来决定换行符
+//		bw.newLine();
 		// 写数据
 		bw.write(data);
 		// 刷新缓冲区
@@ -180,11 +256,25 @@ public class FileUtil {
 	 * 
 	 * @param filePath
 	 * @param data
+	 * @param isAppend  data是追加还是从头加
+	 * @throws IOException
+	 */
+	public static void writeByText(String filePath, String data, boolean isAppend) throws IOException {
+		FileWriter writer = new FileWriter(filePath, isAppend);
+		writeByText(writer, data);
+	}
+	
+	/**
+	 * 写操作 字符流, data是追加在文件内容后面
+	 * 
+	 * @param filePath
+	 * @param data
 	 * @throws IOException
 	 */
 	public static void writeByText(String filePath, String data) throws IOException {
-		FileWriter writer = new FileWriter(filePath);
-		writeByText(writer, data);
+//		FileWriter writer = new FileWriter(filePath, true);
+//		writeByText(writer, data);
+		writeByText(filePath, data, true);
 	}
 	
 
@@ -197,19 +287,26 @@ public class FileUtil {
 	 * @throws IOException 
 	 */
 	public static void copy(File source, File target) throws IOException {
+		if(!target.exists()){
+			target.mkdirs();
+		}
 		File tarpath = new File(target, source.getName());
 		if (source.isDirectory()) {
 			tarpath.mkdir();
 			File[] dir = source.listFiles();
-			for (int i = 0; i < dir.length; i++) {
-				copy(dir[i], tarpath);
+			for (File newFile : dir) {
+				copy(newFile, tarpath);
 			}
+//			for (int i = 0; i < dir.length; i++) {
+//				copy(dir[i], tarpath);
+//			}
 		} else {
 			//用于读取文件的原始字节流
 			InputStream input = new FileInputStream(source); 
 			//用于写入文件的原始字节的流
 			OutputStream output = new FileOutputStream(tarpath); 
-			copy(input, output);
+//			copy(input, output);
+			copyHasCache(input, output);
 		}
 	}
 	
@@ -220,10 +317,6 @@ public class FileUtil {
 	 * @throws IOException
 	 */
 	public static void copy(InputStream input, OutputStream output) throws IOException {
-//		// 用于读取文件的原始字节流
-//		InputStream input = new FileInputStream(source);
-//		// 用于写入文件的原始字节的流
-//		OutputStream output = new FileOutputStream(tarpath);
 		byte[] buf = new byte[1024];// 存储读取数据的缓冲区大小
 		int len = 0;
 		while ((len = input.read(buf)) != -1) {
@@ -232,6 +325,76 @@ public class FileUtil {
 		input.close();
 		output.close();
 	}
+	
+	/**
+	 * 
+	 * @param input
+	 * @param output
+	 * @throws IOException
+	 */
+	public static void copyHasCache(InputStream input, OutputStream output) throws IOException {
+		BufferedInputStream bfInput = new BufferedInputStream(input);
+		BufferedOutputStream bfOutput = new BufferedOutputStream(output);
+		byte[] buf = new byte[1024];// 存储读取数据的缓冲区大小
+		int len = 0;
+		while ((len = bfInput.read(buf)) != -1) {
+			bfOutput.write(buf, 0, len);
+		}
+		bfInput.close();
+		bfOutput.close();
+	}
+	
+	/**
+	 * 
+	 * @param reader
+	 * @param writer
+	 * @throws IOException
+	 */
+	public static void copy(Reader reader, Writer writer) throws IOException {
+		//注意这个是char 数组, InputStream是byte数组
+		char[] buf = new char[1024];// 存储读取数据的缓冲区大小
+		int len = 0;
+		while ((len = reader.read(buf)) != -1) {
+			writer.write(buf, 0, len);
+			writer.flush();
+		}
+		reader.close();
+		writer.close();
+	}
+	
+	/**
+	 * 
+	 * @param reader
+	 * @param writer
+	 * @throws IOException
+	 */
+	public static void copyHasCache(Reader reader, Writer writer) throws IOException {
+		BufferedReader bfReader = new BufferedReader(reader);
+		BufferedWriter bfWriter = new BufferedWriter(writer);
+		String line = null;
+		// 读取一行数据
+		while ((line = bfReader.readLine()) != null) {
+			bfWriter.write(line);
+			bfWriter.newLine();
+			bfWriter.flush();
+		}
+		bfReader.close();
+		bfWriter.close();
+	}
+//	public static void copyHasCache(Reader reader, Writer writer) throws IOException {
+//		BufferedReader bfReader = new BufferedReader(reader);
+//		BufferedWriter bfWriter = new BufferedWriter(writer);
+//		//注意这个是char 数组, InputStream是byte数组
+//		char[] buf = new char[1024];// 存储读取数据的缓冲区大小
+//		int len = 0;
+//		while ((len = bfReader.read(buf)) != -1) {
+//			bfWriter.write(buf, 0, len);
+//			bfWriter.flush();
+//		}
+//		bfReader.close();
+//		bfWriter.close();
+//	}
+	
 	
 	/**
 	 * 对象深度复制
@@ -288,28 +451,175 @@ public class FileUtil {
 	}
 	
 	/**
-	 * 递归删除文件或 删除单个文件
+	 * 删除单个文件
 	 * 
 	 * @param file
 	 * @return
 	 */
 	public static boolean deleteFile(File file) {
-		File[] files = file.listFiles();
-		if (file.isDirectory() && files != null) {
-			for (int i = 0, size = files.length; i < size; i++) {
-				File subFile = files[i];
-				if (subFile.isDirectory()){
-					deleteFile(subFile);
-				}else{
-					subFile.delete();
+		boolean flag = false;
+		if(!file.exists()){
+			System.out.println(file + "不存在");
+			return flag;
+		}
+		
+		if(file.isFile()){
+			flag = file.delete();
+		}else{
+			System.out.println(file + "不是文件");
+		}
+		
+		return flag;
+	}
+	
+	/**
+	 * 删除文件夹下的所有文件 (递归删除)
+	 * <pre>
+	 * 目录 d:\\filetest\\a
+	 * 		b
+	 * 			c
+	 * 			b.txt
+	 * 		a.txt
+	 * 删除目录d:\\filetest\\a (文件夹) ,那么其下的所有文件都会删除, 文件夹（b、c）都未被删除
+	 * </pre>
+	 * @param file
+	 * @return
+	 */
+	public static boolean deleteFileByFolder(File file) {
+		boolean flag = false;
+		if(!file.exists()){
+			System.out.println(file + "不存在");
+			return flag;
+		}
+		
+		if(file.isDirectory()){
+			File[] fileArray = file.listFiles();
+			if(fileArray.length == 0){
+				System.out.println(file + "这个文件夹是空的");
+			}
+			for (File subFile : fileArray) {
+				// 判断该File对象是否是文件夹
+				if (subFile.isDirectory()) {
+					deleteFileByFolder(subFile);
+				} else {
+//					System.out.println(subFile);
+					flag = subFile.delete();
 				}
 			}
-		} else if (file.isFile() || (file.isDirectory() && files == null)) {
-			file.delete();
-		} else{
-			return false;
+		}else{
+			System.out.println(file + "不是文件夹");
 		}
-		return true;
+		return flag;
 	}
+	
+	/**
+	 * 递归删除这个文件夹所有内容 (包括文件和文件夹)
+	 * <pre>
+	 * 目录 d:\\filetest\\a
+	 * 		b
+	 * 			c
+	 * 			b.txt
+	 * 		a.txt
+	 * 删除目录d:\\filetest\\a (文件夹) ,那么其下的所有文件和文件夹（b、c）都会删除
+	 * </pre>
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public static boolean deleteFolder(File file) {
+		boolean flag = false;
+		if(!file.exists()){
+			System.out.println(file + "不存在");
+			return flag;
+		}
+		
+		if(file.isDirectory()){
+			File[] fileArray = file.listFiles();
+			if(fileArray.length == 0){
+				System.out.println(file + "这个文件夹是空的");
+			}
+			for (File subFile : fileArray) {
+				// 判断该File对象是否是文件夹
+				if (subFile.isDirectory()) {
+					//该文件的文件夹下如果没有内容就删除
+					if(subFile.listFiles().length == 0){
+//						System.out.println(subFile);
+						flag = subFile.delete();
+					}else{
+						deleteFolder(subFile);
+					}
+				} else {
+//					System.out.println(subFile);
+					flag = subFile.delete();
+					//该文件的文件夹下如果没有内容就删除
+					File parentFile = subFile.getParentFile();
+					if(parentFile.listFiles().length == 0){
+//						System.out.println(parentFile);
+						flag = parentFile.delete();
+					}
+				}
+			}
+		}else{
+			System.out.println(file + "不是文件夹");
+		}
+		return flag;
+	}
+	
+	/**
+	 * 删除文件 或文件夹(包含其下的文件和文件夹)
+	 * 
+	 * @param file
+	 * @return
+	 */
+	public static boolean deleteFileOrFolder(File file) {
+		boolean flag = false;
+		if(file.isFile()){
+			flag = deleteFile(file);
+		}
+		if(file.isDirectory()){
+			flag = deleteFolder(file);
+		}
+		return flag;
+	}
+	
+	//文件和文件夹都能删除
+//	public static boolean deleteFolder(File file) {
+//		boolean flag = false;
+//		if(!file.exists()){
+//			return flag;
+//		}
+//		
+//		if(file.isFile()){
+//			System.out.println(file.toString());
+//			flag = file.delete();
+//		}else{
+//			File[] fileArray = file.listFiles();
+//			for (File subFile : fileArray) {
+//				// 判断该File对象是否是文件夹
+//				if (subFile.isDirectory()) {
+//					//该文件的文件夹下如果没有内容就删除
+//					if(subFile.listFiles().length == 0){
+//						System.out.println(subFile);
+//						flag = subFile.delete();
+//					}else{
+//						deleteFolder(subFile);
+//					}
+//				} else {
+////					String filePath = subFile.getPath();
+////					String parentFilePath = filePath.substring(0, filePath.lastIndexOf("\\"));
+////					File parentFile = new File(parentFilePath);
+//					System.out.println(subFile.toString());
+//					flag = subFile.delete();
+//					//该文件的文件夹下如果没有内容就删除
+//					File parentFile = subFile.getParentFile();
+//					if(parentFile.listFiles().length == 0){
+//						System.out.println(parentFile.toString());
+//						flag = parentFile.delete();
+//					}
+//				}
+//			}
+//		}
+//		return flag;
+//	}
 	
 }

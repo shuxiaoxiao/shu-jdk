@@ -13,31 +13,6 @@ import com.shuframework.jdk7.random.RandomUtil;
  *
  */
 public class SystemUtil {
-	private static final String USER_HOME_KEY = "user.home";
-	private static final String USER_DIR_KEY = "user.dir";
-	private static final String JAVA_HOME_KEY = "java.home";
-	private static final String JAVA__CLASS_PATH_KEY = "java.class.path";
-	private static final String JAVA_IO_TMPDIR_KEY = "java.io.tmpdir";
-	private static final String FILE_ENCODING_KEY = "file.encoding";
-	private static final String FILE_SEPARATOR_KEY = "file.separator";
-
-	public static final String USER_HOME = getSystemProperty(USER_HOME_KEY);
-	public static final String USER_DIR = getSystemProperty(USER_DIR_KEY);
-	public static final String JAVA_HOME = getSystemProperty(JAVA_HOME_KEY);
-	public static final String JAVA_CLASS_PATH = getSystemProperty(JAVA__CLASS_PATH_KEY);
-	public static final String JAVA_IO_TMPDIR = getSystemProperty(JAVA_IO_TMPDIR_KEY);
-	public static final String FILE_ENCODING = getSystemProperty(FILE_ENCODING_KEY);
-	public static final String FILE_SEPARATOR = getSystemProperty(FILE_SEPARATOR_KEY);
-
-	private static String getSystemProperty(final String property) {
-		try {
-			return System.getProperty(property);
-		} catch (final SecurityException ex) {
-			System.err.println("Caught a SecurityException reading the system property '" + property
-					+ "'; the SystemUtils property value will default to null.");
-			return null;
-		}
-	}
 
 	/**
 	 * 获得36位长度的字符串, 里面包含字符 "-"
@@ -100,12 +75,12 @@ public class SystemUtil {
 	 * null表示重命名失败，无后缀
 	 * （由于依赖生成id 所以没放入StringUtil）
 	 * 
-	 * @param oldFilename
+	 * @param oldFileName
 	 */
-	public static String getNewFilename(String oldFilename) {
-		String suffix = StringUtil.getSuffix(oldFilename);
+	public static String getNewFileName(String oldFileName) {
+		String suffix = StringUtil.getSuffixHasPoint(oldFileName);
 		if(suffix != null){
-			return getRandomId3(5) + "." + suffix;
+			return getRandomId3(5) + suffix;
 		}else{
 			return null;
 		}
@@ -127,4 +102,30 @@ public class SystemUtil {
     	return "";
     }
 	
+	
+	private static final String USER_HOME_KEY = "user.home";
+	private static final String USER_DIR_KEY = "user.dir";
+	private static final String JAVA_HOME_KEY = "java.home";
+	private static final String JAVA__CLASS_PATH_KEY = "java.class.path";
+	private static final String JAVA_IO_TMPDIR_KEY = "java.io.tmpdir";
+	private static final String FILE_ENCODING_KEY = "file.encoding";
+	private static final String FILE_SEPARATOR_KEY = "file.separator";
+
+	public static final String USER_HOME = getSystemProperty(USER_HOME_KEY);
+	public static final String USER_DIR = getSystemProperty(USER_DIR_KEY);
+	public static final String JAVA_HOME = getSystemProperty(JAVA_HOME_KEY);
+	public static final String JAVA_CLASS_PATH = getSystemProperty(JAVA__CLASS_PATH_KEY);
+	public static final String JAVA_IO_TMPDIR = getSystemProperty(JAVA_IO_TMPDIR_KEY);
+	public static final String FILE_ENCODING = getSystemProperty(FILE_ENCODING_KEY);
+	public static final String FILE_SEPARATOR = getSystemProperty(FILE_SEPARATOR_KEY);
+
+	private static String getSystemProperty(final String property) {
+		try {
+			return System.getProperty(property);
+		} catch (final SecurityException ex) {
+			System.err.println("Caught a SecurityException reading the system property '" + property
+					+ "'; the SystemUtils property value will default to null.");
+			return null;
+		}
+	}
 }

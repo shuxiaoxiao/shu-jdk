@@ -1,10 +1,12 @@
-package com.shuframework.test.model;
+package com.shuframework.testmodel;
 
-import java.io.Serializable;
-
-public class BookTemp implements Serializable{
-	
-	private static final long serialVersionUID = -3609110311158774103L;
+/**
+ * 重写了equals()和hashCode() 的pojo
+ * 
+ * @author shu
+ *
+ */
+public class BookInfo2{
 	
 	private Integer id;
 	private String name;
@@ -22,9 +24,9 @@ public class BookTemp implements Serializable{
 		this.name = name;
 	}
 	
-	public BookTemp() {}
+	public BookInfo2() {}
 	
-	public BookTemp(Integer id, String name) {
+	public BookInfo2(Integer id, String name) {
 		this.id = id;
 		this.name = name;
 	}
@@ -45,7 +47,7 @@ public class BookTemp implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BookTemp other = (BookTemp) obj;
+		BookInfo2 other = (BookInfo2) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -61,6 +63,6 @@ public class BookTemp implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "BookTemp [id=" + id + ", name=" + name + "]";
+		return "BookInfo [id=" + id + ", name=" + name + "]";
 	}
 }
