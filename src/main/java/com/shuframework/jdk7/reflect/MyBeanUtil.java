@@ -6,6 +6,7 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -236,6 +237,51 @@ public class MyBeanUtil {
 			}
 		}
 		return null;
+	}
+	
+	/**
+	 * 是否是数字, 是数字返回true
+	 * 
+	 * @param classType
+	 * @return
+	 */
+	public static boolean isNumber(Class classType) {
+		boolean flag = false;
+		if (classType == Float.class || classType == Double.class || classType == BigDecimal.class
+				|| classType == Long.class || classType == Integer.class || classType == Short.class || classType == Byte.class) {
+			flag = true;
+		}
+		return flag;
+	}
+	
+	/**
+	 * 是否是整数 （包括Integer, Long, BigDecimal）
+	 * 是整数返回true
+	 * 
+	 * @param classType
+	 * @return
+	 */
+	public static boolean isIntegerNumber(Class classType){
+		boolean flag = false;
+		if (classType == Integer.class || classType == Long.class || classType == Short.class || classType == Byte.class) {
+			flag = true;
+		}
+		return flag;
+	}
+	
+	/**
+	 * 是否的浮点数 （包括Float, Double, BigDecimal）
+	 * 是浮点数返回true
+	 * 
+	 * @param classType
+	 * @return
+	 */
+	public static boolean isFloatingNumber(Class classType) {
+		boolean flag = false;
+		if (classType == Float.class || classType == Double.class || classType == BigDecimal.class) {
+			flag = true;
+		}
+		return flag;
 	}
 	
 	/**

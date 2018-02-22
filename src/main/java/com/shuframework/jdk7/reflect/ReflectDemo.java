@@ -2,6 +2,10 @@ package com.shuframework.jdk7.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -63,6 +67,29 @@ public class ReflectDemo {
 	public void getProperty() throws ReflectiveOperationException, SecurityException {
 		Field field = BookInfo.class.getDeclaredField("name");
 		System.out.println(field);
+	}
+	
+	/**
+	 * 获得泛型的参数类型
+	 * @throws SecurityException 
+	 * @throws NoSuchMethodException 
+	 */
+	@Test
+	public void getType() throws NoSuchMethodException, SecurityException{
+		Method method = ReflectDemo.class.getMethod("annoTest", List.class);
+		//获得方法上参数的泛型类型
+		Type[] types = method.getGenericParameterTypes();
+		ParameterizedType paramType = (ParameterizedType) types[0];
+		//泛型的参数类型
+		System.out.println(paramType.getActualTypeArguments()[0]);//class java.lang.String
+		System.out.println(paramType.getOwnerType());
+		//整个泛型类型
+		System.out.println(paramType.getTypeName());//java.util.List<java.lang.String>
+		System.out.println(paramType.getRawType());//interface java.util.List
+	}
+	
+	public void annoTest(List<String> list){
+		
 	}
 	
 }

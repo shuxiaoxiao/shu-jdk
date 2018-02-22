@@ -2,7 +2,6 @@ package com.shuframework.jdk7;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -667,9 +666,14 @@ public class ValidateUtil {
      * @return 如果str 符合 regex的正则表达式格式,返回true, 否则返回 false; 
      */  
 	public static boolean match(String regex, String str) {
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(str);
-		return matcher.matches();
+		//有推荐说不要在方法内这样使用Pattern
+//		Pattern pattern = Pattern.compile(regex);
+//		Matcher matcher = pattern.matcher(str);
+//		return matcher.matches();
+		//第2种 其底层是与第一种一样
+		return Pattern.matches(regex, str);
+//		//第3种String的方法, 其底层是Pattern.matches(regex, this);
+//		return str.matches(regex);
 	}
 	
 }

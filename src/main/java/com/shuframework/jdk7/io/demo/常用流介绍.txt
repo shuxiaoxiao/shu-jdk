@@ -26,8 +26,6 @@ InputStream / OutputStream
 
 	|--ObjectInputStream / ObjectOutputStream  对象流
 
-
-	
 	
 转换流	
 	(1)字节流操作中文数据不是特别的方便，所以就出现了转换流。
@@ -42,5 +40,9 @@ Reader / Writer
 		
 	|--BufferedReader / BufferedWriter
 		|--LineNumberReader
+	
+	
+序列化： 将数据结构或对象转换成二进制串的过程
+	
 	
 	

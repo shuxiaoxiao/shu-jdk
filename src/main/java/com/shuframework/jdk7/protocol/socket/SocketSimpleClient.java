@@ -1,4 +1,4 @@
-package com.shuframework.jdk7.proxy.socket;
+package com.shuframework.jdk7.protocol.socket;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
