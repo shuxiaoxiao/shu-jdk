@@ -63,6 +63,6 @@ public class BookInfo2{
 	
 	@Override
 	public String toString() {
-		return "BookInfo [id=" + id + ", name=" + name + "]";
+		return "BookInfo2 [id=" + id + ", name=" + name + "]";
 	}
 }

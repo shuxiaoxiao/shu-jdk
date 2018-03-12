@@ -38,9 +38,10 @@ public class ArrayUtil {
     	            : (T[]) Array.newInstance(newType.getComponentType(), newLength);
     	            
     	int length = Math.min(original.length, newLength);
-    	for (int i = 0; i < length; i++) {
-    		newArr[i] = original[i];
-		}
+//    	for (int i = 0; i < length; i++) {
+//    		newArr[i] = original[i];
+//		}
+    	System.arraycopy(original, 0, newArr, 0, length);
     	return newArr;
     }
     

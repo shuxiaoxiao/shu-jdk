@@ -106,5 +106,37 @@ public class MyBeanUtilTest {
 		Map<String, Object> map = MyBeanUtil.beanToMap(bookInfo);
 		System.out.println(map);
 	}
+	
+	@Test
+	public void copy_test1() {
+		BookInfo bookInfo = new BookInfo(1, "aa");
+//		BookInfo bookInfo = new BookInfo(1, "aa", new Date());
+		
+		BookInfo2 bookInfo2 = new BookInfo2();
+		//BookInfo2 比BookInfo的属性少, 不能从BookInfo 往 BookInfo2 copy，反过来可以 见copy_test2()例子
+		MyBeanUtil.copy(bookInfo, bookInfo2);
+		System.out.println(bookInfo2);
+	}
+	
+	@Test
+	public void copy_test2() {
+		BookInfo2 bookInfo = new BookInfo2(1, "aa");
+		
+		BookInfo bookInfo2 = new BookInfo();
+		//BookInfo2 比BookInfo的属性少
+		MyBeanUtil.copy(bookInfo, bookInfo2);
+		System.out.println(bookInfo2);
+	}
+	
+	@Test
+	public void copyIgnoreException_test1() {
+//		BookInfo bookInfo = new BookInfo(1, "aa");
+		BookInfo bookInfo = new BookInfo(1, "aa", new Date());
+		bookInfo.setBookInfo2(new BookInfo2(2, "bb"));
+		
+		BookInfo2 bookInfo2 = new BookInfo2();
+		MyBeanUtil.copyIgnoreException(bookInfo, bookInfo2);
+		System.out.println(bookInfo2);
+	}
 
 }

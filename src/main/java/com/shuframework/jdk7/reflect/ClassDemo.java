@@ -7,6 +7,7 @@ import org.junit.Test;
  * @author shu
  *
  */
+@SuppressWarnings("rawtypes")
 public class ClassDemo {
 	
 	@Test

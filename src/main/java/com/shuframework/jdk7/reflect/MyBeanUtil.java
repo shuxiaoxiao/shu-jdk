@@ -5,8 +5,10 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,7 +80,10 @@ public class MyBeanUtil {
 	 */
 	protected static PropertyDescriptor[] getPropertyDescriptorList(final Class clazz) {
 		try {
-			BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
+			//获得所有
+//			BeanInfo beanInfo = Introspector.getBeanInfo(clazz);
+			//获得除掉Object
+			BeanInfo beanInfo = Introspector.getBeanInfo(clazz, Object.class);
 			PropertyDescriptor[] pdList = beanInfo.getPropertyDescriptors();
 			return pdList;
 		} catch (IntrospectionException e) {
@@ -197,6 +202,44 @@ public class MyBeanUtil {
 	}
 	
 	/**
+	 * 获得属性的值
+	 * 
+	 * @param bean
+	 * @param property
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	protected static Object getProperty(Object bean, PropertyDescriptor property)
+			throws IllegalAccessException, InvocationTargetException {
+		Method readMethod = property.getReadMethod();
+		if (!readMethod.isAccessible()) {
+			readMethod.setAccessible(true);
+		}
+		Object value = readMethod.invoke(bean);
+		return value;
+	}
+	
+	/**
+	 * 设置属性的值
+	 * 
+	 * @param bean
+	 * @param property
+	 * @param value
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	protected static void setProperty(Object bean, PropertyDescriptor property, Object value)
+			throws IllegalAccessException, InvocationTargetException {
+		Method writeMethod = property.getWriteMethod();
+		if (!writeMethod.isAccessible()) {
+			writeMethod.setAccessible(true);
+		}
+		//类型转换未处理
+		writeMethod.invoke(bean, value);
+	}
+	
+	/**
 	 * 设置Bean属性
 	 * 
 	 * @param bean
@@ -285,18 +328,56 @@ public class MyBeanUtil {
 	}
 	
 	/**
-	 * 拷贝对象
+	 * 拷贝对象, src对象的属性 不能比dist对象 多
 	 * 
 	 * @param src	源对象
 	 * @param dist	需要赋值的对象
 	 */
 	public static void copy(Object src, Object dist) {
-		//TODO copy
-		
+		PropertyDescriptor[] pdList = getPropertyDescriptorList(src.getClass());
+		try {
+			for (PropertyDescriptor property : pdList) {
+				Object value = getProperty(src, property);
+				//这里存在找不到的情况
+				setProperty(dist, property, value);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	/**
-	 * 深度复制
+	 * 拷贝对象, src对象的属性 与dist对象属性可以对不上, 那么则赋值不成功, 且不报错<br>
+	 * src对象的属性 比dist对象 多, 那么多的属性dist 不会被赋值<br>
+	 * src对象的属性 比dist对象 少, 那么多的属性dist 不会被赋值<br>
+	 * 
+	 * @param src	源对象
+	 * @param dist	需要赋值的对象
+	 */
+	public static void copyIgnoreException(Object src, Object dist) {
+		PropertyDescriptor[] pdList = getPropertyDescriptorList(src.getClass());
+		for (PropertyDescriptor property : pdList) {
+//			String key = property.getName();
+//			// 过滤class属性(由于在getPropertyDescriptorList获取的时候已经排除了所有可用不判断)
+//			if (key.equals("class")) {
+//				System.out.println(property);
+//				continue;
+//			}
+			try {
+				// 得到property对应的getter方法
+				Object value = getProperty(src, property);
+				setProperty(dist, property, value);
+			} catch (Exception e) {
+				//不推荐这样处理
+				continue;
+			}
+		}
+	}
+
+	
+	/**
+	 * 深度复制, 利用流的 序列化和反序列化
+	 * 
 	 * @param src
 	 * @param dist
 	 */
@@ -320,16 +401,13 @@ public class MyBeanUtil {
 		try {
 			for (PropertyDescriptor property : pdList) {
 				String key = property.getName();
-				// 过滤class属性
-				if (!key.equals("class")) {
-					// 得到property对应的getter方法
-					Method readMethod = property.getReadMethod();
-					Object value = readMethod.invoke(bean);
-//					if (!readMethod.isAccessible()) {
-//						readMethod.setAccessible(true);
-//					}
-					map.put(key, value);
-				}
+//				// 过滤class属性(由于在getPropertyDescriptorList获取的时候已经排除了所有可用不判断)
+//				if (key.equals("class")) {
+//					System.out.println(property);
+//					continue;
+//				}
+				Object value = getProperty(bean, property);
+				map.put(key, value);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -345,6 +423,7 @@ public class MyBeanUtil {
 	 */
 	public static void mapToBean(Map<String, Object> map, Object bean) {
 		PropertyDescriptor[] pdList = getPropertyDescriptorList(bean.getClass());
+		System.out.println(Arrays.toString(pdList));
 		try {
 			for (PropertyDescriptor property : pdList) {
 				String key = property.getName();
@@ -353,16 +432,11 @@ public class MyBeanUtil {
 				if (value == null) {
 					continue;
 				}
-				Method writeMethod = property.getWriteMethod();
-//				if (!writeMethod.isAccessible()) {
-//					writeMethod.setAccessible(true);
-//				}
-				//类型转换未处理
-				writeMethod.invoke(bean, value);
+				setProperty(bean, property, value);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 }
