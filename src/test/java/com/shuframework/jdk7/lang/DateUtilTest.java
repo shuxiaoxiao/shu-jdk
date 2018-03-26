@@ -38,6 +38,17 @@ public class DateUtilTest {
 	}
 	
 	@Test
+	public void isBefore_test1() {
+		Date date1 = DateFormatUtil.strToDate("2018-01-10 15:10:10");
+		System.out.println(date1.getTime());
+		
+		Date date2 = new Date();//2018-03-10
+		System.out.println(date2.getTime());
+		boolean flag = DateUtil.isBefore(date1, date2);
+		System.out.println(flag);//false
+	}
+	
+	@Test
 	public void addDay_test1() {
 		Date today = new Date();
 		//后一天
@@ -61,21 +72,12 @@ public class DateUtilTest {
 		//2017-1-11 0:00:00
 		Date endTime =  DateUtil.getEndTime(date);
 		System.out.println(DateFormatUtil.dateToStr(endTime));
-		
-		
 	}
 	
 	
 	@Test
-	public void getDate_test1() throws DatatypeConfigurationException {
+	public void getFirstDayOfMonth_test() {
 		Date date = new Date();//2017-01-10 15:10:10  周二 
-//		//2017-2-1 0:00:00
-//		Date nextMonthDate = DateUtil.getFirstDayOfNextMonth(date);
-//		System.out.println(DateFormatUtil.dateToStr(nextMonthDate));
-//		
-//		//2016-12-1 0:00:00
-//		Date lextMonthDate = DateUtil.getFirstDayOfLastMonth(date);
-//		System.out.println(DateFormatUtil.dateToStr(lextMonthDate));
 		
 		//2017-1-1 0:00:00
 		Date newDate1 =  DateUtil.getFirstDayOfMonth(date, 1);
@@ -97,9 +99,44 @@ public class DateUtilTest {
 		//2017-1-1 0:00:00
 		Date newDate5 =  DateUtil.getFirstDayOfMonth(1);
 		System.out.println(DateFormatUtil.dateToStr(newDate5));
+	}
+	
+	@Test
+	public void getLastDayOfMonth_test() {
+		Date date = new Date();//2017-01-10 15:10:10  周二 
 		
+		//2017-2-1 0:00:00
+		Date newDate1 =  DateUtil.getLastDayOfMonth(date, 1);
+		System.out.println(DateFormatUtil.dateToStr(newDate1));
+		
+		Date date2 = DateFormatUtil.strToDate("2016-10-10 11:03:20");
+		//2016-2-1 0:00:00
+		Date newDate2 =  DateUtil.getLastDayOfMonth(date2, 1);
+		System.out.println(DateFormatUtil.dateToStr(newDate2));
+		
+		//2017-2-1 0:00:00
+		Date newDate3 =  DateUtil.getLastDayOfMonth(date);
+		System.out.println(DateFormatUtil.dateToStr(newDate3));
+		
+		//2016-11-1 0:00:00
+		Date newDate4 =  DateUtil.getLastDayOfMonth(date2);
+		System.out.println(DateFormatUtil.dateToStr(newDate4));
+		
+		//2017-2-1 0:00:00
+		Date newDate5 =  DateUtil.getLastDayOfMonth(1);
+		System.out.println(DateFormatUtil.dateToStr(newDate5));
 	}
 
 
+	@Test
+	public void getFirstDayByAddMonth_test() {
+		Date date = DateFormatUtil.strToDate("2017-01-10 15:10:10");//2017-01-10 15:10:10  周二 
+		//2017-1-1 0:00:00
+		Date monthStartTime =  DateUtil.getFirstDayByAddMonth(date, 0);
+		System.out.println(DateFormatUtil.dateToStr(monthStartTime));
+		//2017-2-1 0:00:00
+		Date monthEndTime =  DateUtil.getLastDayByAddMonth(date, 0);
+		System.out.println(DateFormatUtil.dateToStr(monthEndTime));
+	}
 
 }

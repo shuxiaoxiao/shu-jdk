@@ -107,15 +107,19 @@ public class ThreadDemo {
 		my2.start();
 	}
 	
-	//后台线程
-	//public final void join():等待该线程终止。 
+	//后台线程（守护线程）
+	//public final void setDaemon(boolean on):将该线程标记为守护线程或用户线程。当正在运行的线程都是守护线程时，Java 虚拟机退出。 该方法必须在启动线程前调用。 
 	@Test
 	public void init_MyThread_Daemon() throws InterruptedException {
-		my1.start();
+		// 设置收获线程, 需要在start()前调用, 
+		my1.setDaemon(true);
 		
-		//my1 结束后 my2、my3 才能开始执行
-		my1.join();
+		my1.start();
 		my2.start();
-		my3.start();
+		
+		Thread.currentThread().setName("主公刘备");
+		for (int x = 0; x < 5; x++) {
+			System.out.println(Thread.currentThread().getName() + ":" + x);
+		}
 	}
 }

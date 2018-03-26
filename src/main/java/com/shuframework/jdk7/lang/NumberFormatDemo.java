@@ -16,9 +16,23 @@ public class NumberFormatDemo {
 //	double numDouble = 0.1234512;
 	double numDouble2 = 10.131415926537;
 
+	@Test
+	public void test_double() {
+//		double d1= 1; //整数1.0
+//		double d1= 1.0; //整数1.0
+//		double d1= 1.1; //小数1.1
+		double d1= 1.01; //小数1.1
+		if(d1 % 1 == 0){
+			System.out.println("整数"+d1);
+		}else{
+			System.out.println("小数"+d1);
+		}
+	}
+	
 	//保留小数的几种方式
 	@Test
 	public void test_BigDecimal() {
+		double d = 0.1;
 		BigDecimal num = BigDecimalUtil.round(numDouble+"", 2);
 		System.out.println(num); //0.13
 		
@@ -28,10 +42,29 @@ public class NumberFormatDemo {
 //		System.out.println(numDouble); //0.13
 	}
 	
+	//保留小数的几种方式
+	@Test
+	public void test_BigDecimal2() {
+		double d = 0.1;
+		BigDecimal num = BigDecimalUtil.round(d+"", 2);
+		System.out.println(num); //0.13
+		System.out.println(num.doubleValue()); //0.13
+	}
+	
+	@Test
+	public void test_DecimalFormat2() {
+		double d = 0.1;
+		DecimalFormat df = new DecimalFormat("#0.00");
+		String format = df.format(d);
+        System.out.println(format);//0.13  10.13
+        
+        System.out.println(Double.valueOf(format));//0.13  10.13
+	}
+	
 	@Test
 	public void test_DecimalFormat() {
 		DecimalFormat df = new DecimalFormat("#0.00");
-        System.out.println(df.format(numDouble));//0.13  10.13
+		System.out.println(df.format(numDouble));//0.13  10.13
 	}
 	
 	/**
