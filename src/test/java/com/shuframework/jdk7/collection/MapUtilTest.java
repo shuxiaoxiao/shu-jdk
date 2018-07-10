@@ -1,5 +1,6 @@
 package com.shuframework.jdk7.collection;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,5 +35,20 @@ public class MapUtilTest {
 		Integer intMinKey = MapUtil.getMinKey(intMap);
 		System.out.println(intMinKey);
 	}
+	
+	@Test
+	public void test2() {
+		String str = (String) intMap.get(2);
+		System.out.println(str);
+	}
+	
+	@Test
+	public void test3() {
+		BigDecimal b1 = new BigDecimal(Double.toString(522.65));
+        BigDecimal b2 = new BigDecimal(Double.toString(5.55));
+        double d = b1.subtract(b2).doubleValue();
+        System.out.println(d);
+	}
+	
 
 }

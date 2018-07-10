@@ -102,6 +102,14 @@ public class SystemUtil {
     	return "";
     }
 	
+	/**
+	 * bool转成int
+	 * @param bool
+	 * @return
+	 */
+	public static Integer bool2Int(boolean bool) {
+		return bool ? 1 : 0;
+	}
 	
 	private static final String USER_HOME_KEY = "user.home";
 	private static final String USER_DIR_KEY = "user.dir";

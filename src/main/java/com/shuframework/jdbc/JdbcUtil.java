@@ -81,6 +81,7 @@ public class JdbcUtil {
 	}
 	
 	/**
+	 * 执行新增、修改、删除操作
 	 * 
 	 * @param connection
 	 * @param sql
@@ -94,6 +95,7 @@ public class JdbcUtil {
 	}
 
 	/**
+	 * 执行新增、修改、删除操作
 	 * 
 	 * @param connection
 	 * @param sql
@@ -106,7 +108,15 @@ public class JdbcUtil {
 		return pstmt.executeUpdate();
 	}
 	
-
+	/**
+	 * 执行查询操作
+	 * 
+	 * @param connection
+	 * @param sql
+	 * @param params
+	 * @return
+	 * @throws SQLException
+	 */
 	public static Map<String, Object> query2Map(Connection connection, String sql, List<?> params) throws SQLException {
 		Map<String, Object> map = new HashMap<>();
 		PreparedStatement pstmt = initStatement(connection, sql, params);
@@ -129,6 +139,15 @@ public class JdbcUtil {
 		return map;
 	}
 	
+	/**
+	 * 执行查询操作
+	 * 
+	 * @param connection
+	 * @param sql
+	 * @param params
+	 * @return
+	 * @throws SQLException
+	 */
 	public static List<Map<String, Object>> query2ListMap(Connection connection, String sql, List<?> params) throws SQLException {
 		List<Map<String, Object>> mapList = new ArrayList<>();
 		PreparedStatement pstmt = initStatement(connection, sql, params);
@@ -154,6 +173,16 @@ public class JdbcUtil {
 		return mapList;
 	}
 	
+	/**
+	 * 执行查询操作
+	 * 
+	 * @param connection
+	 * @param sql
+	 * @param clazz
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
 	public static <T> T query2Bean(Connection connection, String sql, Class<T> clazz, List<?> params) throws Exception {
 		T bean = clazz.newInstance();
 		PreparedStatement pstmt = initStatement(connection, sql, params);
@@ -176,6 +205,16 @@ public class JdbcUtil {
 		return bean;
 	}
 	
+	/**
+	 * 执行查询操作
+	 * 
+	 * @param connection
+	 * @param sql
+	 * @param clazz
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
 	public static <T> List<T> query2ListBean(Connection connection, String sql, Class<T> clazz, List<?> params) throws Exception {
 		List<T> mapList = new ArrayList<>();
 		PreparedStatement pstmt = initStatement(connection, sql, params);
@@ -226,6 +265,7 @@ public class JdbcUtil {
 
 	/**
 	 * 创建PreparedStatement 并给参数赋值
+	 * 
 	 * @param connection
 	 * @param sql
 	 * @param params
@@ -248,6 +288,7 @@ public class JdbcUtil {
 	
 	/**
 	 * 创建PreparedStatement 并给参数赋值
+	 * 
 	 * @param connection
 	 * @param sql
 	 * @param params

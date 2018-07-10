@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import com.shuframework.jdk7.exception.UtilException;
+
 
 /**
  * 参数校验
@@ -213,109 +215,153 @@ public class ValidateUtil {
 //	}
 	
 	
+	/**
+	 * 检查字符串长度，true表示未通过（不满足），false表示通过
+	 * 如果required = true 则会判断不为空， 长度是否满足
+	 *
+	 * @param str
+	 * @param required	是否必填
+	 * @param limitLength 长度
+	 * @return
+	 */
+	public static boolean checkStrLength(String str, boolean required, int limitLength){
+		boolean flag = true;
+		if(isNotEmpty(str)){
+			if (str.length() <= limitLength){
+				flag = false;
+			}
+		}else{
+			if (!required){//非必填直接过
+				flag = false;
+			}
+		}
+		return flag;
+	}
+	
+	
 /////////====== 类似表单校验 ======
 	
+	public enum NumberTypeEnnm {
+		POSITIVE("正数", ""), //([+]?) +可以省略
+		NEGATIVE("负数", "-"),
+		ALL("正数或负数", "([+-]?)"),
+		
+//		INTEGER("整数"),
+//		FLOAT("小数"),
+//		NUMBER("数字")
+		;
+		
+		private String msg;
+		private String prefix;
+
+		NumberTypeEnnm(String msg, String prefix) {
+//			this.code = code;
+			this.msg = msg;
+			this.prefix = prefix;
+		}
+		
+		public String getMsg() {
+			return msg;
+		}
+		public String getPrefix() {
+			return prefix;
+		}
+		
+	}
+	
 	/** 整数 */
-	private static final String V_INTEGER = "^-?[1-9]\\d*$";
+	private static final String V_INTEGER = "-?[1-9]\\d*";
 
 	/** 正整数 */
-	private static final String V_Z_INDEX = "^[1-9]\\d*$";
+	private static final String V_Z_INDEX = "[1-9]\\d*";
 
 	/** 负整数 */
-	private static final String V_NEGATIVE_INTEGER = "^-[1-9]\\d*$";
+	private static final String V_NEGATIVE_INTEGER = "-[1-9]\\d*";
 
 	/** 数字 */
-	private static final String V_NUMBER = "^([+-]?)\\d*\\.?\\d+$";
+	private static final String V_NUMBER = "([+-]?)\\d*\\.?\\d+";
 
 	/** 正数 */
-	private static final String V_POSITIVE_NUMBER = "^[1-9]\\d*|0$";
+	private static final String V_POSITIVE_NUMBER = "[1-9]\\d*|0";
 
 	/** 负数 */
-	private static final String V_NEGATINE_NUMBER = "^-[1-9]\\d*|0$";
+	private static final String V_NEGATINE_NUMBER = "-[1-9]\\d*|0";
 
-	/** 浮点数 */
-	private static final String V_FLOAT = "^([+-]?)\\d*\\.\\d+$";
-
-	/** 正浮点数 */
-	private static final String V_POSTTIVE_FLOAT = "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*$";
-
-	/** 负浮点数 */
-	private static final String V_NEGATIVE_FLOAT = "^-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*)$";
-
-	/** 非负浮点数（正浮点数 + 0） */
-	private static final String V_UNPOSITIVE_FLOAT = "^[1-9]\\d*.\\d*|0.\\d*[1-9]\\d*|0?.0+|0$";
-
-	/** 非正浮点数（负浮点数 + 0） */
-	private static final String V_UN_NEGATIVE_FLOAT = "^(-([1-9]\\d*.\\d*|0.\\d*[1-9]\\d*))|0?.0+|0$";
+	/** 浮点数模型: 加前后缀来限制条件 */
+	private static final String V_FLOAT_TEMPLATE = "\\d+\\.\\d";
+//	private static final String V_FLOAT = "([+-]?)\\d*\\.\\d+";
+//	/** 验证两位数 */
+//	private static final String V_TWO＿POINT = "[0-9]+(.[0-9]{2})?";
 
 	/** 邮件 */
-	private static final String V_EMAIL = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
+	private static final String V_EMAIL = "\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+";
 
 	/** 颜色 */
-	private static final String V_COLOR = "^[a-fA-F0-9]{6}$";
+	private static final String V_COLOR = "[a-fA-F0-9]{6}";
 
 	/** url */
-	private static final String V_URL = "^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$";
+	private static final String V_URL = "http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?";
 
 	/** 仅中文 */
-	private static final String V_CHINESE = "^[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+$";
+	private static final String V_CHINESE = "[\\u4E00-\\u9FA5\\uF900-\\uFA2D]+";
 
 	/** 仅ACSII字符 */
-	private static final String V_ASCII = "^[\\x00-\\xFF]+$";
+	private static final String V_ASCII = "[\\x00-\\xFF]+";
 
 	/** 邮编 */
-	private static final String V_ZIPCODE = "^\\d{6}$";
+	private static final String V_ZIPCODE = "\\d{6}";
 
 	/** 手机 */
-	private static final String V_MOBILE_PHONE = "^(1)[0-9]{10}$";
+	private static final String V_MOBILE_PHONE = "(1)[0-9]{10}";
 
 	/** ip地址 */
-	private static final String V_IP4 = "^(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)$";
+	private static final String V_IP4 = "(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)";
 
-	/** 非空 */
-	private static final String V_NOTEMPTY = "^\\S+$";
+//	/** 非空 */
+//	private static final String V_NOTEMPTY = "\\S+";
 
 	/** 图片 */
-	private static final String V_PICTURE = "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$";
+	private static final String V_PICTURE = "(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)";
 
 	/** 压缩文件 */
-	private static final String V_RAR = "(.*)\\.(rar|zip|7zip|tgz)$";
+	private static final String V_RAR = "(.*)\\.(rar|zip|7zip|tgz)";
 
-	/** 日期 */
-	private static final String V_DATE = "^((((1[6-9]|[2-9]\\d)\\d{2})-(0?[13578]|1[02])-(0?[1-9]|[12]\\d|3[01]))|(((1[6-9]|[2-9]\\d)\\d{2})-(0?[13456789]|1[012])-(0?[1-9]|[12]\\d|30))|(((1[6-9]|[2-9]\\d)\\d{2})-0?2-(0?[1-9]|1\\d|2[0-8]))|(((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-0?2-29-)) (20|21|22|23|[0-1]?\\d):[0-5]?\\d:[0-5]?\\d$";
+	/** 日期: yyyy-MM-dd */
+	private static final String V_DATE = "((19|20)\\d{2})-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])";
+	/** 时间: HH:mm:ss */
+    private static final String V_TIME = "([0-1][0-9]|2[0-4]):([0-5][0-9]|60):([0-5][0-9]|60)";
+    //2种都可以
+//    private static final String V_TIME = "(0[0-9]|1[0-9]|2[0-4])\\:([0-5][0-9]|60)\\:([0-5][0-9]|60)";
 
 	/** QQ号码 */
-	private static final String V_QQ_NUMBER = "^[1-9]*[1-9][0-9]*$";
+	private static final String V_QQ_NUMBER = "[1-9]*[1-9][0-9]*";
 
 	/** 电话号码的函数(包括验证国内区号,国际区号,分机号) */
-	private static final String V_TEL_PHONE = "^(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?$";
+	private static final String V_TEL_PHONE = "(([0\\+]\\d{2,3}-)?(0\\d{2,3})-)?(\\d{7,8})(-(\\d{3,}))?";
 
 	/** 用来用户注册。匹配由数字、26个英文字母或者下划线组成的字符串 */
-	private static final String V_USERNAME = "^\\w+$";
+	private static final String V_USERNAME = "\\w+";
 
 	/** 字母 */
-	private static final String V_LETTER = "^[A-Za-z]+$";
+	private static final String V_LETTER = "[A-Za-z]+";
 
 	/** 大写字母 */
-	private static final String V_LETTER_U = "^[A-Z]+$";
+	private static final String V_LETTER_U = "[A-Z]+";
 
 	/** 小写字母 */
-	private static final String V_LETTER_I = "^[a-z]+$";
+	private static final String V_LETTER_I = "[a-z]+";
 
 	/** 身份证 */
-	private static final String V_IDCARD = "^(\\d{15}$|^\\d{18}$|^\\d{17}(\\d|X|x))$";
+	private static final String V_IDCARD = "(\\d{15}|\\d{18}|\\d{17}(\\d|X|x))";
 
 	/** 验证密码(数字和英文同时存在) */
 	private static final String V_PASSWORD_REG = "[A-Za-z]+[0-9]";
 
 	/** 验证密码长度(6-18位) */
-	private static final String V_PASSWORD_LENGTH = "^\\d{6,18}$";
-
-	/** 验证两位数 */
-	private static final String V_TWO＿POINT = "^[0-9]+(.[0-9]{2})?$";
+	private static final String V_PASSWORD_LENGTH = "\\d{6,18}";
 
 	/** 验证一个月的31天 */
-	private static final String V_31DAYS = "^((0?[1-9])|((1|2)[0-9])|30|31)$";
+	private static final String V_31DAYS = "((0?[1-9])|((1|2)[0-9])|30|31)";
     
     /** 
      * 验证是不是整数 
@@ -416,6 +462,22 @@ public class ValidateUtil {
 		return match(V_DATE, value);
 	}
   
+	/**
+     * 验证是不是日期yyyy-MM-dd HH:mm:ss
+     * 如果是符合格式的字符串,返回true,否则为false
+     * @param str 要验证的字符串
+     * @return
+     */
+    public static boolean isDateTime(String str) {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append(V_DATE);
+    	sb.append(" ");
+    	sb.append(V_TIME);
+//        String regex = V_DATE + " " + V_TIME;
+    	String regex = sb.toString();
+        return match(regex, str);
+    }
+	
     /** 
      * 验证是不是邮箱地址 
      * @param value 要验证的字符串 
@@ -431,32 +493,80 @@ public class ValidateUtil {
      * @return  如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
      */  
 	public static boolean isFloat(String value) {
-		return match(V_FLOAT, value);
+		return isFloat(value, NumberTypeEnnm.ALL, null);
 	}
-	 
+	/** 
+	 * 验证是不是浮点数 
+	 * @param value 要验证的字符串 
+	 * @return  如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
+	 */  
+	public static boolean isFloat(String value, Integer scale) {
+		return isFloat(value, NumberTypeEnnm.ALL, scale);
+	}
     /** 
      * 验证是不是负浮点数 
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
+     */
 	public static boolean isNegativeFloat(String value) {
-		return match(V_NEGATIVE_FLOAT, value);
+		return isFloat(value, NumberTypeEnnm.NEGATIVE, null);
 	}
-	  
     /** 
      * 验证正浮点数 
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
+     */
 	public static boolean isPosttiveFloat(String value) {
-		return match(V_POSTTIVE_FLOAT, value);
+		return isFloat(value, NumberTypeEnnm.POSITIVE, null);
 	}
+	
+	/**
+	 * 验证是不是浮点数, scale是精确到小数位
+	 * @param value 要验证的字符串
+	 * @param scale 小数位
+	 * @return  如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
+	 */
+	public static boolean isFloat(String value, NumberTypeEnnm numberTypeEnnm, Integer scale) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(numberTypeEnnm.getPrefix());
+		sb.append(V_FLOAT_TEMPLATE);
+		if(scale == null){
+			sb.append("+");
+		}else if(scale < 1){
+			throw new UtilException("scale参数不能小于1");
+		}else{
+			sb.append("{").append(scale).append("}");
+		}
+		//scale为空,最终的正则是([+-]?)\\d+\\.\\d+
+		//scale有值,最终的正则是([+-]?)\\d+\\.\\d{scale}
+		String regex = sb.toString();
+		return match(regex, value);
+	}
+	
+	
+//    /** 
+//     * 验证非正浮点数 
+//     * @param value 要验证的字符串 
+//     * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
+//     */  
+//	public static boolean Un_negative_float(String value) {
+//		return match(V_UN_NEGATIVE_FLOAT, value);
+//	}
+//  
+//    /** 
+//     * 验证非负浮点数 
+//     * @param value 要验证的字符串 
+//     * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
+//     */  
+//	public static boolean Unpositive_float(String value) {
+//		return match(V_UNPOSITIVE_FLOAT, value);
+//	}
 	
     /** 
      * 验证是不是正确的身份证号码 
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
+     */
 	public static boolean isIDcard(String value) {
 		return match(V_IDCARD, value);
 	}
@@ -465,7 +575,7 @@ public class ValidateUtil {
      * 验证是不是正确的IP地址 
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
+     */
 	public static boolean isIP4(String value) {
 		return match(V_IP4, value);
 	}
@@ -474,7 +584,7 @@ public class ValidateUtil {
      * 验证是不是字母 
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
+     */
 	public static boolean isLetter(String value) {
 		return match(V_LETTER, value);
 	}
@@ -483,7 +593,7 @@ public class ValidateUtil {
      * 验证是不是小写字母 
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
+     */
 	public static boolean isLowerLetter(String value) {
 		return match(V_LETTER_I, value);
 	}
@@ -571,32 +681,7 @@ public class ValidateUtil {
 		return match(V_TEL_PHONE, value);
 	}
   
-    /** 
-     * 验证两位小数 
-     * @param value 要验证的字符串 
-     * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
-	public static boolean Two_point(String value) {
-		return match(V_TWO＿POINT, value);
-	}
-  
-    /** 
-     * 验证非正浮点数 
-     * @param value 要验证的字符串 
-     * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
-	public static boolean Un_negative_float(String value) {
-		return match(V_UN_NEGATIVE_FLOAT, value);
-	}
-  
-    /** 
-     * 验证非负浮点数 
-     * @param value 要验证的字符串 
-     * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
-	public static boolean Unpositive_float(String value) {
-		return match(V_UNPOSITIVE_FLOAT, value);
-	}
+
   
     /** 
      * 验证URL 
@@ -634,7 +719,7 @@ public class ValidateUtil {
 	 * @return
 	 */
 	public static boolean matchMethod(String key, String str) {
-		String regex = "^\\/?\\w+/" + key + "\\w*$";
+		String regex = "\\/?\\w+/" + key + "\\w*";
 		return match(regex, str);
 	}
 	
@@ -653,9 +738,9 @@ public class ValidateUtil {
 	 */
 	public static boolean matchRegex(String regexKey, String str) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("^\\w+(\\" + regexKey + "\\w+)*$");
-		//regexKey为空 ^\\w+$
-		//regexKey不为空 ^\\w+(\\" + regexKey + "\\w+)+$
+		sb.append("\\w+(\\" + regexKey + "\\w+)*");
+		//regexKey为空 \\w+
+		//regexKey不为空 \\w+(\\" + regexKey + "\\w+)+
 		String regex = sb.toString();
 		return match(regex, str);
 	}

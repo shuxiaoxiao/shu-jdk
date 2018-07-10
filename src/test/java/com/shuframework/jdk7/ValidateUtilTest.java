@@ -1,9 +1,12 @@
 package com.shuframework.jdk7;
 
+import java.math.BigDecimal;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -11,6 +14,20 @@ import org.junit.Test;
 
 public class ValidateUtilTest {
 
+	@Test
+	public void isDateTime_test2() {
+//		String str = "2017-01-01"; //false
+//		String str = "2017-01-01 00:10:00"; //true
+		String str = "2017-01-01 00:61:00"; //false
+		System.out.println(ValidateUtil.isDateTime(str));
+	}
+	
+	@Test
+	public void isDate_test1() {
+		String str = "2017-01-01";
+		System.out.println(ValidateUtil.isDate(str));
+	}
+	
 	@Test
 	public void matchRegex_test() {
 		//true
@@ -39,10 +56,23 @@ public class ValidateUtilTest {
 	}
 	
 	@Test
+	public void map_test2() {
+		Map<String, Double> map = new HashMap<>();
+		Integer num = 1;
+		map.put("a", num.doubleValue());
+		map.put("b", null);
+		System.out.println("map:"+map);
+		int n = map.get("a").intValue();
+		int n2 = map.get("b").intValue();
+		System.out.println(n);
+		System.out.println(n2);
+	}
+	
+	@Test
 	public void matchMethod_test() {
 //		String regex = "^\\/?\\w+/get\\w*$";
-		String str = "/sysUser/queryPersonInfoDetail";
-//		String str = "sysUser/get";
+//		String str = "/sysUser/queryPersonInfoDetail";
+		String str = "sysUser/get";
 //		String str = "/get";
 		System.out.println(ValidateUtil.matchMethod("query", str));
 	}
@@ -55,6 +85,19 @@ public class ValidateUtilTest {
 		String str = "/get";
 		System.out.println(ValidateUtil.match(regex, str));
 	}
+	
+	
+	@Test
+	public void checkStrLength_test() {
+		String str = "";
+//		boolean required = true;
+		boolean required = false;
+		int limitLength = 5;
+		
+		boolean flag = ValidateUtil.checkStrLength(str, required, limitLength);
+		System.out.println(flag);
+	}
+	
 	
 	@Test
 	public void isInteger_test() {
@@ -82,6 +125,65 @@ public class ValidateUtilTest {
 		System.out.println(ValidateUtil.isNumber(numStr4));
 		String numStr5 = "-10";
 		System.out.println(ValidateUtil.isNumber(numStr5));
+	}
+	
+	@Test
+	public void isNumber_test2() {
+		String numStr1 = "0.010";
+		System.out.println(ValidateUtil.isNumber(numStr1));
+		String numStr2 = "-.2000";
+		System.out.println(ValidateUtil.isNumber(numStr2));
+		String numStr3 = "-0.210";
+		System.out.println(ValidateUtil.isNumber(numStr3));
+	}
+	
+	@Test
+	public void isPosttiveFloat_test1() {
+		String numStr1 = "0.010";
+		System.out.println(ValidateUtil.isPosttiveFloat(numStr1));
+		String numStr2 = "-.2000";
+		System.out.println(ValidateUtil.isPosttiveFloat(numStr2));
+		String numStr3 = "12";
+		System.out.println(ValidateUtil.isPosttiveFloat(numStr3));
+	}
+	
+	@Test
+	public void isNegativeFloat_test1() {
+		String numStr1 = "0.010";
+		System.out.println(ValidateUtil.isNegativeFloat(numStr1));
+		String numStr2 = "-.2000";
+		System.out.println(ValidateUtil.isNegativeFloat(numStr2));
+		String numStr3 = "-1.2";
+		System.out.println(ValidateUtil.isNegativeFloat(numStr3));
+	}
+	
+	@Test
+	public void isFloat_test1() {
+		String numStr1 = "0.010";
+		System.out.println(ValidateUtil.isFloat(numStr1));
+		String numStr2 = "-.2000";
+		System.out.println(ValidateUtil.isFloat(numStr2));//false
+		String numStr3 = "-0.210";
+		System.out.println(ValidateUtil.isFloat(numStr3));
+		
+		//整数不算 小数 即必须有小数点
+		String numStr4 = "2";
+		System.out.println(ValidateUtil.isFloat(numStr4));
+		String numStr5 = "-10";
+		System.out.println(ValidateUtil.isFloat(numStr5));
+	}
+	
+	@Test
+	public void isFloat_test2() {
+		String numStr1 = "0.010";
+		System.out.println(ValidateUtil.isFloat(numStr1, 1));
+//		String numStr2 = "0.0";
+//		System.out.println(ValidateUtil.isFloat(numStr2, 1));
+//		System.out.println(ValidateUtil.isFloat(numStr2, 2));
+//		String numStr3 = "-0.210";
+//		System.out.println(ValidateUtil.isFloat(numStr3, 2));
+//		System.out.println(ValidateUtil.isFloat(numStr3, 3));
+		
 	}
 	
 	@Test
@@ -179,4 +281,25 @@ public class ValidateUtilTest {
 		System.out.println(ValidateUtil.isEmptyUnTrim(str5));
 	}
 
+	
+	@Test
+	public void test_String() {
+		BigDecimal num = new BigDecimal("0");
+		if(num.equals("0")){ // 不成功
+			System.out.println(true);
+		}
+		if(num.doubleValue()<= 0){
+			System.out.println(true);
+		}
+	}
+	
+	@Test
+	public void test2_String() {
+		BigDecimal num = new BigDecimal("1.0145");
+		BigDecimal result = num.divide(BigDecimal.ONE, 0, BigDecimal.ROUND_HALF_UP);
+		System.out.println(result);
+		BigDecimal result2 = num.divide(BigDecimal.ONE, 2, BigDecimal.ROUND_UP);
+		System.out.println(result2);
+	}
+	
 }

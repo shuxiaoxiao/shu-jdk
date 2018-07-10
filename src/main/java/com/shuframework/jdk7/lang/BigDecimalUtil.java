@@ -16,14 +16,7 @@ public class BigDecimalUtil {
 	private static final String DEFAULT_STR_VALUE = "0";
 	/** 字符串默认值为1 */
 	private static final String DEFAULT_STR_VALUE_1 = "1";
-//	//检查数字
-//	private static String checkNum(String num) {
-//		if ("".equals(num)) {
-//			num = "0";
-//		}
-//		return num;
-//	}
-	
+
 	/**
 	 * 字符串转成BigDecimal, 有"" 或null已被转成0
 	 * @param str
@@ -49,7 +42,6 @@ public class BigDecimalUtil {
 	/**
 	 * 加法, 如果num1, num2 有"" 或null已被转成0
 	 * 
-	 * @Title: add
 	 * @param num1 	第1个值的字符串表示形式
 	 * @param num2 	第2个值的字符串表示形式
 	 * @return BigDecimal 返回类型
@@ -90,7 +82,9 @@ public class BigDecimalUtil {
 	 */
 	public static BigDecimal add(String... nums) {
 		//空，或者长度小于2都报参数异常
-		if(nums == null || nums.length < 2)	throw new IllegalArgumentException("可变参数长度不能小于2");
+		if(nums == null || nums.length < 2)	{
+			throw new IllegalArgumentException("可变参数长度不能小于2");
+		}
 		
 		BigDecimal sum = BigDecimal.ZERO;
 		BigDecimal numBd = null;
@@ -112,7 +106,9 @@ public class BigDecimalUtil {
 	 */
 	public static BigDecimal add(BigDecimal... nums) {
 		//空，或者长度小于2都报参数异常
-		if(nums == null || nums.length < 2)	throw new IllegalArgumentException("可变参数长度不能小于2");
+		if(nums == null || nums.length < 2) {
+			throw new IllegalArgumentException("可变参数长度不能小于2");
+		}
 		
 		BigDecimal sum = BigDecimal.ZERO;
 		for (BigDecimal numBd : nums) {
@@ -127,7 +123,6 @@ public class BigDecimalUtil {
 	/**
 	 * 减法, 如果num1, num2 有"" 或null已被转成0
 	 * 
-	 * @Title: subtract
 	 * @param num1 	第1个值的字符串表示形式
 	 * @param num2 	第2个值的字符串表示形式
 	 * @return BigDecimal 返回类型
@@ -168,7 +163,9 @@ public class BigDecimalUtil {
 	 */
 	public static BigDecimal subtract(String num1, String... nums) {
 		//空，或者长度小于1都报参数异常
-		if(nums == null || nums.length < 1)	throw new IllegalArgumentException("可变参数长度不能小于1");
+		if(nums == null || nums.length < 1)	{
+			throw new IllegalArgumentException("可变参数长度不能小于1");
+		}
 		
 //		num1 = StringUtil.parseEmpty(num1, DEFAULT_STR_VALUE);
 //		BigDecimal sum = new BigDecimal(num1);
@@ -228,7 +225,9 @@ public class BigDecimalUtil {
 	 */
 	public static BigDecimal multiply(String... nums) {
 		//空，或者长度小于2都报参数异常
-		if(nums == null || nums.length < 2)	throw new IllegalArgumentException("可变参数长度不能小于2");
+		if(nums == null || nums.length < 2) {
+			throw new IllegalArgumentException("可变参数长度不能小于2");
+		}
 		
 		BigDecimal sum = BigDecimal.ZERO;
 		BigDecimal numBd = null;
@@ -250,7 +249,9 @@ public class BigDecimalUtil {
 	 */
 	public static BigDecimal multiply(BigDecimal... nums) {
 		//空，或者长度小于2都报参数异常
-		if(nums == null || nums.length < 2)	throw new IllegalArgumentException("可变参数长度不能小于2");
+		if(nums == null || nums.length < 2)	{
+			throw new IllegalArgumentException("可变参数长度不能小于2");
+		}
 		
 		BigDecimal sum = BigDecimal.ZERO;
 		for (BigDecimal numBd : nums) {
@@ -351,6 +352,32 @@ public class BigDecimalUtil {
 		 * 所以偏向选择用round
 		 */
 		return round(strToBd0(num), scale);
+	}
+	
+	/**
+	 * num1是否大于num2
+	 * 相等 返回false，小于 返回false， 大于返回true
+	 * 
+	 * @param num1
+	 * @param num2
+	 * @return
+	 */
+	public static boolean compare(BigDecimal num1, BigDecimal num2) {
+		boolean flag = false;
+		
+		if(num1 == null){
+			num1 = BigDecimal.ZERO;
+		}
+		if(num2 == null){
+			num2 = BigDecimal.ZERO;
+		}
+		
+		int compareTo = num1.compareTo(num2);
+		if (compareTo > 0) {
+			flag = true;
+		}
+		
+		return flag;
 	}
 
 }

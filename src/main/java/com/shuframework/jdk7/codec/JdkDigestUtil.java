@@ -11,13 +11,17 @@ import sun.misc.BASE64Encoder;
 /**
  * jdk自带的加密算法。 实际项目可以org.apache.commons.codec.digest.*
  * md5、sha加密底层是java.security.MessageDigest;
- * http://snowolf.iteye.com/blog/379860
+ * <p>
+ * 	BASE加密后产生的字节位数是8的倍数，如果不够位数以=符号填充。 
+ * </p>
+ * 
  * 
  * @author shu
  *
  */
 public class JdkDigestUtil {
-
+	//base64、md5、sha、hmac算法详情 http://snowolf.iteye.com/blog/379860
+	
 ///////需要注意BASE64 用的是底层的	sun.misc.BASE64Decoder;  sun.misc.BASE64Encoder;如果不能导包就重新编辑下jdk
     /** 
      * BASE64解密 
