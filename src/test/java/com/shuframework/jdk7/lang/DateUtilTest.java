@@ -1,6 +1,8 @@
 package com.shuframework.jdk7.lang;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 
@@ -137,6 +139,45 @@ public class DateUtilTest {
 		//2017-2-1 0:00:00
 		Date monthEndTime =  DateUtil.getLastDayByAddMonth(date, 0);
 		System.out.println(DateFormatUtil.dateToStr(monthEndTime));
+	}
+
+	@Test
+	public void getFirstDayOfWeek2zh_test() {
+		Date date = DateFormatUtil.strToDate("2016-6-8 11:03:20");
+		int week2Zh = DateUtil.getWeek2Zh(date);
+		System.out.println(week2Zh);
+
+		Date firstDayOfWeek2zh= DateUtil.getFirstDayOfWeek2zh(date);
+		System.out.println(DateFormatUtil.dateToStr(firstDayOfWeek2zh));
+	}
+
+	@Test
+	public void getFirstDayOfYear_test() {
+		Date date = DateFormatUtil.strToDate("2016-6-8 11:03:20");
+		Date firstDayOfYear = DateUtil.getFirstDayOfYear(date);
+		System.out.println(DateFormatUtil.dateToStr(firstDayOfYear));
+	}
+
+	@Test
+	public void getDates_test() {
+		Date startTime = DateFormatUtil.strToDate("2018-07-01 00:00:00");
+		Date endTime = DateFormatUtil.strToDate("2018-07-03 23:59:59");
+//		long dayDiff = DateUtil.timeDiff(endTime, startTime)/(1000L*3600*24);
+		int dayDiff = DateUtil.getDay(endTime)- DateUtil.getDay(startTime);
+
+		Date tempStartTime = DateUtil.getStartTime(startTime);
+		List<String> list = new ArrayList<>();
+//		list.add(DateFormatUtil.dateToStr(tempStartTime, "yyyy/MM/dd"));
+//		for (int i = 0; i < dayDiff; i++){
+//			tempStartTime = DateUtil.addDay(tempStartTime, 1);
+//			list.add(DateFormatUtil.dateToStr(tempStartTime, "yyyy/MM/dd"));
+//		}
+		for (int i = 0; i <= dayDiff; i++){
+			list.add(DateFormatUtil.dateToStr(DateUtil.addDay(tempStartTime, i), "yyyy/MM/dd"));
+		}
+
+		System.out.println(dayDiff);
+		System.out.println(list);
 	}
 
 }

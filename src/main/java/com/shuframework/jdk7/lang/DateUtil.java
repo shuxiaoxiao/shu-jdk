@@ -97,13 +97,23 @@ public class DateUtil {
 	public static int getWeek2Zh(Date date) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
-		int week = c.get(Calendar.DAY_OF_WEEK);
+
+		return getWeek2Zh(c);
+	}
+	/**
+	 * 获取日期的星期 (中国的记录方式), 周一为一周第一天,即 1 周一  2周二  7周日
+	 *
+	 * @param calendar	日历对象
+	 * @return
+	 */
+	public static int getWeek2Zh(Calendar calendar) {
+		int week = calendar.get(Calendar.DAY_OF_WEEK);
 		if(week == 1){
 			week = 7;
 		}else{
 			week --;
 		}
-		
+
 		return week;
 	}
 
@@ -464,6 +474,26 @@ public class DateUtil {
 		return getStartTime(date, addDays + 1);
 	}
 
+
+	/**
+	 * 获取某个日期该周的第一天（周一）<br/>
+	 * 如"2016-6-6 10:10:10 周一",返回"2016-6-6 0:00:00"
+	 * 如"2016-6-8 10:10:10 周三",返回"2016-6-6 0:00:00"
+	 *
+	 * @param date	日期对象
+	 * @return
+	 */
+	public static Date getFirstDayOfWeek2zh(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		//周几
+		int week2Zh = getWeek2Zh(c);
+		c.add(Calendar.DAY_OF_MONTH, 1-week2Zh);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		return c.getTime();
+	}
 	
 	/**
 	 * 获取某个日期指定月份第一天的日期<br/>
@@ -544,7 +574,7 @@ public class DateUtil {
 	 * 获取某个日期该月的最后一天<br/>
 	 * 如"2016-6-6 10:10:10",返回"2016-6-30 23:59:59"
 	 * 
-	 * @param date	日期对象
+	 * @param specifiedMonth  指定月份
 	 * @return
 	 */
 	public static Date getLastDayOfMonth(int specifiedMonth) {
@@ -609,6 +639,24 @@ public class DateUtil {
 	 */
 	public static Date getLastDayByAddMonth(Date date, int addMonth) {
 		return getFirstDayByAddMonth(date, (addMonth + 1));
+	}
+
+	/**
+	 * 获取某个日期今年的第一天<br/>
+	 * 如"2016-6-6 10:10:10",返回"2016-1-1 0:00:00"
+	 *
+	 * @param date
+	 * @return
+	 */
+	public static Date getFirstDayOfYear(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.set(Calendar.MONTH, 0);//月份从0开始
+		c.set(Calendar.DAY_OF_MONTH, 1);
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		return c.getTime();
 	}
 
 }

@@ -105,9 +105,15 @@ public class CollectForeachDemo {
 //        Map<Integer, BookInfo> bookInfoMap = bookList.stream().collect(Collectors.toMap(b -> b.getId(), Function.identity()));
         System.out.println(bookInfoMap);
     }
-
     @Test
     public void list_tomap2(){
+        Map<Integer, List<BookInfo>> bookInfoMap = bookList.stream().collect(Collectors.groupingBy(BookInfo::getId));
+//        Map<Integer, BookInfo> bookInfoMap = bookList.stream().collect(Collectors.toMap(b -> b.getId(), Function.identity()));
+        System.out.println(bookInfoMap);
+    }
+
+    @Test
+    public void intList_tomap(){
 //        Map<Integer, Integer> integerMap = intList.stream().collect(Collectors.toMap(Function.identity(), Function.identity()));
 //        System.out.println(integerMap);
 //        Map<String, Integer> integerMap = intList.stream().collect(Collectors.toMap("key", Function.identity()));
