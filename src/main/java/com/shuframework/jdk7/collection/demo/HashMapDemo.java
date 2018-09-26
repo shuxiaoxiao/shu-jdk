@@ -26,7 +26,7 @@ import org.junit.Test;
  * 			如果键不是第一次存在，就用值把以前的值替换掉，返回以前的值
  * 2:删除功能
  * 		void clear():移除所有的键值对元素
- * 		V remove(Object key)：根据键删除键值对元素，并把值返回
+ * 		V removeKey(Object key)：根据键删除键值对元素，并把值返回
  * 3:判断功能
  * 		boolean containsKey(Object key)：判断集合是否包含指定的键
  * 		boolean containsValue(Object value):判断集合是否包含指定的值
@@ -57,9 +57,9 @@ public class HashMapDemo {
 		// void clear():移除所有的键值对元素
 		// map.clear();
 
-		// V remove(Object key)：根据键删除键值对元素，并把值返回
-		// System.out.println("remove:" + map.remove("test1"));
-		// System.out.println("remove:" + map.remove("test2"));
+		// V removeKey(Object key)：根据键删除键值对元素，并把值返回
+		// System.out.println("removeKey:" + map.removeKey("test1"));
+		// System.out.println("removeKey:" + map.removeKey("test2"));
 
 		// boolean containsKey(Object key)：判断集合是否包含指定的键
 		// System.out.println("containsKey:" + map.containsKey("test1"));

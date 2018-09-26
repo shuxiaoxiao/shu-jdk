@@ -18,7 +18,7 @@ import org.junit.Test;
  * 	C:列表迭代器
  * 		ListIterator listIterator()：List集合特有的迭代器
  * 	D:删除功能
- * 		Object remove(int index)：根据索引删除元素,返回被删除的元素
+ * 		Object removeKey(int index)：根据索引删除元素,返回被删除的元素
  * 	E:修改功能
  * 		Object set(int index,Object element):根据索引修改元素，返回被修饰的元素
  * 
@@ -60,7 +60,7 @@ public class ArrayListDemo {
 		System.out.println("移除后：" + strList);//[]
 	}
 	
-	// boolean remove(Object o):移除一个元素
+	// boolean removeKey(Object o):移除一个元素
 	//底层是o.equals(elementData[index]) 注意如果移除对象时, 需要重写equals方法
 	@Test
 	public void remove() {

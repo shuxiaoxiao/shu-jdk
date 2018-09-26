@@ -12,7 +12,7 @@ public class ArrayUtil {
     /**
      * 数组复制,如果长度比之前大，多的长度内容赋值为空
      * 
-     * @param array
+     * @param original
      * @param newLength
      * @return
      */

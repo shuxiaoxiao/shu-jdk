@@ -34,8 +34,16 @@ public class MyMapNode<K, V> implements Map.Entry<K, V> {
 		return value;
 	}
 
+	public MyMapNode<K, V> getNext() {
+		return next;
+	}
+
+	public void setNext(MyMapNode<K, V> next) {
+		this.next = next;
+	}
+
 	public final String toString() {
-		return key + "=" + value;
+		return key + "=" + value + "next:" + next;
 	}
 
 	public final int hashCode() {

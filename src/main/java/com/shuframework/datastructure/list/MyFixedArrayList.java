@@ -131,7 +131,7 @@ public class MyFixedArrayList<E> {
 	
 	/**
 	 * 删除元素，返回该索引删除前对应的值
-	 * @Title: remove
+	 * @Title: removeKey
 	 * @param @param index	索引位置
 	 * @return E    返回类型
 	 */
@@ -235,38 +235,5 @@ public class MyFixedArrayList<E> {
 			throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + length);
 		}
 	}
-	
-//	/**
-//	 * 调整数组数据及长度(有bug)
-//	 * @Title: arrayCopy
-//	 * @param @param index	索引
-//	 * @param @param arr	数组对象
-//	 * @param @param state    up表示数组往前移动,down表示数组往后移动
-//	 * @return void    返回类型
-//	 */
-//	public void arrayCopy(int index, Object[] arr, String state) {
-//		//length表示需要复制数组的长度
-////		System.arraycopy(Object src,  int  srcPos,
-////                Object dest, int destPos,
-////                int length);
-//		if ("up".equals(state)) {
-//			// 前移, 最后一位前移时下标是size-2
-//			for (int i = index; i < size; i++) {
-//				if(i == size - 1){
-////					arr[i] = null;
-//					size--;
-//				}else{
-//					arr[i] = arr[i + 1];
-//				}
-//			}
-//			
-//		} else if ("down".equals(state)) {
-//			// 后移
-//			for (int i = size; i > index; i--) {
-//				arr[i] = arr[i - 1];
-//			}
-//			size++;
-//		}
-//	}
 	
 }

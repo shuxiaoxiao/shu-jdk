@@ -12,6 +12,7 @@ public class BookInfo {
 
 	private Integer id;
 	private String name;
+	private Double price;
 	private Date createTime;
 	
 	private BookInfo2 bookInfo2;
@@ -47,12 +48,26 @@ public class BookInfo {
 		this.createTime = createTime;
 	}
 
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
 	public BookInfo() {
 	}
 
 	public BookInfo(Integer id, String name) {
 		this.id = id;
 		this.name = name;
+	}
+
+	public BookInfo(Integer id, String name, Double price) {
+		this.id = id;
+		this.name = name;
+		this.price = price;
 	}
 
 	public BookInfo(Integer id, String name, Date createTime) {
@@ -63,7 +78,7 @@ public class BookInfo {
 
 	@Override
 	public String toString() {
-		return "BookInfo [id=" + id + ", name=" + name + ", createTime=" + createTime + "]";
+		return "BookInfo [id=" + id + ", name=" + name + ", price=" + price + ", createTime=" + createTime + "]";
 	}
 
 }

@@ -70,20 +70,43 @@ public class ValidateUtilTest {
 	
 	@Test
 	public void matchMethod_test() {
-//		String regex = "^\\/?\\w+/get\\w*$";
-//		String str = "/sysUser/queryPersonInfoDetail";
-		String str = "sysUser/get";
-//		String str = "/get";
-		System.out.println(ValidateUtil.matchMethod("query", str));
+		String str1 = "getPersonInfoDetail";
+		String str2 = "sysUser/get";
+		String str3 = "sysUser/get/info";
+		String str4 = "/get";
+		String str5 = "/sysUser/getPersonInfoDetail";
+		String str6 = "/sysUser/get/info";
+		System.out.println(ValidateUtil.matchMethod("get", str1));
+		System.out.println(ValidateUtil.matchMethod("get", str2));
+		System.out.println(ValidateUtil.matchMethod("get", str3));
+		System.out.println(ValidateUtil.matchMethod("get", str4));
+		System.out.println(ValidateUtil.matchMethod("get", str5));
+		System.out.println(ValidateUtil.matchMethod("get", str6));
 	}
 	
 	@Test
 	public void match_test() {
-		String regex = "^\\/?\\w+/get\\w*$";
-//		String str = "/sysUser/getPersonInfoDetail";
-//		String str = "sysUser/get";
-		String str = "/get";
-		System.out.println(ValidateUtil.match(regex, str));
+//		String regex = "/*\\w*/*get[/A-Za-z0-9]*";
+//		String regex = "/*\\w*/*get([/A-Za-z0-9]*)";
+		String regex = "[/\\w]*/*get[/\\w]*";
+		String str1 = "getPersonInfoDetail";
+		String str2 = "sysUser/get";
+		String str3 = "sysUser/get/info";
+		String str4 = "/get";
+		String str5 = "/sysUser/getPersonInfoDetail";
+		String str6 = "/sysUser/get/info";
+		String str7 = "/sysUser/get/info/ddfd";
+		String str8 = "/sysUser/get/info//ddfd";
+		String str9 = "/sysUser/info/get//ddfd";
+		System.out.println(ValidateUtil.match(regex, str1));
+		System.out.println(ValidateUtil.match(regex, str2));
+		System.out.println(ValidateUtil.match(regex, str3));
+		System.out.println(ValidateUtil.match(regex, str4));
+		System.out.println(ValidateUtil.match(regex, str5));
+		System.out.println(ValidateUtil.match(regex, str6));
+		System.out.println(ValidateUtil.match(regex, str7));
+		System.out.println(ValidateUtil.match(regex, str8));
+		System.out.println(ValidateUtil.match(regex, str9));
 	}
 	
 	

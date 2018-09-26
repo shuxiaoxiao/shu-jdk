@@ -10,20 +10,6 @@ import java.util.Date;
  * @author shu
  */
 public class DateUtil {
-	
-	//这块的常量修改为枚举了
-//	/**天*/
-//	public static final int DAY = 5;
-//	/**时(12小时制)*/
-//	public static final int HOUR = 10;
-//	/**时(24小时制)*/
-//	public static final int HOUR_OF_DAY = 11;
-//	/**分钟*/
-//	public static final int MINUTE = 12;
-//	/**秒*/
-//	public static final int SECOND = 13;
-//	/**毫秒*/
-//	public static final int MILLISECOND = 14;
 
 	/**
 	 * 获取日期的年份
@@ -57,20 +43,32 @@ public class DateUtil {
 	 * @param date	日期对象
 	 * @return
 	 */
-	public static int getDay(Date date) {
+	public static int getDayOfMonth(Date date) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
-		return c.get(Calendar.DATE);
+		return c.get(Calendar.DAY_OF_MONTH);
 	}
 
 	/**
-	 * 获取某个日期该月有多少天
+	 * 获取日期的天数(年份的第几天)
+	 *
+	 * @param date	日期对象
+	 * @return
+	 */
+	public static int getDayOfYear(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		return c.get(Calendar.DAY_OF_YEAR);
+	}
+
+	/**
+	 * 获取某个日期该月有多少天(该月最大天数)
 	 * 如 1月 是31天
 	 * 
 	 * @param date	日期对象
 	 * @return
 	 */
-	public static int getActualDaysOfMonth(Date date) {
+	public static int getMaxDaysOfMonth(Date date) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
 		return c.getActualMaximum(Calendar.DATE);
@@ -135,7 +133,31 @@ public class DateUtil {
 		return false;
 	}
 
-	
+	/**
+	 * 获得该年的第几周 （周日为第一天）
+	 * @param date
+	 * @return
+	 */
+	public static int getWeekOfYear(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		return c.get(Calendar.WEEK_OF_YEAR);
+	}
+
+	/**
+	 * 获得该年的第几周 (中国的记录方式：周一为第一天)
+	 * @param date
+	 * @return
+	 */
+	public static int getWeekOfYear2Zh(Date date) {
+		Calendar c = Calendar.getInstance();
+		//设置每周开始的时间
+		c.setFirstDayOfWeek(Calendar.MONDAY);
+		c.setTime(date);
+		return c.get(Calendar.WEEK_OF_YEAR);
+	}
+
+
 	/**
 	 * 返回true表示 time1在time2前（time1与time2一样返回是false）
 	 * @param time1
@@ -198,94 +220,7 @@ public class DateUtil {
 			return false;
 		}
 	}
-	
-// 一般不需要这样处理	
-//	/**
-//	 * time1与time2的时间差,设定了type则根据其返回<br/>
-//	 * 结果都是整型,默认的取整方式(向上取整),如0.6返回是0
-//	 * @param time1	当前时间
-//	 * @param time2	比较时间
-//	 * @param dateEnum	获取时间类型——DateEnum.DAY(天)、DateEnum.HOUR24(小时)、DateEnum.MINUTE(分钟)、DateEnum.SECOND(秒)
-//	 * @return
-//	 */
-//	public static long timeDiff(Date time1, Date time2, DateEnum dateEnum) {
-//		long times = time1.getTime() - time2.getTime();
-//		switch (dateEnum) {
-//			case DAY:
-//				times = times / 1000 / 3600 / 24;
-//				break;
-//			case HOUR24:
-//				times = times / 1000 / 3600;
-//				break;
-//			case MINUTE:
-//				times = times / 1000 / 60;
-//				break;
-//			case SECOND:
-//				times = times / 1000;
-//				break;
-//			default:
-//				// 默认是毫秒
-//				break;
-//		}
-//		return times;
-//	}
-//	
-//	/**
-//	 * time1与time2的时间差，没有type返回单位是毫秒数,设定了type则根据其返回,结果都是整型,依据四舍五入
-//	 * 
-//	 * @param time1	当前时间
-//	 * @param time2	比较时间
-//	 * @param dateEnum	获取时间类型——DateEnum.DAY(天)、DateEnum.HOUR24(小时)、DateEnum.MINUTE(分钟)、DateEnum.SECOND(秒)
-//	 * @return
-//	 */
-//	public static long timeDiff2(Date time1, Date time2, DateEnum dateEnum) {
-//		long times = time1.getTime() - time2.getTime();
-//		switch (dateEnum) {
-//			case DAY:
-//				times = (long) (times / 1000.0 /3600 /24 + 0.5);
-//				break;
-//			case HOUR24:
-//				times = (long) (times / 1000.0 /3600 + 0.5);
-//				break;
-//			case MINUTE:
-//				times = (long) (times / 1000.0 /60 + 0.5);
-//				break;
-//			case SECOND:
-//				times = (long) (times / 1000.0 + 0.5);
-//				break;
-//			default:
-//				// 默认是毫秒
-//				break;
-//		}
-//		return times;
-//	}
-//	
-//	/**
-//	 * time1与time2的时间差，没有type返回单位是毫秒数,设定了type则根据其返回
-//	 * 
-//	 * @param time1	当前时间
-//	 * @param time2	比较时间
-//	 * @param dateEnum	获取时间类型——DateEnum.DAY(天)、DateEnum.HOUR24(小时)、DateEnum.MINUTE(分钟)、DateEnum.SECOND(秒)
-//	 * @return
-//	 */
-//	public static double timeDiff2Double(Date time1, Date time2, DateEnum dateEnum) {
-//		double times = time1.getTime() - time2.getTime();
-//		switch (dateEnum) {
-//			case HOUR24:
-//				times = times / 1000.0 /3600;
-//				break;
-//			case MINUTE:
-//				times = times / 1000.0 /60;
-//				break;
-//			case SECOND:
-//				times = times / 1000.0;
-//				break;
-//			default:
-//				break;
-//		}
-//		return times;
-//	}
-	
+
 	
 	/**
 	 * 指定date 增加天数、小时、分钟或秒数
@@ -293,10 +228,16 @@ public class DateUtil {
 	 * @param num 数值，天数、小时、分钟或秒数，可以是负值
 	 * @param dateEnum	类型——DateEnum.DAY(天)、DateEnum.HOUR24(小时)、DateEnum.MINUTE(分钟)、DateEnum.SECOND(秒)
 	 */
-	private static Date addDayOrHourOrMinuteOrSecond(Date date, int num, DateTimeEnum dateEnum) {
+	private static Date add(Date date, int num, DateTimeEnum dateEnum) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
 		switch (dateEnum) {
+			case YEAR:
+				c.add(Calendar.YEAR, num);
+				break;
+			case MONTH:
+				c.add(Calendar.MONTH, num);
+				break;
 			case DAY:
 				c.add(Calendar.DAY_OF_MONTH, num);
 				break;
@@ -317,28 +258,61 @@ public class DateUtil {
 	}
 	
 	/**
+	 * 指定date 增加years年，可以是负值
+	 * @param years
+	 */
+	public static Date addYear(int years) {
+		return add(new Date(), years, DateTimeEnum.YEAR);
+	}
+	
+	/**
+	 * 指定date 增加years年，可以是负值
+	 * @param date
+	 * @param years
+	 */
+	public static Date addYear(Date date, int years) {
+		return add(date, years, DateTimeEnum.YEAR);
+	}
+	/**
+	 * 指定date 增加months月，可以是负值
+	 * @param months
+	 */
+	public static Date addMonth(int months) {
+		return add(new Date(), months, DateTimeEnum.MONTH);
+	}
+
+	/**
+	 * 指定date 增加months月，可以是负值
+	 * @param date
+	 * @param months
+	 */
+	public static Date addMonth(Date date, int months) {
+		return add(date, months, DateTimeEnum.MONTH);
+	}
+
+	/**
 	 * 指定date 增加days天，可以是负值
 	 * @param days
 	 */
 	public static Date addDay(int days) {
-		return addDayOrHourOrMinuteOrSecond(new Date(), days, DateTimeEnum.DAY);
+		return add(new Date(), days, DateTimeEnum.DAY);
 	}
-	
+
 	/**
 	 * 指定date 增加days天，可以是负值
 	 * @param date
 	 * @param days
 	 */
 	public static Date addDay(Date date, int days) {
-		return addDayOrHourOrMinuteOrSecond(date, days, DateTimeEnum.DAY);
+		return add(date, days, DateTimeEnum.DAY);
 	}
-	
+
 	/**
 	 * 指定date 增加hour小时，可以是负值
 	 * @param hours
 	 */
 	public static Date addHour(int hours) {
-		return addDayOrHourOrMinuteOrSecond(new Date(), hours, DateTimeEnum.HOUR24);
+		return add(new Date(), hours, DateTimeEnum.HOUR24);
 	}
 	
 	/**
@@ -347,7 +321,7 @@ public class DateUtil {
 	 * @param hours
 	 */
 	public static Date addHour(Date date, int hours) {
-		return addDayOrHourOrMinuteOrSecond(date, hours, DateTimeEnum.HOUR24);
+		return add(date, hours, DateTimeEnum.HOUR24);
 	}
 	
 	/**
@@ -355,7 +329,7 @@ public class DateUtil {
 	 * @param minutes
 	 */
 	public static Date addMinute(int minutes) {
-		return addDayOrHourOrMinuteOrSecond(new Date(), minutes, DateTimeEnum.MINUTE);
+		return add(new Date(), minutes, DateTimeEnum.MINUTE);
 	}
 	
 	/**
@@ -364,7 +338,7 @@ public class DateUtil {
 	 * @param minutes
 	 */
 	public static Date addMinute(Date date, int minutes) {
-		return addDayOrHourOrMinuteOrSecond(date, minutes, DateTimeEnum.MINUTE);
+		return add(date, minutes, DateTimeEnum.MINUTE);
 	}
 	
 	/**
@@ -372,7 +346,7 @@ public class DateUtil {
 	 * @param seconds
 	 */
 	public static Date addSecond(int seconds) {
-		return addDayOrHourOrMinuteOrSecond(new Date(), seconds, DateTimeEnum.SECOND);
+		return add(new Date(), seconds, DateTimeEnum.SECOND);
 	}
 	
 	/**
@@ -381,7 +355,7 @@ public class DateUtil {
 	 * @param seconds
 	 */
 	public static Date addSecond(Date date, int seconds) {
-		return addDayOrHourOrMinuteOrSecond(date, seconds, DateTimeEnum.SECOND);
+		return add(date, seconds, DateTimeEnum.SECOND);
 	}
 
 	
@@ -486,12 +460,13 @@ public class DateUtil {
 	public static Date getFirstDayOfWeek2zh(Date date) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
-		//周几
 		int week2Zh = getWeek2Zh(c);
+		//需要减几天
 		c.add(Calendar.DAY_OF_MONTH, 1-week2Zh);
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
 		return c.getTime();
 	}
 	
@@ -511,6 +486,7 @@ public class DateUtil {
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
 		return c.getTime();
 	}
 	
@@ -567,6 +543,7 @@ public class DateUtil {
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
 		return c.getTime();
 	}
 	
@@ -621,6 +598,7 @@ public class DateUtil {
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
 		return c.getTime();
 	}
 	
@@ -656,6 +634,7 @@ public class DateUtil {
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
 		return c.getTime();
 	}
 

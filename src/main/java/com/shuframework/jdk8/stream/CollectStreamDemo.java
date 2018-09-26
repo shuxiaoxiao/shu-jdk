@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,8 @@ import java.util.stream.Collectors;
  * Created by shu on 2018/7/23.
  */
 public class CollectStreamDemo {
+
+    private Map<Integer, List<Integer>> map;
 
     @Test
     public void test(){
@@ -117,6 +120,47 @@ public class CollectStreamDemo {
         list.add(map4);
         list.add(map5);
         return list;
+    }
+
+
+
+    @Test
+    public void test3(){
+        Map<Integer, List<Integer>> map = initDistinctMapData();
+        System.out.println("去重前:" + map);
+        //冒泡比较
+        //java.util.ConcurrentModificationException
+//        map.forEach((k,v) -> {
+////            System.out.println(k +","+v);
+//            Set<Integer> keys =  map.keySet();
+//            for(Integer i : keys){
+//                if(!i.equals(k) && v.contains(i)){
+//                    map.remove(i);
+//                }
+//            }
+//        });
+        map.entrySet().iterator();
+
+        System.out.println("去重后:" + map);
+    }
+
+    private Map<Integer, List<Integer>> initDistinctMapData() {
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(1);
+        list1.add(11);
+        list1.add(111);
+        List<Integer> list2 = new ArrayList<>();
+        list2.add(11);
+        list2.add(111);
+        List<Integer> list3 = new ArrayList<>();
+        list3.add(12);
+        list3.add(121);
+        Map<Integer, List<Integer>> map = new TreeMap<>();
+//        Map<Integer, List<Integer>> map = new HashMap<>();
+        map.put(1, list1);
+        map.put(11, list2);
+        map.put(12, list3);
+        return map;
     }
 
 }

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-
 import org.junit.Test;
 
 public class DateUtilTest {
@@ -24,8 +22,9 @@ public class DateUtilTest {
 		Date date = new Date();//2017-01-10 15:10:10  周二 
 		int year = DateUtil.getYear(date);
 		int month = DateUtil.getMonth(date);
-		int day = DateUtil.getDay(date);
-		int daysOfMonth = DateUtil.getActualDaysOfMonth(date);
+		int day = DateUtil.getDayOfMonth(date);
+		int dayOfYear = DateUtil.getDayOfYear(date);
+		int daysOfMonth = DateUtil.getMaxDaysOfMonth(date);
 		int week = DateUtil.getWeek(date);
 		int week2 = DateUtil.getWeek2Zh(date);
 		boolean isWeekend = DateUtil.isWeekend(date);
@@ -33,6 +32,7 @@ public class DateUtilTest {
 		System.out.println(year);//2017
 		System.out.println(month);//1
 		System.out.println(day);//10
+		System.out.println(dayOfYear);//10
 		System.out.println(daysOfMonth);//31
 		System.out.println(week);//3
 		System.out.println(week2);//2
@@ -163,7 +163,7 @@ public class DateUtilTest {
 		Date startTime = DateFormatUtil.strToDate("2018-07-01 00:00:00");
 		Date endTime = DateFormatUtil.strToDate("2018-07-03 23:59:59");
 //		long dayDiff = DateUtil.timeDiff(endTime, startTime)/(1000L*3600*24);
-		int dayDiff = DateUtil.getDay(endTime)- DateUtil.getDay(startTime);
+		int dayDiff = DateUtil.getDayOfMonth(endTime)- DateUtil.getDayOfMonth(startTime);
 
 		Date tempStartTime = DateUtil.getStartTime(startTime);
 		List<String> list = new ArrayList<>();
@@ -178,6 +178,25 @@ public class DateUtilTest {
 
 		System.out.println(dayDiff);
 		System.out.println(list);
+	}
+
+
+	@Test
+	public void timestampToDate() {
+		Date date1 = DateFormatUtil.timestampToDate(1533571200000L);
+		System.out.println(DateFormatUtil.dateToStr(date1));
+
+		Date date2 = DateFormatUtil.timestampToDate(1533657599000L);
+		System.out.println(DateFormatUtil.dateToStr(date2));
+	}
+
+
+	@Test
+	public void getWeekOfYear() {
+		Date date1 = DateFormatUtil.strToDate("2018-01-07 00:00:00");
+		System.out.println(DateUtil.getWeekOfYear(date1));
+		System.out.println(DateUtil.getWeekOfYear2Zh(date1));
+
 	}
 
 }

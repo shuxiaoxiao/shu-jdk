@@ -30,10 +30,10 @@ public class MyFixedArrayListTest {
 //			fixedArrayList.add("a6");
 //		}
 		System.out.println("add：" + fixedArrayList.toString());
-//		String oldValue = fixedArrayList.remove(3);
-//		String oldValue = fixedArrayList.remove();
-//		System.out.println("remove：" + oldValue);
-//		System.out.println("remove：" + fixedArrayList.toString());
+//		String oldValue = fixedArrayList.removeKey(3);
+//		String oldValue = fixedArrayList.removeKey();
+//		System.out.println("removeKey：" + oldValue);
+//		System.out.println("removeKey：" + fixedArrayList.toString());
 	}
 	
 	@Test
@@ -47,10 +47,10 @@ public class MyFixedArrayListTest {
 	@Test
 	public void remove_test() {
 		String oldValue1 = fixedArrayList.remove();
-		System.out.println("remove：" + oldValue1);
+		System.out.println("removeKey：" + oldValue1);
 		String oldValue2 = fixedArrayList.remove();
-		System.out.println("remove：" + oldValue2);
-		System.out.println("remove：" + fixedArrayList.toString());
+		System.out.println("removeKey：" + oldValue2);
+		System.out.println("removeKey：" + fixedArrayList.toString());
 	}
 	
 	@Test

@@ -172,18 +172,20 @@ public class MapUtil {
 	
 	
 	/**
-	 * 通过key 删除某项
+	 * 通过key 删除某项(map的本身remove与其功能一样)
+	 * 
 	 * @param map
 	 * @param key
 	 * @return
 	 */
-	public static boolean remove(Map<String, ?> map, String key) {
+	public static boolean removeKey(Map<String, ?> map, String key) {
 		boolean isSuccess = false;
 		//map迭代删除
 		Iterator<String> it = map.keySet().iterator();
 		while(it.hasNext()){
 			String mapKey = it.next();
 			if (key.equals(mapKey)) {
+				//用迭代器去删除
 				it.remove();
 				isSuccess = true;
 			}
@@ -193,9 +195,31 @@ public class MapUtil {
 //		for (String key : keySet) {
 //			//java.util.ConcurrentModificationException  at java.util.HashMap$HashIterator
 //			if (key.equals("k5")) {
-//				map.remove(key);
+//				map.removeKey(key);
 //			}
 //		}
+		return isSuccess;
+	}
+	
+	/**
+	 * 通过val 删除某项
+	 * 
+	 * @param map
+	 * @param val
+	 * @return
+	 */
+	public static boolean removeVal(Map<?, Object> map, Object val) {
+		boolean isSuccess = false;
+		//map迭代删除 用迭代自身的，用map的remove会出现 并发修改的问题
+		Iterator<Object> it = map.values().iterator();
+		while(it.hasNext()){
+			Object mapVal = it.next();
+			if (val.equals(mapVal)) {
+				//用迭代器去删除，其原理是 modCount的值修改问题
+				it.remove();
+				isSuccess = true;
+			}
+		}
 		return isSuccess;
 	}
 	

@@ -713,13 +713,14 @@ public class ValidateUtil {
 	/**
 	 * 匹配含key的方法，格式是/../key* 或 ../key*
 	 * 如 user/get*; /user/get*的方法
+	 * 现在这个正则比较简单，可以匹配多节和多个/
 	 * 
 	 * @param key
 	 * @param str
 	 * @return
 	 */
 	public static boolean matchMethod(String key, String str) {
-		String regex = "\\/?\\w+/" + key + "\\w*";
+		String regex = "[/\\w]*/*" + key + "[/\\w]*";
 		return match(regex, str);
 	}
 	

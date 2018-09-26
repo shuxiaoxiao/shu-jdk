@@ -25,9 +25,9 @@ public class MyArrayList<E> {
 	private Object[] elementData;
 
 	public MyArrayList(int initialCapacity) {
-		if (initialCapacity < 0)
+		if (initialCapacity < 0) {
 			throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
-		else if (initialCapacity == 0) {
+		}else if (initialCapacity == 0) {
 			this.elementData = EMPTY_ELEMENTDATA;
 		}else{
 			this.elementData = new Object[initialCapacity];
@@ -38,12 +38,12 @@ public class MyArrayList<E> {
 		this(DEFAULT_CAPACITY);
 	}
 	
-//	/**返回数组长度*/
-//	public int length() {
-//		return elementData.length;
-//	}
+	/**返回数组总长度（真正的长度）*/
+	public int length() {
+		return elementData.length;
+	}
 	
-	/**返回数组长度*/
+	/**返回数组长度（含有数据的长度）*/
 	public int size() {
 		return size;
 	}
@@ -54,20 +54,23 @@ public class MyArrayList<E> {
 	}
 	
 	/**遍历数组，返回格式[x1,x2]*/
+	@Override
 	public String toString() {
 		//初始化的数组
 //		return Arrays.toString(elementData);
 //		//真正的
 		int max = size - 1;
-        if (max == -1)
-            return "[]";
+        if (max == -1) {
+			return "[]";
+		}
 
         StringBuilder b = new StringBuilder();
         b.append('[');
         for (int i = 0; ; i++) {
             b.append(String.valueOf(elementData[i]));
-            if (i == max)
-                return b.append(']').toString();
+            if (i == max) {
+				return b.append(']').toString();
+			}
             b.append(", ");
         }
 	}
@@ -92,9 +95,6 @@ public class MyArrayList<E> {
      * @param destArr
      */
     public void toArray(E[] destArr) {
-//    	Object[] destArr = new Object[size];
-//    	System.arraycopy(elementData, 0, destArr, 0, size);
-//    	return destArr;
     	System.arraycopy(elementData, 0, destArr, 0, size);
     }
     
@@ -102,7 +102,6 @@ public class MyArrayList<E> {
      * 返回的list长度是固定的
      * @return
      */
-    @SuppressWarnings("unchecked")
 	public List<E> getList() {
     	//elementData是初始化的数组，里面可能存在null
     	return (List<E>) Arrays.asList(elementData);
@@ -117,8 +116,7 @@ public class MyArrayList<E> {
 	 * @param @param e 值
 	 */
 	public boolean add(E e) {
-//		rangeCheck(size);
-		ensureCapacity(size + 1); 
+		ensureCapacity(size + 1);
 		elementData[size++] = e;
 		return true;
 	}
@@ -133,11 +131,10 @@ public class MyArrayList<E> {
 		rangeCheck(index);
 		ensureCapacity(size + 1);
 		// index前面部分不动，[index+1, size] 的部分后移
-		int copyLength = (elementData.length - 1) - index;
-		if (copyLength > 0) {
-			System.arraycopy(elementData, index, elementData, index + 1, copyLength);
-		}
-
+//		int copyLength = (elementData.length - 1) - index;
+		int copyLength = size - index;
+		System.arraycopy(elementData, index, elementData, index + 1, copyLength);
+		//移动后 将需要插入的数据赋值
 		elementData[index] = e;
 		size++; // 长度累加
 		return true;
@@ -162,24 +159,23 @@ public class MyArrayList<E> {
 	
 	/**
 	 * 删除元素，返回该索引删除前对应的值
-	 * @Title: remove
+	 * @Title: removeKey
 	 * @param @param index	索引位置
 	 * @return E    返回类型
 	 */
-	//TODO 有问题
 	@SuppressWarnings("unchecked")
 	public E remove(int index) {
 		rangeCheck(index);
 		// 在删除前，将值保留
 		E oldValue = (E) elementData[index];
 		// index后面部分不动，[index, size] 的部分前移
-		int copyLength = (elementData.length - 1) - index;
+//		int copyLength = (elementData.length - 1) - index;
+		int copyLength = size - index -1;
 		if (copyLength > 0) {
 			//注意与add有区别
 			System.arraycopy(elementData, index + 1, elementData, index, copyLength);
 		}
-		elementData[size - 1] = null;// 真正的最后一位设置为null
-		size--;// 长度累减
+		elementData[--size] = null;// 真正的最后一位设置为null
 		return oldValue;
 	}
 	
@@ -205,14 +201,19 @@ public class MyArrayList<E> {
 	 * @return
 	 */
 	public int indexOf(Object o) {
+		//兼容null 的数据，所以查找时单独处理下
 		if (o == null) {
-			for (int i = 0; i < size; i++)
-				if (elementData[i] == null)
+			for (int i = 0; i < size; i++){
+				if (elementData[i] == null){
 					return i;
+				}
+			}
 		} else {
-			for (int i = 0; i < size; i++)
-				if (o.equals(elementData[i]))
+			for (int i = 0; i < size; i++) {
+				if (o.equals(elementData[i])) {
 					return i;
+				}
+			}
 		}
 		return -1;
 	}
@@ -228,16 +229,25 @@ public class MyArrayList<E> {
     
     /**
      * 清空
+	 * 所有元素赋值为null，size为0
      */
     public void clear() {
-        // clear to let GC do its work
-        for (int i = 0; i < size; i++)
-            elementData[i] = null;
+        for (int i = 0; i < size; i++) {
+			elementData[i] = null;
+		}
 
         size = 0;
     }
-	
-	
+
+	/**
+	 * 是否空
+	 * @return
+	 */
+	public boolean isEmpty() {
+		return size == 0;
+	}
+
+
 	/**
 	 * 检查数组长度是否超过默认值，
 	 * 如果超过则改变其长度，原数据保持不变, 新长度是(oldCapacity * 3) / 2 + 1
@@ -249,7 +259,8 @@ public class MyArrayList<E> {
 		int oldCapacity = elementData.length;
 		if (minCapacity > oldCapacity) {
 			resizeCount++;//记录扩容次数
-			int newCapacity = (oldCapacity * 3) / 2 + 1; //与下面的扩容效果相同
+			//扩容1.5倍
+			int newCapacity = (oldCapacity * 3) / 2 + 1;
 //			int newCapacity = oldCapacity + (oldCapacity / 2) + 1;
 			if (newCapacity < minCapacity){
 				newCapacity = minCapacity;
@@ -263,9 +274,9 @@ public class MyArrayList<E> {
 	
 	/**
 	 * 检查index 是否合法
-	 * @Title: RangeCheck
-	 * @param @param index    设定文件
-	 * @return void    返回类型
+	 *
+	 * @param index  下标
+	 * @return
 	 */
 	private void rangeCheck(int index) {
 		//固定数组这里的size用length, 可变长数组用size也可行

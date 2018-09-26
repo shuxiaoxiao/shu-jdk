@@ -22,4 +22,16 @@ public class ClassDemo {
 //		cls1.isXXX 类型判断
 	}
 
+	//getCanonicalName和getName这两个方法没有什么不同的， 但是对于array或内部类等就显示出来了。
+	@Test
+	public void get() {
+		Class clazz = String.class;
+		System.out.println(clazz.getName());//java.lang.String
+		System.out.println(clazz.getCanonicalName());//java.lang.String
+
+		Class clazz2 = String[].class;
+		System.out.println(clazz2.getName());//[Ljava.lang.String;
+		System.out.println(clazz2.getCanonicalName());//java.lang.String[]
+	}
+
 }

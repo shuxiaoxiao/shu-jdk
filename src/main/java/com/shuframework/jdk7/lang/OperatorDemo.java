@@ -1,6 +1,13 @@
 package com.shuframework.jdk7.lang;
 
+import com.shuframework.jdk7.random.RandomUtil;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * 运算符示例
@@ -88,5 +95,20 @@ public class OperatorDemo {
         }
         return h;
     }
+
+    @Test
+    public void test10(){
+		int count = 100;
+		List<Integer> list = new ArrayList<>(count);
+		for (int i = 0; i< count; i++){
+			int a = RandomUtil.random(20);
+			int b = RandomUtil.random(100, 200);
+			int r = a & b;
+			list.add(r);
+			System.out.println(StringUtil.append("a:", a, ", b:", b, ", r:", r));
+		}
+		Collections.sort(list);
+		System.out.println(list.get(list.size()-1));
+	}
 
 }

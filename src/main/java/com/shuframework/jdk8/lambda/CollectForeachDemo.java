@@ -9,9 +9,12 @@ import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.DoubleSummaryStatistics;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -34,9 +37,9 @@ public class CollectForeachDemo {
         intList.add(5);
 
 
-        BookInfo b1 = new BookInfo(1, "a1");
-        BookInfo b2 = new BookInfo(2, "a2");
-        BookInfo b3 = new BookInfo(3, "a3");
+        BookInfo b1 = new BookInfo(1, "a1", 1.1);
+        BookInfo b2 = new BookInfo(2, "a2", 2.2);
+        BookInfo b3 = new BookInfo(4, "a3", 3.3);
         bookList = new ArrayList<>();
         bookList.add(b1);
         bookList.add(b2);
@@ -114,11 +117,38 @@ public class CollectForeachDemo {
 
     @Test
     public void intList_tomap(){
-//        Map<Integer, Integer> integerMap = intList.stream().collect(Collectors.toMap(Function.identity(), Function.identity()));
-//        System.out.println(integerMap);
-//        Map<String, Integer> integerMap = intList.stream().collect(Collectors.toMap("key", Function.identity()));
-//        System.out.println(integerMap);
+        //不推荐这样使用
+        Map<Integer, Integer> integerMap = intList.stream().collect(Collectors.toMap(Function.identity(), Function.identity()));
+        System.out.println(integerMap);
     }
 
+    @Test
+    public void list_double_summary(){
+        DoubleSummaryStatistics doubleSummaryStatistics = bookList.stream().mapToDouble(book -> book.getPrice()).summaryStatistics();
+        //小数计算可能存在精度丢失的问题 （double不推荐用）
+        System.out.println(doubleSummaryStatistics.getSum());
+        System.out.println(doubleSummaryStatistics.getAverage());
+        System.out.println(doubleSummaryStatistics.getMax());
+        System.out.println(doubleSummaryStatistics.getMin());
+    }
+    @Test
+    public void list_int_summary(){
+        IntSummaryStatistics intSummaryStatistics = bookList.stream().mapToInt(book -> book.getId()).summaryStatistics();
+        //小数计算可能存在精度的问题, getAverage()注意保留小数位
+        System.out.println(intSummaryStatistics.getSum());
+        System.out.println(intSummaryStatistics.getAverage());
+        System.out.println(intSummaryStatistics.getMax());
+        System.out.println(intSummaryStatistics.getMin());
+    }
+
+
+    @Test
+    public void tolist_test(){
+        List<Integer> intList = Arrays.asList(1, 2, 3);
+        System.out.println(intList);
+        //toCollection用来指定数据类型
+        TreeSet<Integer> intTreeSet = Arrays.asList(1, 2, 3).stream().collect(Collectors.toCollection(TreeSet::new));
+        System.out.println(intTreeSet);
+    }
 
 }

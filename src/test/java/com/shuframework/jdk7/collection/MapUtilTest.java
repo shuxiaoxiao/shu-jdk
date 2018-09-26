@@ -1,11 +1,10 @@
 package com.shuframework.jdk7.collection;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapUtilTest {
 
@@ -41,14 +40,38 @@ public class MapUtilTest {
 		String str = (String) intMap.get(2);
 		System.out.println(str);
 	}
-	
+
 	@Test
-	public void test3() {
-		BigDecimal b1 = new BigDecimal(Double.toString(522.65));
-        BigDecimal b2 = new BigDecimal(Double.toString(5.55));
-        double d = b1.subtract(b2).doubleValue();
-        System.out.println(d);
+	public void removeKey_test1() {
+		intMap.remove(2);
+		System.out.println(intMap);
 	}
+	@Test
+	public void removeKey_test2() {
+		MapUtil.removeKey(strMap, "key1");
+		System.out.println(strMap);
+	}
+
+	@Test
+	public void removeVal_test0() {
+		boolean flag = strMap.remove(strMap, "key1");
+		System.out.println(flag);
+		System.out.println(strMap);
+	}
+	@Test
+	public void removeVal_test1() {
+		boolean flag = MapUtil.removeVal(strMap, "key1");
+		System.out.println(flag);
+		System.out.println(strMap);
+	}
+	@Test
+	public void removeVal_test2() {
+		boolean flag = MapUtil.removeVal(strMap, "val1");
+		System.out.println(flag);
+		System.out.println(strMap);
+	}
+
+
 	
 
 }

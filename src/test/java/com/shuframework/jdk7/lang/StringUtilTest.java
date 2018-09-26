@@ -85,17 +85,47 @@ public class StringUtilTest {
 	@Test
 	public void renameByRemove_test3() {
 		String oldName = "bb";
-		String addName = "[shu]";
-		String newName = StringUtil.renameByRemove(oldName, addName, StringUtil.TYPE_PREFIX);
-		System.out.println(newName);//[shu]bb
+		String removeName = "[b]";
+		String newName = StringUtil.renameByRemove(oldName, removeName, StringUtil.TYPE_PREFIX);
+		System.out.println(newName);//
 	}
 	
 	@Test
 	public void renameByRemove_test4() {
 		String oldName = "bb";
-		String addName = "[shu]";
-		String newName = StringUtil.renameByRemove(oldName, addName, StringUtil.TYPE_SUFFIX);
+		String removeName = "[shu]";
+		String newName = StringUtil.renameByRemove(oldName, removeName, StringUtil.TYPE_SUFFIX);
 		System.out.println(newName);//bb[shu]
+	}
+
+
+	@Test
+	public void capitalize_test() {
+		String str = "abc_abC";
+		System.out.println(StringUtil.capitalize(str));//Abc_abC
+		System.out.println(StringUtil.capitalizeFully(str));//Abc_abc
+	}
+
+	@Test
+	public void uncapitalize_test1() {
+		String str = "AbCabC";
+		System.out.println(StringUtil.uncapitalize(str));//abCabC
+	}
+
+	@Test
+	public void capitalizeFully_test1() {
+		String str = "abc_ABC_bcd";
+		System.out.println(StringUtil.capitalizeFully(str, null));//Abc_abc_bcd
+	}
+	@Test
+	public void capitalizeFully_test2() {
+		String str = "abc_ABC_bcd";
+		System.out.println(StringUtil.capitalizeFully(str, new char[]{'_'}));//AbcAbcBcd
+	}
+	@Test
+	public void capitalizeFully_test3() {
+		String str = "abc_ABC,bcd";
+		System.out.println(StringUtil.capitalizeFully(str, new char[]{'_',','}));//AbcAbcBcd
 	}
 
 }

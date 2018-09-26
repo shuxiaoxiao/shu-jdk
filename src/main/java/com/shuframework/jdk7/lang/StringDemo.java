@@ -2,6 +2,10 @@ package com.shuframework.jdk7.lang;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * 字符串的特点:字符串一旦被赋值，就不能改变。这里指的是字符串的内容不能改变，而不是引用不能改变。
  * @author shu
@@ -285,5 +289,27 @@ public class StringDemo {
 		String s2 = "hel";
 		System.out.println(s1.compareTo(s2));// 2
 	}
-	
+
+	@Test
+	public void split_1() {
+//		String str = "abc_ABC,bcd";
+//		String[] arr = str.split("_|,");
+		String str = "abc.ABC,bcd";
+		String reg = "\\"+".|\\,";
+//		String reg = "\\.|\\,";
+		String lowerStr = str.toLowerCase();
+		String[] arr = lowerStr.split(reg);
+		System.out.println(Arrays.toString(arr));// 2
+	}
+
+
+	@Test
+	public void sb() {
+		StringBuilder b = new StringBuilder("{a1: 1, a2: 2, a3: 3, ");
+		System.out.println(b);
+		b.delete(b.length()-2, b.length());
+		System.out.println(b);
+		Map map = new ConcurrentHashMap<>();
+	}
+
 }
