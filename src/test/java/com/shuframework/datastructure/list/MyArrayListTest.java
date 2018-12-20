@@ -1,8 +1,6 @@
 package com.shuframework.datastructure.list;
 
-import java.util.Arrays;
-
-import com.shuframework.jdk7.lang.StringUtil;
+import com.shuframework.jdkutil.lang.StringUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

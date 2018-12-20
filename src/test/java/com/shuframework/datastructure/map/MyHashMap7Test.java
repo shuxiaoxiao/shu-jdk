@@ -1,7 +1,6 @@
 package com.shuframework.datastructure.map;
 
-import com.shuframework.datastructure.list.MyArrayList;
-import com.shuframework.jdk7.lang.StringUtil;
+import com.shuframework.jdkutil.lang.StringUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

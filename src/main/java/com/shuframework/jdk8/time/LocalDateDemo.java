@@ -34,7 +34,7 @@ public class LocalDateDemo {
 	
 	/**
 	 * java.time.Instant的初始化 类似于之前的java.util.Date
-	 * jdk7 System.currentTimeMillis()与date.getTime() 都能获得当前时间毫秒数
+	 * jdkutil System.currentTimeMillis()与date.getTime() 都能获得当前时间毫秒数
 	 * jdk8 Instant.now().toEpochMilli() 获得当前时间毫秒数
 	 */
 	@Test

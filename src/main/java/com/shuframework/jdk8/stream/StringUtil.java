@@ -1,6 +1,6 @@
 package com.shuframework.jdk8.stream;
 
-import com.shuframework.jdk7.ValidateUtil;
+import com.shuframework.jdkutil.ValidateUtil;
 
 import java.util.Arrays;
 import java.util.List;
