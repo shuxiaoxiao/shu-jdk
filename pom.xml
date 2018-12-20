@@ -5,8 +5,20 @@
 	<artifactId>shu-jdk</artifactId>
 	<version>0.0.1</version>
 	<description>不同jdk的例子</description>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
-	<dependencies>
+    <dependencies>
 		
 		<!-- 正常情况应该只有test才用，但是现在为了方便在main里面也允许使用 -->
 		<dependency>
