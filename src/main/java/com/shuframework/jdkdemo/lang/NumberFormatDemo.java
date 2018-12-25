@@ -1,9 +1,10 @@
-package com.shuframework.jdkutil.lang;
+package com.shuframework.jdkdemo.lang;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
+import com.shuframework.jdkutil.lang.BigDecimalUtil;
 import org.junit.Test;
 
 /**

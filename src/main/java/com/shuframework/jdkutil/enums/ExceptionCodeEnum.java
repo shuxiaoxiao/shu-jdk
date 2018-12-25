@@ -15,12 +15,12 @@ public enum ExceptionCodeEnum {
 
 	/**
 	 * 4xx 现在有的编码是400-417,421-426,449,451
-	 * 为了不冲突，现在的编码从46x 到49x，并扩展到5位。
+	 * 为了不冲突，现在的编码扩展到5位
 	 * 
 	 */
-	PARAMETER_ERROR(46101, "参数错误"), 
-	NOTEXIST_ERROR(46401, "不存在的信息错误"),
-	unknown_error(56101, "未知错误");
+	PARAMETER_ERROR(40101, "参数错误"),
+	NOTEXIST_ERROR(40401, "不存在的信息错误"),
+	UNKNOWN_ERROR(50101, "未知错误");
 	
 
 	private int code;
@@ -30,10 +30,6 @@ public enum ExceptionCodeEnum {
 		this.code = code;
 		this.msg = msg;
 	}
-	// private ExceptionCodeEnum(int code, String msg) {
-	// this.code = code;
-	// this.msg = msg;
-	// }
 
 	/**
 	 * 通过code 获得枚举对象
@@ -69,16 +65,8 @@ public enum ExceptionCodeEnum {
 		return code;
 	}
 
-	public void setCode(int code) {
-		this.code = code;
-	}
-
 	public String getMsg() {
 		return msg;
-	}
-
-	public void setMsg(String msg) {
-		this.msg = msg;
 	}
 
 }

@@ -1,5 +1,6 @@
-package com.shuframework.jdkutil.lang;
+package com.shuframework.jdkdemo.lang;
 
+import com.shuframework.jdkutil.lang.StringUtil;
 import com.shuframework.jdkutil.random.RandomUtil;
 import org.junit.Test;
 

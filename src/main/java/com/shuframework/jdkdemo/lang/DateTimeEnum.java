@@ -1,4 +1,4 @@
-package com.shuframework.jdkutil.lang;
+package com.shuframework.jdkdemo.lang;
 
 public enum DateTimeEnum {
 	

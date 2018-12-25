@@ -1,4 +1,4 @@
-package com.shuframework.jdkutil.lang;
+package com.shuframework.jdkdemo;
 
 import org.junit.Test;
 

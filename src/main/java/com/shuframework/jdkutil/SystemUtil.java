@@ -38,36 +38,22 @@ public class SystemUtil {
 	}
 	
 	/**
-	 * 返回32位随机数, 组成格式：当前日期（yyMMddHHmmss）+ 20位随机数
-	 */
-	public static String getRandomId2() {
-		return getRandomId2(20);
-	}
-	
-	/**
 	 * 返回(12+length)位随机数, 组成格式：当前日期（yyMMddHHmmss）+ length位随机数
 	 * 
 	 * @param @param length 	随机位长度
 	 */
 	public static String getRandomId2(int length) {
 		
-		return DateFormatUtil.today2YyMMddHHmmss() + RandomUtil.randomByLength2Str(length);
+		return DateFormatUtil.today2YyMMddHHmmss() + RandomUtil.randomByLength(length);
 	}
-	
-	/**
-	 * 返回32位随机数, 组成格式：当前日期（yyMMddHHmmssSSS）+ 17位随机数
-	 */
-	public static String getRandomId3() {
-		return getRandomId3(17);
-	}
-	
+
 	/**
 	 * 返回(15+length)位随机数, 组成格式：当前日期（yyMMddHHmmssSSS）+ length位随机数
 	 * 
 	 * @param @param length 	随机位长度
 	 */
 	public static String getRandomId3(int length) {
-		return DateFormatUtil.today2YyMMddHHmmssSSS() + RandomUtil.randomByLength2Str(length);
+		return DateFormatUtil.today2YyMMddHHmmssSSS() + RandomUtil.randomByLength(length);
 	}
 
 	/**
@@ -87,10 +73,9 @@ public class SystemUtil {
 	}
 	    
     //产生验证码，根据用户手机号保存到数据库，然后拿出数据与参数进行比较
-    public static String verifyCode(){
+    public static Integer verifyCode(){
     	//生成的随机数是线性可预测的
-    	return RandomUtil.randomByLength2Str(6);
-//    	return "";
+    	return RandomUtil.randomByLength(6);
     }
 
 	/**

@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -24,6 +25,20 @@ public class MaxLengthCollectStreamDemo {
 //                "George Harrison", "Ringo Starr", "Pete Best", "Stuart Sutcliffe");
         nameStream = Stream.of("John", "Paul", "George", "John",
                 "Paul", "John");
+    }
+
+
+    @Test
+    public void join_test(){
+        List<String> list = nameStream.collect(Collectors.toList());
+        System.out.println(list);
+        StringBuilder gameIds = new StringBuilder();
+        for (String str : list){
+            gameIds.append(str);
+            gameIds.append(",");
+        }
+        gameIds = gameIds.deleteCharAt(gameIds.length()-1);
+        System.out.println(gameIds.toString());
     }
 
 

@@ -1,4 +1,4 @@
-package com.shuframework.jdkutil.enums;
+package com.shuframework.jdkdemo.lang;
 
 /**
  * 这个命名只是为了区分示例与工具类，枚举建议都以Enum结束

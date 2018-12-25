@@ -1,5 +1,6 @@
 package com.shuframework.jdkutil.lang;
 
+import com.shuframework.jdkdemo.lang.MathUtil;
 import org.junit.Test;
 
 public class MathUtilTest {
