@@ -181,13 +181,13 @@ public class ArrayConvertUtilTest {
 		System.out.println(list);
 	}
 	
-	@Test
-	public void str2ListOfVar_test2() {
-		String str1 = "1,2,3";
-		List<String> list = ArrayConvertUtil.str2ListOfVar2(str1);
-		list.add("a6");
-		System.out.println(list);
-	}
+//	@Test
+//	public void str2ListOfVar_test2() {
+//		String str1 = "1,2,3";
+//		List<String> list = ArrayConvertUtil.str2ListOfVar2(str1);
+//		list.add("a6");
+//		System.out.println(list);
+//	}
 	
 
 }

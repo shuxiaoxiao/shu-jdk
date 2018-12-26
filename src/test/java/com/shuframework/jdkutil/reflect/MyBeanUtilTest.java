@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.shuframework.jdkutil.MyBeanUtil;
+import com.shuframework.testmodel.BookInfo3;
 import org.junit.Test;
 
 import com.shuframework.jdkdemo.lang.DateFormatUtil;
@@ -13,7 +15,7 @@ import com.shuframework.testmodel.BookInfo2;
 public class MyBeanUtilTest {
 
 	@Test
-	public void test1() {
+	public void getProperty_test1() {
 		String propertyName = "name";
 		String value = "aa";
 		//这样操作的对象不是同一个
@@ -23,7 +25,7 @@ public class MyBeanUtilTest {
 	}
 	
 	@Test
-	public void test2() {
+	public void getProperty_test2() {
 		String propertyName = "name";
 		String value = "aa";
 //		BookInfo bookInfo = BookInfo.class.newInstance();
@@ -33,27 +35,27 @@ public class MyBeanUtilTest {
 		System.out.println(property);
 	}
 	
-	@Test
-	public void test3() {
-		String propertyName = "name";
-		String value = "aab";
-//		BookInfo bookInfo = BookInfo.class.newInstance();
-		BookInfo bookInfo = MyBeanUtil.newInstance(BookInfo.class);
-		MyBeanUtil.setPropertyByField(bookInfo, propertyName, value);
-		Object property = MyBeanUtil.getPropertyByField(bookInfo, propertyName);
-		System.out.println(property);
-	}
-	
-	@Test
-	public void test5() {
-		String propertyName = "name";
-		String value = "aab";
-//		BookInfo bookInfo = BookInfo.class.newInstance();
-		BookInfo bookInfo = MyBeanUtil.newInstance(BookInfo.class);
-		MyBeanUtil.setProperty(bookInfo, propertyName, value);
-		Object property = MyBeanUtil.getPropertyByField(bookInfo, propertyName);
-		System.out.println(property);
-	}
+//	@Test
+//	public void test3() {
+//		String propertyName = "name";
+//		String value = "aab";
+////		BookInfo bookInfo = BookInfo.class.newInstance();
+//		BookInfo bookInfo = MyBeanUtil.newInstance(BookInfo.class);
+//		MyBeanUtil.setPropertyByField(bookInfo, propertyName, value);
+//		Object property = MyBeanUtil.getPropertyByField(bookInfo, propertyName);
+//		System.out.println(property);
+//	}
+//
+//	@Test
+//	public void test5() {
+//		String propertyName = "name";
+//		String value = "aab";
+////		BookInfo bookInfo = BookInfo.class.newInstance();
+//		BookInfo bookInfo = MyBeanUtil.newInstance(BookInfo.class);
+//		MyBeanUtil.setProperty(bookInfo, propertyName, value);
+//		Object property = MyBeanUtil.getPropertyByField(bookInfo, propertyName);
+//		System.out.println(property);
+//	}
 	
 	@Test
 	public void property_test1() {
@@ -137,6 +139,14 @@ public class MyBeanUtilTest {
 		BookInfo2 bookInfo2 = new BookInfo2();
 		MyBeanUtil.copyIgnoreException(bookInfo, bookInfo2);
 		System.out.println(bookInfo2);
+	}
+
+	@Test
+	public void deepCopy_test() {
+		BookInfo3 bookInfo = new BookInfo3(1, "aa");
+
+		BookInfo obj = (BookInfo)MyBeanUtil.deepCopy(bookInfo);
+		System.out.println(obj);
 	}
 
 }

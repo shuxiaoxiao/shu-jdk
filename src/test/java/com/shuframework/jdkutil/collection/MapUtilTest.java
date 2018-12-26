@@ -17,8 +17,9 @@ public class MapUtilTest {
 		strMap.put("key1", "val1");
 		strMap.put("key3", null);
 		strMap.put("key2", "val2");
-		strMap.put("key5", "");
-		
+		strMap.put("key4", "");
+		strMap.put("key5", "val1");
+
 		intMap = new HashMap<>();
 		intMap.put(1, "val1");
 		intMap.put(3, "val2");
@@ -71,7 +72,11 @@ public class MapUtilTest {
 		System.out.println(strMap);
 	}
 
-
+	@Test
+	public void getKey_test() {
+		String keys = MapUtil.getKey(strMap, "vual1");
+		System.out.println(keys);
+	}
 	
 
 }

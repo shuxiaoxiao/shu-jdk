@@ -15,6 +15,26 @@ public class RandomUtil {
 
     private RandomUtil(){}
 
+    // 使用到Algerian字体，系统里没有的话需要安装字体，字体只显示大写，去掉了1,0,i,o几个容易混淆的字符
+    public static final String VERIFY_CODES = "23456789ABCDEFGHJKMNPQRSTUVWXYZ";
+//    public static final String VERIFY_CODES = "23456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ";
+
+    /**
+     * 生成含有字母的验证码
+     * @param length
+     * @return
+     */
+    public static String verifyCodeHasLetter(int length) {
+        String sources = VERIFY_CODES;
+        int codesLen = sources.length();
+        Random rand = new Random(System.currentTimeMillis());
+        StringBuilder verifyCode = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            verifyCode.append(sources.charAt(rand.nextInt(codesLen - 1)));
+        }
+        return verifyCode.toString();
+    }
+
     /**
      * 返回的范围是[0,num)
      *

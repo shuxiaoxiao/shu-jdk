@@ -1,12 +1,16 @@
 package com.shuframework.jdkutil.lang;
 
+import com.shuframework.jdkutil.SystemUtil;
 import com.shuframework.jdkutil.enums.SeparatorTypeEnum;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * String 的工具类
+ * 字符串，数组，集合的转换在 ArrayConvertUtil类
  * 
  * @author shuheng
  */
@@ -20,8 +24,8 @@ public class StringUtil {
 	public final static String TYPE_SUFFIX = "suffix";
 	/** 默认分隔符（,） */
 	private static final String SEPARATOR_DEFAULT = SeparatorTypeEnum.COMMA.getValue();
-	/** 点（.） */
-	private static final String SEPARATOR_POINT = SeparatorTypeEnum.POINT.getValue();
+//	/** 点（.） */
+//	private static final String SEPARATOR_POINT = SeparatorTypeEnum.POINT.getValue();
 	
 	/**
 	 * 获得文件后缀, ""表示无后缀,如返回doc 或 xls等
@@ -146,7 +150,6 @@ public class StringUtil {
 		if(isEmpty(str)){
 			return num;
 		}
-		
 		return str;
 	}
 	
@@ -411,5 +414,5 @@ public class StringUtil {
 		sb.append(str.substring(1));
 		return sb.toString();
 	}
-    
+
 }

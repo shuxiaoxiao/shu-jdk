@@ -1,4 +1,4 @@
-package com.shuframework.jdkutil.reflect;
+package com.shuframework.jdkutil;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -60,7 +60,7 @@ public class MyBeanUtil {
 	/**
 	 * 获得内省PropertyDescriptor对象
 	 * 
-	 * @param bean
+	 * @param clazz
 	 * @param propertyName
 	 * @return
 	 */
@@ -179,7 +179,7 @@ public class MyBeanUtil {
 	/**
 	 * 设置Bean属性（建议不用这个）
 	 * 
-	 * @param bean
+	 * @param clazz
 	 * @param propertyName	属性名
 	 * @param value		属性值
 	 */
@@ -281,51 +281,7 @@ public class MyBeanUtil {
 		}
 		return null;
 	}
-	
-	/**
-	 * 是否是数字, 是数字返回true
-	 * 
-	 * @param classType
-	 * @return
-	 */
-	public static boolean isNumber(Class classType) {
-		boolean flag = false;
-		if (classType == Float.class || classType == Double.class || classType == BigDecimal.class
-				|| classType == Long.class || classType == Integer.class || classType == Short.class || classType == Byte.class) {
-			flag = true;
-		}
-		return flag;
-	}
-	
-	/**
-	 * 是否是整数 （包括Integer, Long, BigDecimal）
-	 * 是整数返回true
-	 * 
-	 * @param classType
-	 * @return
-	 */
-	public static boolean isIntegerNumber(Class classType){
-		boolean flag = false;
-		if (classType == Integer.class || classType == Long.class || classType == Short.class || classType == Byte.class) {
-			flag = true;
-		}
-		return flag;
-	}
-	
-	/**
-	 * 是否的浮点数 （包括Float, Double, BigDecimal）
-	 * 是浮点数返回true
-	 * 
-	 * @param classType
-	 * @return
-	 */
-	public static boolean isFloatingNumber(Class classType) {
-		boolean flag = false;
-		if (classType == Float.class || classType == Double.class || classType == BigDecimal.class) {
-			flag = true;
-		}
-		return flag;
-	}
+
 	
 	/**
 	 * 拷贝对象, src对象的属性 不能比dist对象 多
@@ -376,17 +332,19 @@ public class MyBeanUtil {
 
 	
 	/**
-	 * 深度复制, 利用流的 序列化和反序列化
-	 * 
+	 * 深度复制, 利用流的 序列化和反序列化, 返回的结果与参数类型一致，注意类型转换异常的问题
+	 * 注意obj 必须实现Serializable接口
+	 *
 	 * @param src
-	 * @param dist
 	 */
-	public static void deepCopy(Object src, Object dist) {
+	public static Object deepCopy(Object src) {
+		Object dist = null;
 		try {
 			dist = FileUtil.deepCopy(src);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+		return dist;
 	}
 	
 	/**

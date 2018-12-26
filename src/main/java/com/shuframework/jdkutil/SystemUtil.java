@@ -66,15 +66,35 @@ public class SystemUtil {
 			return null;
 		}
 	}
-	    
-    //产生验证码，根据用户手机号保存到数据库，然后拿出数据与参数进行比较
+
+	/**
+	 * 生成6位数字验证码，根据用户手机号保存到数据库，然后拿出数据与参数进行比较
+	 */
     public static Integer verifyCode(){
     	//生成的随机数是线性可预测的
     	return RandomUtil.randomByLength(6);
     }
 
 	/**
-	 * 获得订单编码
+	 * 生成6位验证码含字母和数字
+	 */
+	public static String verifyCodeHasLetter(){
+		//生成的随机数是线性可预测的
+		return RandomUtil.verifyCodeHasLetter(6);
+	}
+
+	/**
+	 * 生成几位验证码含字母和数字
+	 * @param length
+	 * @return
+	 */
+	public static String verifyCodeHasLetter(int length){
+		//生成的随机数是线性可预测的
+		return RandomUtil.verifyCodeHasLetter(length);
+	}
+
+	/**
+	 * 获得订单编码(用idwork算法)
 	 * @return
 	 */
 	public static String getOrderCode(){

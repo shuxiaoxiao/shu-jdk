@@ -1,5 +1,9 @@
 package com.shuframework.jdkutil.collection;
 
+import com.shuframework.jdkutil.SystemUtil;
+import com.shuframework.jdkutil.ValidateUtil;
+import com.shuframework.jdkutil.lang.StringUtil;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,16 +11,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import com.shuframework.jdkutil.SystemUtil;
-import com.shuframework.jdkutil.SystemUtil;
-import com.shuframework.jdkutil.ValidateUtil;
-import com.shuframework.jdkutil.lang.StringUtil;
-
 /**
  * 数组转换工具类
  * 	array、 String、 list之间的转换
  *
- * @author shu
+ * @author shuheng
  */
 public class ArrayConvertUtil {
 	
@@ -32,13 +31,12 @@ public class ArrayConvertUtil {
 	 * @return
 	 */
 	public static String toString(final Object[] array) {
-//		if (SystemUtil.isEmpty(array))	return "[]";
 		if (SystemUtil.isEmpty(array)) {
 			return "[]";
 		}
 
-		// String str = StringUtil.join(array, SEPARATOR_DEFAULT);//[x1,x2]
-		String str = StringUtil.join(array, SEPARATOR_DEFAULT_HAVEBLANK);// [x1, x2]
+		// String str = StringUtil.join(array, SEPARATOR_DEFAULT);//x1,x2
+		String str = StringUtil.join(array, SEPARATOR_DEFAULT_HAVEBLANK);//x1, x2
 		StringBuilder sb = new StringBuilder(str.length() + 2);
 		sb.append("[");
 		sb.append(str);
@@ -54,7 +52,6 @@ public class ArrayConvertUtil {
      */
     @Deprecated
     public static String toString2(final Object[] array) {
-//    	if(SystemUtil.isEmpty(array))	return "[]";
     	if(SystemUtil.isEmpty(array)){
     		return "[]";
     	}
@@ -84,7 +81,6 @@ public class ArrayConvertUtil {
 	 */
     @Deprecated
     public static String toString(final Collection<?> collection) {
-//    	if(SystemUtil.isEmpty(collection))	return "[]";
     	if(SystemUtil.isEmpty(collection)){
     		return "[]";
     	}
@@ -114,12 +110,11 @@ public class ArrayConvertUtil {
      * @return
      */
     public static String array2Str(final Object[] array) {
-//    	if(SystemUtil.isEmpty(array))	return "";
     	if(SystemUtil.isEmpty(array)){
     		return "[]";
     	}
-    	String str = StringUtil.join(array, SEPARATOR_DEFAULT);//[x1,x2]
-//    	String str = StringUtil.join(array, SEPARATOR_DEFAULT_HAVEBLANK);//[x1, x2]
+    	String str = StringUtil.join(array, SEPARATOR_DEFAULT);//x1,x2
+//    	String str = StringUtil.join(array, SEPARATOR_DEFAULT_HAVEBLANK);//x1, x2
     	return str;
     }
     
@@ -136,18 +131,6 @@ public class ArrayConvertUtil {
     	return Arrays.asList(array);
     }
     
-//    /**
-//     * 数组转成可变长度的集合 (实质是创建集合循环add)
-//     * 
-//     * @param array
-//     * @param list
-//     * @return
-//     */
-//    public static <T> void array2ListOfVar(final T[] array, List<T> list) {
-//    	for (T value : array) {
-//    		list.add(value);
-//    	}
-//    }
     /**
      * 数组转成可变长度的集合 (实质是创建集合循环add)
      * 
@@ -164,16 +147,15 @@ public class ArrayConvertUtil {
     }
     
     /**
-     * 集合转成String 得到的格式是 "x1,x2", 注意各集合的特别，特别是存储顺序和取出顺序是否一致
+     * 集合转成String得到的格式是 "x1,x2", 注意各集合的特别，特别是存储顺序和取出顺序是否一致
      * 
      * @param collection
      * @return
      */
     public static String collection2Str(final Collection<?> collection) {
-    	if(SystemUtil.isEmpty(collection))	return "";
-//    	if(SystemUtil.isEmpty(collection)){
-//    		return "[]";
-//    	}
+    	if(SystemUtil.isEmpty(collection)){
+    		return "";
+    	}
     	
     	Iterator<?> it = collection.iterator();
     	StringBuilder sb = new StringBuilder();
@@ -186,6 +168,7 @@ public class ArrayConvertUtil {
 //            sb.append(SEPARATOR_DEFAULT_HAVEBLANK);
             sb.append(SEPARATOR_DEFAULT);
 		}
+
     }
     
     /**
@@ -295,21 +278,21 @@ public class ArrayConvertUtil {
     	return list;
     }
     
-    /** 
-     * 这个只是提供一种思路
-     * 
-     * @param str
-     * @return
-     */
-    @Deprecated
-    public static List<String> str2ListOfVar2(final String str) {
-    	List<String> fixedList = str2ListOfFixed(str);
-    	int size = Math.min(fixedList.size() * 2, 10);
-    	List<String> list = new ArrayList<>(size);
-    	//这个的实质是对数组进行copy
-    	list.addAll(fixedList);
-    	
-    	return list;
-    }
+//    /**
+//     * 这个只是提供一种思路
+//     *
+//     * @param str
+//     * @return
+//     */
+//    @Deprecated
+//    public static List<String> str2ListOfVar2(final String str) {
+//    	List<String> fixedList = str2ListOfFixed(str);
+//    	int size = Math.min(fixedList.size() * 2, 10);
+//    	List<String> list = new ArrayList<>(size);
+//    	//这个的实质是对数组进行copy
+//    	list.addAll(fixedList);
+//
+//    	return list;
+//    }
 
 }

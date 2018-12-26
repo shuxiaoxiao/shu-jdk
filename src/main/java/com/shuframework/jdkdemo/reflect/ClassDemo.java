@@ -1,4 +1,4 @@
-package com.shuframework.jdkutil.reflect;
+package com.shuframework.jdkdemo.reflect;
 
 import org.junit.Test;
 

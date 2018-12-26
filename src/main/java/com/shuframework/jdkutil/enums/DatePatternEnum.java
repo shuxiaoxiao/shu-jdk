@@ -6,7 +6,7 @@ package com.shuframework.jdkutil.enums;
  * @author shu
  *
  */
-public enum DateEnum {
+public enum DatePatternEnum {
 
 	YM("yyyy-MM", "年-月"),
 	MD("MM-dd", "月-日"),
@@ -21,7 +21,7 @@ public enum DateEnum {
 	private String code;
 	private String msg;
 
-	DateEnum(String code, String msg) {
+	DatePatternEnum(String code, String msg) {
 		this.code = code;
 		this.msg = msg;
 	}

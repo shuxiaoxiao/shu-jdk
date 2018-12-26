@@ -67,6 +67,6 @@ public class BookInfo5 implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "BookInfo [id=" + id + ", name=" + name + "]";
+		return "BookInfo5 [id=" + id + ", name=" + name + "]";
 	}
 }

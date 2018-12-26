@@ -37,6 +37,6 @@ public class BookInfo3 implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "BookInfo [id=" + id + ", name=" + name + "]";
+		return "BookInfo3 [id=" + id + ", name=" + name + "]";
 	}
 }

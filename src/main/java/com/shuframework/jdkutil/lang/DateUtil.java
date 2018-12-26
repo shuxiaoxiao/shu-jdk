@@ -1,7 +1,6 @@
 package com.shuframework.jdkutil.lang;
 
-import com.shuframework.jdkdemo.lang.DateTimeEnum;
-import com.shuframework.jdkutil.enums.DateEnum;
+import com.shuframework.jdkutil.enums.DatePatternEnum;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -103,7 +102,7 @@ public class DateUtil {
      */
     public static String today2Str() {
         Date date = new Date();
-        return dateToStr(date, DateEnum.YMD_HMS_.getCode());
+        return dateToStr(date, DatePatternEnum.YMD_HMS_.getCode());
     }
 
     /**
@@ -111,7 +110,7 @@ public class DateUtil {
      *
      * @return
      */
-    public static String today2Str(DateEnum dateEnum) {
+    public static String today2Str(DatePatternEnum dateEnum) {
         Date date = new Date();
         return dateToStr(date, dateEnum.getCode());
     }
