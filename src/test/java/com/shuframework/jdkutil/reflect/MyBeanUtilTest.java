@@ -6,7 +6,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.shuframework.jdkutil.lang.DateFormatUtil;
+import com.shuframework.jdkdemo.lang.DateFormatUtil;
 import com.shuframework.testmodel.BookInfo;
 import com.shuframework.testmodel.BookInfo2;
 

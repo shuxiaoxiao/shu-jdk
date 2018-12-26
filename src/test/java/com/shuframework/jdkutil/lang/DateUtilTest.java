@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.shuframework.jdkdemo.lang.DateFormatUtil;
 import org.junit.Test;
 
 public class DateUtilTest {
@@ -156,6 +157,9 @@ public class DateUtilTest {
 		Date date = DateFormatUtil.strToDate("2016-6-8 11:03:20");
 		Date firstDayOfYear = DateUtil.getFirstDayOfYear(date);
 		System.out.println(DateFormatUtil.dateToStr(firstDayOfYear));
+
+		Date newDate1 =  DateUtil.getFirstDayOfMonth(date, 1);
+		System.out.println(DateFormatUtil.dateToStr(newDate1));
 	}
 
 	@Test

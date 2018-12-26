@@ -3,6 +3,7 @@ package com.shuframework.jdkutil.io;
 import java.io.FileReader;
 import java.io.IOException;
 
+import com.shuframework.jdkdemo.io.MyBufferedReader;
 import org.junit.Test;
 
 public class MyBufferedReaderTest {
