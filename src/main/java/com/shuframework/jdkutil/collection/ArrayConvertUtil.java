@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import com.shuframework.jdkutil.SystemUtil;
+import com.shuframework.jdkutil.SystemUtil;
 import com.shuframework.jdkutil.ValidateUtil;
 import com.shuframework.jdkutil.lang.StringUtil;
 
@@ -30,8 +32,8 @@ public class ArrayConvertUtil {
 	 * @return
 	 */
 	public static String toString(final Object[] array) {
-//		if (ValidateUtil.isEmpty(array))	return "[]";
-		if (ValidateUtil.isEmpty(array)) {
+//		if (SystemUtil.isEmpty(array))	return "[]";
+		if (SystemUtil.isEmpty(array)) {
 			return "[]";
 		}
 
@@ -52,8 +54,8 @@ public class ArrayConvertUtil {
      */
     @Deprecated
     public static String toString2(final Object[] array) {
-//    	if(ValidateUtil.isEmpty(array))	return "[]";
-    	if(ValidateUtil.isEmpty(array)){
+//    	if(SystemUtil.isEmpty(array))	return "[]";
+    	if(SystemUtil.isEmpty(array)){
     		return "[]";
     	}
     	
@@ -82,8 +84,8 @@ public class ArrayConvertUtil {
 	 */
     @Deprecated
     public static String toString(final Collection<?> collection) {
-//    	if(ValidateUtil.isEmpty(collection))	return "[]";
-    	if(ValidateUtil.isEmpty(collection)){
+//    	if(SystemUtil.isEmpty(collection))	return "[]";
+    	if(SystemUtil.isEmpty(collection)){
     		return "[]";
     	}
     	
@@ -112,8 +114,8 @@ public class ArrayConvertUtil {
      * @return
      */
     public static String array2Str(final Object[] array) {
-//    	if(ValidateUtil.isEmpty(array))	return "";
-    	if(ValidateUtil.isEmpty(array)){
+//    	if(SystemUtil.isEmpty(array))	return "";
+    	if(SystemUtil.isEmpty(array)){
     		return "[]";
     	}
     	String str = StringUtil.join(array, SEPARATOR_DEFAULT);//[x1,x2]
@@ -168,8 +170,8 @@ public class ArrayConvertUtil {
      * @return
      */
     public static String collection2Str(final Collection<?> collection) {
-    	if(ValidateUtil.isEmpty(collection))	return "";
-//    	if(ValidateUtil.isEmpty(collection)){
+    	if(SystemUtil.isEmpty(collection))	return "";
+//    	if(SystemUtil.isEmpty(collection)){
 //    		return "[]";
 //    	}
     	
@@ -237,7 +239,7 @@ public class ArrayConvertUtil {
 			throw new IllegalArgumentException("字符串格式是x1" + separator + "x2");
 		}
 
-		if (ValidateUtil.isEmpty(str))
+		if (SystemUtil.isEmpty(str))
 			return null;
 
 		String[] strArr = str.split(separator);

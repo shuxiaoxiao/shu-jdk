@@ -14,6 +14,9 @@ import java.math.BigDecimal;
  * @author shuheng
  */
 public class BigDecimalUtil {
+
+	private BigDecimalUtil(){}
+
 	/** 字符串默认值为0 */
 	private static final String STR_VALUE_0 = "0";
 	/** 字符串默认值为1 */

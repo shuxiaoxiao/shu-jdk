@@ -1,18 +1,23 @@
 package com.shuframework.jdkutil;
 
-import com.shuframework.jdkutil.lang.DateFormatUtil;
+import com.shuframework.jdkutil.lang.DateUtil;
 import com.shuframework.jdkutil.lang.StringUtil;
 import com.shuframework.jdkutil.random.RandomUtil;
+
+import java.util.Collection;
+import java.util.Map;
 
 
 /**
  * 系统通用的判断<br>
  * 1.大部分类型 判断是否为null或为空
  * 2.手动生成的id，主要用于编码或主键
- * @author shu
+ * @author shuheng
  *
  */
 public class SystemUtil {
+
+	private SystemUtil(){}
 
 	/**
 	 * 获得36位长度的字符串, 里面包含字符 "-"
@@ -42,22 +47,12 @@ public class SystemUtil {
 	 * 
 	 * @param @param length 	随机位长度
 	 */
-	public static String getRandomId2(int length) {
-		
-		return DateFormatUtil.today2YyMMddHHmmss() + RandomUtil.randomByLength(length);
+	public static String getRandomId(int length) {
+		return DateUtil.today2Str() + RandomUtil.randomByLength(length);
 	}
 
 	/**
-	 * 返回(15+length)位随机数, 组成格式：当前日期（yyMMddHHmmssSSS）+ length位随机数
-	 * 
-	 * @param @param length 	随机位长度
-	 */
-	public static String getRandomId3(int length) {
-		return DateFormatUtil.today2YyMMddHHmmssSSS() + RandomUtil.randomByLength(length);
-	}
-
-	/**
-	 * 文件重命名（20位+后缀），组成格式：当前日期（yyMMddHHmmssSSS）+ 5位随机数
+	 * 文件重命名（18位+后缀），组成格式：当前日期（yyMMddHHmmss）+ 6位随机数
 	 * null表示重命名失败，无后缀
 	 * （由于依赖生成id 所以没放入StringUtil）
 	 * 
@@ -66,7 +61,7 @@ public class SystemUtil {
 	public static String getNewFileName(String oldFileName) {
 		String suffix = StringUtil.getSuffixHasPoint(oldFileName);
 		if(suffix != null){
-			return getRandomId3(5) + suffix;
+			return getRandomId(6) + suffix;
 		}else{
 			return null;
 		}
@@ -86,7 +81,152 @@ public class SystemUtil {
     	//TODO 获得订单编码
     	return "";
     }
-	
+
+
+	/**
+	 * 判断str是否为null或空串（去空格了）,是返回 true
+	 *
+	 * @param str
+	 */
+	public static boolean isEmpty(String str){
+		//当str = null时为true，后面的不执行了，所以str = null时不会执行trim()，所以就没问题
+		return str == null || str.trim().length() == 0;
+	}
+	/**
+	 * 判断str是否不为null或非空串（已去空格），是返回 true
+	 *
+	 * @param str
+	 */
+	public static boolean isNotEmpty(String str){
+		return !isEmpty(str);
+	}
+
+
+	/**
+	 * 判断str是否为null或空串（没有去空格）,是返回 true
+	 *
+	 * @param str
+	 */
+	public static boolean isEmptyUnTrim(String str){
+		//当str = null时为true，后面的不执行了，所以str = null时不会执行length()，所以就没问题
+		return str == null || str.length() == 0;
+	}
+	/**
+	 * 判断str是否不为null或非空串（去空格了），是返回 true
+	 *
+	 * @param str
+	 */
+	public static boolean isNotEmptyUnTrim(String str){
+		return !isEmptyUnTrim(str);
+	}
+
+
+	/**
+	 * 判断集合是否为null或空,是返回 true.
+	 * 包含List、Set
+	 *
+	 * @param collection
+	 */
+	public static boolean isEmpty(Collection<?> collection){
+		return collection == null || collection.size() == 0;
+//		//isEmpty的底层就是判断的size
+//		return collection == null || collection.isEmpty();
+	}
+	/**
+	 * 判断集合是否不为null或非空，是返回 true.
+	 * 包含List、Set
+	 *
+	 * @param collection
+	 */
+	public static boolean isNotEmpty(Collection<?> collection){
+		return !isEmpty(collection);
+	}
+
+
+	/**
+	 * 判断数组对象 是否为null或空,是返回 true
+	 *
+	 * @param array
+	 */
+	public static <T> boolean isEmpty(T[] array) {
+		return array == null || array.length == 0;
+	}
+
+	/**
+	 * 判断数组对象 是否不为null或非空，是返回 true
+	 *
+	 * @param array
+	 */
+	public static <T> boolean isNotEmpty(T[] array) {
+		return !isEmpty(array);
+	}
+
+
+	/**
+	 * 判断map对象 是否为null或空,是返回 true
+	 *
+	 * @param map
+	 */
+	public static boolean isEmpty(Map<?, ?> map) {
+		return (map == null || map.size() == 0);
+		//isEmpty的底层就是判断的size
+//        return (map == null || map.isEmpty());
+	}
+	/**
+	 * 判断map对象 是否不为null或非空,是返回 true
+	 *
+	 * @param map
+	 */
+	public static boolean isNotEmpty(Map<?, ?> map) {
+		return !isEmpty(map);
+	}
+
+
+	/**
+	 * 判断数字类型对象 是否为null或0,是返回 true.
+	 * 包含Integer、Long
+	 *
+	 * @param num
+	 */
+	public static boolean isEmpty(Number num) {
+//		return (num == null || num.equals(0));//Long时返回false
+//		return (num == null || num.equals(0L));//Integer时返回false
+//		return (num == null || num.toString().equals(0));//返回都是false
+		return (num == null || num.toString().equals("0"));
+	}
+	/**
+	 * 判断数字类型对象 是否不为null或非0,是返回 true.
+	 * 包含Integer、Long
+	 *
+	 * @param num
+	 */
+	public static boolean isNotEmpty(Number num) {
+		return !isEmpty(num);
+	}
+
+	/**
+	 * 检查字符串长度,true表示未通过（不满足）,false表示通过
+	 * 如果required=true 则会判断不为空,长度是否满足
+	 *
+	 * @param str
+	 * @param required	是否必填
+	 * @param limitLength 长度
+	 * @return
+	 */
+	public static boolean checkStrLength(String str, boolean required, int limitLength){
+		boolean flag = true;
+		if(isNotEmpty(str)){
+			if (str.length() <= limitLength){
+				flag = false;
+			}
+		}else{
+			if (!required){//非必填直接过
+				flag = false;
+			}
+		}
+		return flag;
+	}
+
 	/**
 	 * bool转成int
 	 * @param bool

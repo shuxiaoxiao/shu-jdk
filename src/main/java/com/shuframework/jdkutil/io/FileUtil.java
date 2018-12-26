@@ -37,24 +37,23 @@ public class FileUtil {
 	
 	private static final String DEFAULT_ENCODING = CharsetConstant.CHARSET_UTF8;
 	
-//	/**
-//	 * 这个方法建议直接调用file.exists()
-//	 * @param file
-//	 * @return
-//	 */
-//	public static boolean isExist(File file){
-//		return file.exists();
-//	}
-//	
-//	/**
-//	 * 判断文件是否存在
-//	 * @param filePath
-//	 * @return
-//	 */
-//	public static boolean isExist(String filePath){
-//		
-//		return new File(filePath).exists();
-//	}
+	/**
+	 * 这个方法建议直接调用file.exists()
+	 * @param file
+	 * @return
+	 */
+	public static boolean isExist(File file){
+		return file.exists();
+	}
+
+	/**
+	 * 判断文件是否存在
+	 * @param filePath
+	 * @return
+	 */
+	public static boolean isExist(String filePath){
+		return new File(filePath).exists();
+	}
 
 	
 	/**
@@ -417,38 +416,7 @@ public class FileUtil {
 		
 		return objInput.readObject();
 	}
-	
 
-	/**
-	 * 图片BASE64 编码
-	 * 
-	 * @param picPath
-	 * @return
-	 * @throws IOException 
-	 */
-	public static String getPicBASE64(String picPath) throws IOException {
-		FileInputStream fis = new FileInputStream(picPath);
-		byte[] bytes = new byte[fis.available()];
-		fis.read(bytes);
-		String content = new sun.misc.BASE64Encoder().encode(bytes); // 具体的编码方法
-		fis.close();
-		
-		return content;
-	}
-
-	/**
-	 * 图片BASE64 编码
-	 * 
-	 * @param base64str
-	 * @param outPicPath
-	 * @throws IOException 
-	 */
-	public static void getPicFromBASE64(String base64str, String outPicPath) throws IOException {
-		byte[] result = new sun.misc.BASE64Decoder().decodeBuffer(base64str.trim());
-		FileOutputStream fos = new FileOutputStream(outPicPath); // r,rw,rws,rwd
-		fos.write(result);
-		fos.close();
-	}
 	
 	/**
 	 * 删除单个文件

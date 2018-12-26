@@ -1,7 +1,5 @@
 package com.shuframework.jdkutil;
 
-import java.util.Collection;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import com.shuframework.jdkutil.exception.UtilException;
@@ -29,216 +27,7 @@ import com.shuframework.jdkutil.exception.UtilException;
 public class ValidateUtil {
 	
 	private ValidateUtil(){}
-		
-	/**
-	 * 判断str是否为null或空串（去空格了）,是返回 true
-	 * 
-	 * @param str
-	 */
-	public static boolean isEmpty(String str){
-		//当str = null时为true，后面的不执行了，所以str = null时不会执行trim()，所以就没问题
-		return str == null || str.trim().length() == 0;
-	}
-	/**
-	 * 判断str是否不为null或非空串（已去空格），是返回 true
-	 * 
-	 * @param str
-	 */
-	public static boolean isNotEmpty(String str){
-		return !isEmpty(str);
-	}
-	
-	/**
-	 * 判断str是否为null或空串（没有去空格）,是返回 true
-	 * 
-	 * @param str
-	 */
-	public static boolean isEmptyUnTrim(String str){
-		//当str = null时为true，后面的不执行了，所以str = null时不会执行length()，所以就没问题
-		return str == null || str.length() == 0;
-	}
-	/**
-	 * 判断str是否不为null或非空串（去空格了），是返回 true
-	 * 
-	 * @param str
-	 */
-	public static boolean isNotEmptyUnTrim(String str){
-		return !isEmptyUnTrim(str);
-	}
-	
-	/**
-	 * 判断集合是否为null或空,是返回 true
-	 * 
-	 * @param collection
-	 */
-	public static boolean isEmpty(Collection<?> collection){
-		return collection == null || collection.size() == 0;
-//		//isEmpty的底层就是判断的size
-//		return collection == null || collection.isEmpty();
-	}
-	/**
-	 * 判断集合是否不为null或非空，是返回 true
-	 * 
-	 * @param collection
-	 */
-	public static boolean isNotEmpty(Collection<?> collection){
-		return !isEmpty(collection);
-	}
-	
-//	/**
-//	 * 判断list是否为null或空,是返回 true
-//	 * 
-//	 * @param list
-//	 */
-//	public static boolean isEmpty(List<?> list){
-//		return list == null || list.size() == 0;
-//	}
-//	/**
-//	 * 判断list是否不为null或非空串（去空格了），是返回 true
-//	 * 
-//	 * @param list
-//	 */
-//	public static boolean isNotEmpty(List<?> list){
-//		return !isEmpty(list);
-//	}
-	
-	/**
-	 * 判断数组对象 是否为null或空,是返回 true
-	 * 
-	 * @param array
-	 */
-	public static <T> boolean isEmpty(T[] array) {
-		return array == null || array.length == 0;
-	}
 
-	/**
-	 * 判断数组对象 是否不为null或非空，是返回 true
-	 * 
-	 * @param array
-	 */
-	public static <T> boolean isNotEmpty(T[] array) {
-		return !isEmpty(array);
-	}
-	
-//	//与上面差不多，因为Object是所有类的父类
-//	/**
-//	 * 判断数组对象 是否为null或空,是返回 true
-//	 * 
-//	 * @param array
-//	 */
-//	public static boolean isEmpty(Object[] array){
-//		return array == null || array.length == 0;
-//	}
-//	/**
-//	 * 判断数组对象 是否不为null或非空，是返回 true
-//	 * 
-//	 * @param array
-//	 */
-//	public static boolean isNotEmpty(Object[] array){
-//		return !isEmpty(array);
-//	}
-	
-	/**
-	 * 判断map对象 是否为null或空,是返回 true
-	 * 
-	 * @param map
-	 */
-    public static boolean isEmpty(Map<?, ?> map) {
-    	return (map == null || map.size() == 0);
-    	//isEmpty的底层就是判断的size
-//        return (map == null || map.isEmpty());
-    }
-    /**
-     * 判断map对象 是否不为null或非空,是返回 true
-     * 
-     * @param map
-     */
-    public static boolean isNotEmpty(Map<?, ?> map) {
-    	return !isEmpty(map);
-    }
-    
-
-	/**
-	 * 判断数字类型对象 是否为null或0,是返回 true
-	 * 包含Integer、Long
-	 * 
-	 * @param num
-	 */
-	public static boolean isEmpty(Number num) {
-//		return (num == null || num.equals(0));//Long时返回false
-//		return (num == null || num.equals(0L));//Integer时返回false
-//		return (num == null || num.toString().equals(0));//返回都是false
-		return (num == null || num.toString().equals("0"));
-	}
-	/**
-	 * 判断数字类型对象 是否不为null或非0,是返回 true
-	 * 包含Integer、Long
-	 *
-	 * @param num
-	 */
-	public static boolean isNotEmpty(Number num) {
-		return !isEmpty(num);
-	}
-	
-//	/**
-//	 * 判断Integer对象 是否为null或0,是返回 true
-//	 *
-//	 * @param intNum
-//	 */
-//	public static boolean isEmpty(Integer intNum) {
-//		return (intNum == null || intNum == 0);
-//	}
-//	/**
-//	 * 判断Integer对象 是否不为null或非0,是返回 true
-//	 *
-//	 * @param intNum
-//	 */
-//	public static boolean isNotEmpty(Integer intNum) {
-//		return !isEmpty(intNum);
-//	}
-//
-//	/**
-//	 * 判断Long对象 是否为null或0,是返回 true
-//	 *
-//	 * @param longNum
-//	 */
-//	public static boolean isEmpty(Long longNum) {
-//		return (longNum == null || longNum == 0);
-//	}
-//	/**
-//	 * 判断Long对象 是否不为null或非0,是返回 true
-//	 *
-//	 * @param longNum
-//	 */
-//	public static boolean isNotEmpty(Long longNum) {
-//		return !isEmpty(longNum);
-//	}
-	
-	
-	/**
-	 * 检查字符串长度，true表示未通过（不满足），false表示通过
-	 * 如果required = true 则会判断不为空， 长度是否满足
-	 *
-	 * @param str
-	 * @param required	是否必填
-	 * @param limitLength 长度
-	 * @return
-	 */
-	public static boolean checkStrLength(String str, boolean required, int limitLength){
-		boolean flag = true;
-		if(isNotEmpty(str)){
-			if (str.length() <= limitLength){
-				flag = false;
-			}
-		}else{
-			if (!required){//非必填直接过
-				flag = false;
-			}
-		}
-		return flag;
-	}
-	
-	
 /////////====== 类似表单校验 ======
 	
 	public enum NumberTypeEnnm {
@@ -246,9 +35,9 @@ public class ValidateUtil {
 		NEGATIVE("负数", "-"),
 		ALL("正数或负数", "([+-]?)"),
 		
-//		INTEGER("整数"),
-//		FLOAT("小数"),
-//		NUMBER("数字")
+//		INTEGER("整数", ""),
+//		FLOAT("小数", ""),
+//		NUMBER("数字", "")
 		;
 		
 		private String msg;
@@ -273,7 +62,7 @@ public class ValidateUtil {
 	private static final String V_INTEGER = "-?[1-9]\\d*";
 
 	/** 正整数 */
-	private static final String V_Z_INDEX = "[1-9]\\d*";
+	private static final String V_POSITIVE_INDEX = "[1-9]\\d*";
 
 	/** 负整数 */
 	private static final String V_NEGATIVE_INTEGER = "-[1-9]\\d*";
@@ -377,8 +166,8 @@ public class ValidateUtil {
      * @param value 要验证的字符串 
      * @return  如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
      */  
-	public static boolean Z_index(String value) {
-		return match(V_Z_INDEX, value);
+	public static boolean isPositiveInteger(String value) {
+		return match(V_POSITIVE_INDEX, value);
 	}
   
     /** 
@@ -386,7 +175,7 @@ public class ValidateUtil {
      * @param value 要验证的字符串 
      * @return  如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
      */  
-	public static boolean Negative_integer(String value) {
+	public static boolean isNegativeInteger(String value) {
 		return match(V_NEGATIVE_INTEGER, value);
 	}
   
@@ -422,7 +211,7 @@ public class ValidateUtil {
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
      */  
-	public static boolean Is31Days(String value) {
+	public static boolean is31Days(String value) {
 		return match(V_31DAYS, value);
 	}
   
@@ -543,8 +332,7 @@ public class ValidateUtil {
 		return match(regex, value);
 	}
 	
-	
-//    /** 
+//    /**
 //     * 验证非正浮点数 
 //     * @param value 要验证的字符串 
 //     * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
@@ -598,8 +386,7 @@ public class ValidateUtil {
 		return match(V_LETTER_I, value);
 	}
   
-  
-    /** 
+    /**
      * 验证是不是大写字母 
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
@@ -617,12 +404,21 @@ public class ValidateUtil {
 	public static boolean isMobilePhone(String value) {
 		return match(V_MOBILE_PHONE, value);
 	}
-  
-    /** 
+
+	/**
+	 * 验证电话
+	 * @param value 要验证的字符串
+	 * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
+	 */
+	public static boolean isTelPhone(String value) {
+		return match(V_TEL_PHONE, value);
+	}
+
+	/**
      * 验证非空 
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
+     */
 //	public static boolean isNotEmpty(String value) {
 //		return match(V_NOTEMPTY, value);
 //	}
@@ -650,7 +446,7 @@ public class ValidateUtil {
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
      */  
-	public static boolean picture(String value) {
+	public static boolean isPicture(String value) {
 		return match(V_PICTURE, value);
 	}
   
@@ -659,7 +455,7 @@ public class ValidateUtil {
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
      */  
-	public static boolean QQnumber(String value) {
+	public static boolean isQQnumber(String value) {
 		return match(V_QQ_NUMBER, value);
 	}
   
@@ -668,27 +464,16 @@ public class ValidateUtil {
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
      */  
-	public static boolean Rar(String value) {
+	public static boolean isRar(String value) {
 		return match(V_RAR, value);
 	}
-  
-    /** 
-     * 验证电话 
-     * @param value 要验证的字符串 
-     * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
-     */  
-	public static boolean Tel(String value) {
-		return match(V_TEL_PHONE, value);
-	}
-  
 
-  
     /** 
      * 验证URL 
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
      */  
-	public static boolean Url(String value) {
+	public static boolean isUrl(String value) {
 		return match(V_URL, value);
 	}
   
@@ -697,7 +482,7 @@ public class ValidateUtil {
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
      */  
-	public static boolean UserName(String value) {
+	public static boolean isUserName(String value) {
 		return match(V_USERNAME, value);
 	}
   
@@ -706,7 +491,7 @@ public class ValidateUtil {
      * @param value 要验证的字符串 
      * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b> 
      */  
-	public static boolean Zipcode(String value) {
+	public static boolean isZipcode(String value) {
 		return match(V_ZIPCODE, value);
 	}
 	

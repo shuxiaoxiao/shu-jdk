@@ -1,4 +1,4 @@
-package com.shuframework.jdkutil.io.demo;
+package com.shuframework.jdkdemo.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

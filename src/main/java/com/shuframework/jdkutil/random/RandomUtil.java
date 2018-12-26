@@ -9,7 +9,7 @@ import com.shuframework.jdkutil.lang.StringUtil;
  * 底层都是java.util.Random类, 线程安全, 但是多线程下可能性能比较低, 因为Random用了很多CAS的类，ThreadLocalRandom根本没有用到 <br/>
  * 生成的随机数是线性可预测的, 所以在安全性要求比较高的场合，应当使用SecureRandom。
  *
- * @author shu
+ * @author shuheng
  */
 public class RandomUtil {
 

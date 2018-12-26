@@ -8,10 +8,12 @@ import java.util.Iterator;
 /**
  * String 的工具类
  * 
- * @author shu
+ * @author shuheng
  */
 public class StringUtil {
-	
+
+	private StringUtil(){}
+
 	/** 前缀 */
 	public final static String TYPE_PREFIX = "prefix";
 	/** 后缀 */

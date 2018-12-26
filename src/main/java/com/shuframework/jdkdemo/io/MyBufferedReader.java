@@ -1,4 +1,4 @@
-package com.shuframework.jdkutil.io;
+package com.shuframework.jdkdemo.io;
 
 import java.io.IOException;
 import java.io.Reader;

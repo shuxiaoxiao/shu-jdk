@@ -2,6 +2,9 @@ package com.shuframework.jdkutil.codec;
 
 import com.shuframework.jdkutil.constant.CharsetConstant;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
@@ -60,6 +63,41 @@ public class Base64Util {
         }
         return str;
     }
+
+
+    /**
+     * 图片BASE64 编码
+     *
+     * @param picPath
+     * @return
+     * @throws IOException
+     */
+    public static String getPicBASE64(String picPath) throws IOException {
+        FileInputStream fis = new FileInputStream(picPath);
+        byte[] bytes = new byte[fis.available()];
+        fis.read(bytes);
+//        String content = new sun.misc.BASE64Encoder().encode(bytes); // 具体的编码方法
+        String content = Base64.getEncoder().encodeToString(bytes); // 具体的编码方法
+        fis.close();
+
+        return content;
+    }
+
+    /**
+     * 图片BASE64 编码
+     *
+     * @param base64str
+     * @param outPicPath
+     * @throws IOException
+     */
+    public static void getPicFromBASE64(String base64str, String outPicPath) throws IOException {
+//        byte[] result = new sun.misc.BASE64Decoder().decodeBuffer(base64str.trim());
+        byte[] result = Base64.getDecoder().decode(base64str.trim());
+        FileOutputStream fos = new FileOutputStream(outPicPath); // r,rw,rws,rwd
+        fos.write(result);
+        fos.close();
+    }
+
 
     public static void main(String[] args) {
         String encode1 = Base64Util.encodeBASE64("hello world");

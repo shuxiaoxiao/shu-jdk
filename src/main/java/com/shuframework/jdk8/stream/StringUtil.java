@@ -1,6 +1,7 @@
 package com.shuframework.jdk8.stream;
 
-import com.shuframework.jdkutil.ValidateUtil;
+import com.shuframework.jdkutil.SystemUtil;
+import com.shuframework.jdkutil.SystemUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,7 @@ public class StringUtil {
      * @return
      */
     public static List<String> split2StrList(String str, String regex){
-        if (ValidateUtil.isEmpty(str)){
+        if (SystemUtil.isEmpty(str)){
             return null;
         }
         String[] strArr = str.split(regex);
@@ -45,7 +46,7 @@ public class StringUtil {
      */
     public static List<Integer> split2IntList(String str, String regex){
         List<String> strList = split2StrList(str, regex);
-        if (ValidateUtil.isEmpty(strList)){
+        if (SystemUtil.isEmpty(strList)){
             return null;
         }
         return strList.stream().map(s -> Integer.parseInt(s)).collect(Collectors.toList());
@@ -67,7 +68,7 @@ public class StringUtil {
      */
     public static List<Long> split2LongList(String str, String regex){
         List<String> strList = split2StrList(str, regex);
-        if (ValidateUtil.isEmpty(strList)){
+        if (SystemUtil.isEmpty(strList)){
             return null;
         }
         return strList.stream().map(s -> Long.parseLong(s)).collect(Collectors.toList());

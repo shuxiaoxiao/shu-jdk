@@ -16,6 +16,7 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import com.shuframework.jdkutil.SystemUtil;
 import com.shuframework.jdkutil.ValidateUtil;
 
 /**
@@ -188,7 +189,7 @@ public class ZipUtil {
 		// 如果解压后的文件保存路径包含压缩文件的文件名，则追加该文件名到解压路径
 		if (includeZipFileName) {
 			String fileName = zipFile.getName();
-			if (ValidateUtil.isNotEmpty(fileName)) {
+			if (SystemUtil.isNotEmpty(fileName)) {
 				fileName = fileName.substring(0, fileName.lastIndexOf("."));
 			}
 			unzipFilePath = unzipFilePath + File.separator + fileName;

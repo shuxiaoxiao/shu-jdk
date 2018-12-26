@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.shuframework.jdkutil.SystemUtil;
 import com.shuframework.jdkutil.ValidateUtil;
 
 /**
@@ -244,7 +245,7 @@ public class MapUtil {
 			}
 		}
 		//截取多余的逗号，排查没有找到的情况
-		if(ValidateUtil.isNotEmpty(returnKey)){
+		if(SystemUtil.isNotEmpty(returnKey)){
 			returnKey = returnKey.substring(1);
 		}
 		

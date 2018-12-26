@@ -7,7 +7,7 @@ import com.shuframework.jdkutil.lang.StringUtil;
 
 /**
  * 安全性很高的随机数
- * @author shu
+ * @author shuheng
  *
  */
 public class SecureRandomUtil {

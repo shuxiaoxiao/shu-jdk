@@ -10,11 +10,13 @@ import com.shuframework.jdkutil.enums.NumberSystemEnum;
  * 十六进制 (hexadecimal)
  * 	由0,1 ... 9, a,b,c,d,e,f组成。以0x开头（0是数字零,出现的字母大小写都行）
  * 
- * @author shu
+ * @author shuheng
  *
  */
 public class NumberSystemConvert {
-	
+
+	private NumberSystemConvert(){}
+
 	/** 二进制 */
 	public static final int binary_2 = 2;
 
