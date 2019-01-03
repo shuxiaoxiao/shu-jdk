@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.shuframework.jdkutil.MyBeanUtil;
+import com.shuframework.jdkutil.reflect.MyBeanUtil;
 
 /**
  * 数据库连接工具

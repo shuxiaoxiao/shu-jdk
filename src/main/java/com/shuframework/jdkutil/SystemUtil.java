@@ -1,5 +1,7 @@
 package com.shuframework.jdkutil;
 
+import com.shuframework.jdkutil.enums.IdGeneratorTypeEnum;
+import com.shuframework.jdkutil.generator.IdWorker;
 import com.shuframework.jdkutil.lang.DateUtil;
 import com.shuframework.jdkutil.lang.StringUtil;
 import com.shuframework.jdkutil.random.RandomUtil;
@@ -41,7 +43,15 @@ public class SystemUtil {
 		String uuids = str.replace("-", "");
 		return uuids;
 	}
-	
+
+	/**
+	 * 返回18位随机数, 组成格式：当前日期（yyMMddHHmmss）+ 6位随机数
+	 * @return
+	 */
+	public static String getRandomId(){
+		return getRandomId(6);
+	}
+
 	/**
 	 * 返回(12+length)位随机数, 组成格式：当前日期（yyMMddHHmmss）+ length位随机数
 	 * 
@@ -94,12 +104,12 @@ public class SystemUtil {
 	}
 
 	/**
-	 * 获得订单编码(用idwork算法)
+	 * 获得订单编码(用idwork算法) 2位类型前缀+18位
 	 * @return
 	 */
 	public static String getOrderCode(){
-    	//TODO 获得订单编码
-    	return "";
+		String orderCode = IdGeneratorTypeEnum.ORDER.getCode() + IdWorker.getInstance().nextId();
+		return orderCode;
     }
 
 
@@ -246,6 +256,7 @@ public class SystemUtil {
 		}
 		return flag;
 	}
+
 
 	/**
 	 * bool转成int

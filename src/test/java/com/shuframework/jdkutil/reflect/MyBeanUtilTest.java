@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.shuframework.jdkutil.MyBeanUtil;
 import com.shuframework.testmodel.BookInfo3;
 import org.junit.Test;
 

@@ -43,6 +43,20 @@ import org.junit.Test;
 public class HashMapDemo {
 
 	@Test
+	public void test2() {
+		// map里面的数据建议强转而不是 toString
+		Map<String, Object> map = new HashMap<>();
+		map.put("test1", "测试1");
+		map.put("test2", null);
+
+		String v1 = (String) map.get("test2");
+		// java.lang.NullPointerException
+		String v2 = map.get("test2").toString();
+		System.out.println(v1);
+		System.out.println(v2);
+	}
+
+	@Test
 	public void test() {
 		// 创建集合对象
 		Map<String, String> map = new HashMap<>();

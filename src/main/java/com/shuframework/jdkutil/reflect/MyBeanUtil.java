@@ -1,4 +1,4 @@
-package com.shuframework.jdkutil;
+package com.shuframework.jdkutil.reflect;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -16,7 +16,8 @@ import com.shuframework.jdkutil.io.FileUtil;
 
 /**
  * 对象反射
- * @author shu
+ * 线上环境不推荐用这个，推荐用
+ * @author shuheng
  *
  */
 @SuppressWarnings("rawtypes")
@@ -37,10 +38,6 @@ public class MyBeanUtil {
 			throw new RuntimeException(e);
 		}
 	}
-//	public static <T> T newInstance(Class<?> clazz) throws ReflectiveOperationException {
-//		T obj = (T) clazz.newInstance();
-//		return obj;
-//	}
 	
 	/**
 	 * 实例化对象
@@ -112,7 +109,7 @@ public class MyBeanUtil {
 	}
 	
 	/**
-	 * 获取Bean的属性（建议不用这个）
+	 * 获取Bean的属性（建议不用这个,因为大部分都是获得对象属性）
 	 * 
 	 * @param clazz
 	 * @param propertyName 	属性名
@@ -266,6 +263,7 @@ public class MyBeanUtil {
 	 * @param fieldName
 	 * @return
 	 */
+	@Deprecated
 	public static Field getDeclaredField(final Class clazz, final String fieldName) {
 		for (Class superClass = clazz; superClass != Object.class; superClass = superClass.getSuperclass()) {
 			try {
