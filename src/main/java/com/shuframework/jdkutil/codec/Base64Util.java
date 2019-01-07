@@ -25,8 +25,19 @@ public class Base64Util {
      * @param key
      * @return
      */
+    public static String encodeBASE64(byte[] key) {
+        return Base64.getEncoder().encodeToString(key);
+    }
+
+    /**
+     * BASE64加密
+     *
+     * @param key
+     * @return
+     */
     public static String encodeBASE64(String key) {
-//        String asB64 = Base64.getEncoder().encodeToString(key.getBytes(CHARSET_UTF8));
+//        // 这样返回可能存在编码的问题
+//        return Base64.getEncoder().encodeToString(key.getBytes());
         try {
             return Base64.getEncoder().encodeToString(key.getBytes(CHARSET_UTF8));
         } catch (UnsupportedEncodingException e) {
@@ -100,7 +111,7 @@ public class Base64Util {
 
 
     public static void main(String[] args) {
-        String encode1 = Base64Util.encodeBASE64("hello world");
+        String encode1 = Base64Util.encodeBASE64("com.shuframework");
         System.out.println(encode1);
 
         String decode = "aGVsbG8gd29ybGQ=";
