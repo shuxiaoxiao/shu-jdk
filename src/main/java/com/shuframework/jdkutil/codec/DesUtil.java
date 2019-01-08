@@ -115,7 +115,7 @@ public class DesUtil {
 
         byte[] encrypt = DesUtil.encrypt(data.getBytes(), key);
 
-        System.out.println(encrypt);
+//        System.out.println(encrypt);
 //        //乱码
 //        System.out.println(new String(encrypt));
 

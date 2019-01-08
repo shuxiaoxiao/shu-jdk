@@ -1,5 +1,6 @@
 package com.shuframework.jdkutil.lang;
 
+import com.shuframework.jdkutil.SystemUtil;
 import com.shuframework.jdkutil.enums.DatePatternEnum;
 
 import java.text.SimpleDateFormat;
@@ -9,7 +10,7 @@ import java.util.Date;
 /**
  * Date工具类 Date与String类型的转换<br/>
  * 以及日期的常见操作,底层依赖的是java.util.Calendar
- * 结束时间（endTime，lastDay）都是新一天的00:00:00 不是23:59:59，为了解决转点问题
+ * 结束时间（endTime，lastDay）都是23:59:59，为了解决转点问题
  *
  * @author shuheng
  */
@@ -36,6 +37,9 @@ public class DateUtil {
      * @return
      */
     public static Date strToDate(String dateStr, String datePattern) {
+        if (StringUtil.isEmpty(dateStr)){
+            return null;
+        }
         SimpleDateFormat sd = new SimpleDateFormat(datePattern);
         // return sd.parse(dateStr);//这样可能会出 类型现转换异常
         return sd.parse(dateStr, new java.text.ParsePosition(0));
@@ -60,6 +64,9 @@ public class DateUtil {
      * @return
      */
     public static String dateToStr(Date date, String datePattern) {
+        if (date == null){
+            return "";
+        }
         SimpleDateFormat sd = new SimpleDateFormat(datePattern);
         return sd.format(date);
     }
@@ -190,9 +197,6 @@ public class DateUtil {
      * @return
      */
     public static int getYear(Date date) {
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(date);
-//        return c.get(Calendar.YEAR);
         return get(date, Calendar.YEAR);
     }
 
@@ -204,9 +208,6 @@ public class DateUtil {
      * @return
      */
     public static int getMonth(Date date) {
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(date);
-//        return c.get(Calendar.MONTH) + 1;
         return get(date, Calendar.MONTH) + 1;
     }
 
@@ -217,9 +218,6 @@ public class DateUtil {
      * @return
      */
     public static int getDayOfMonth(Date date) {
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(date);
-//        return c.get(Calendar.DAY_OF_MONTH);
         return get(date, Calendar.DAY_OF_MONTH);
     }
 
@@ -230,9 +228,6 @@ public class DateUtil {
      * @return
      */
     public static int getDayOfYear(Date date) {
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(date);
-//        return c.get(Calendar.DAY_OF_YEAR);
         return get(date, Calendar.DAY_OF_YEAR);
     }
 
@@ -243,10 +238,19 @@ public class DateUtil {
      * @return
      */
     public static int getWeekOfYear(Date date) {
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(date);
-//        return c.get(Calendar.WEEK_OF_YEAR);
         return get(date, Calendar.WEEK_OF_YEAR);
+    }
+
+    /**
+     * 如果需要将int 转成 String，请用 String.valueOf()方法
+     * @param date
+     * @param field  日期类型
+     * @return
+     */
+    private static int get(Date date, int field) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return c.get(field);
     }
 
     /**
@@ -283,9 +287,6 @@ public class DateUtil {
      * @return
      */
     public static int getWeek(Date date) {
-//        Calendar c = Calendar.getInstance();
-//        c.setTime(date);
-//        return c.get(Calendar.DAY_OF_WEEK);
         return get(date, Calendar.DAY_OF_WEEK);
     }
 
@@ -332,17 +333,6 @@ public class DateUtil {
         return false;
     }
 
-    /**
-     * 如果需要将int 转成 String，请用 String.valueOf()方法
-     * @param date
-     * @param field  日期类型
-     * @return
-     */
-    private static int get(Date date, int field) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        return c.get(field);
-    }
 
     /**
      * 指定date 增加天数、小时、分钟或秒数
@@ -364,7 +354,7 @@ public class DateUtil {
      * @param years
      */
     public static Date addYear(int years) {
-        return add(new Date(), Calendar.YEAR, years);
+        return addYear(new Date(), years);
     }
 
     /**
@@ -383,7 +373,7 @@ public class DateUtil {
      * @param months
      */
     public static Date addMonth(int months) {
-        return add(new Date(), Calendar.MONTH, months);
+        return addMonth(new Date(), months);
     }
 
     /**
@@ -402,7 +392,7 @@ public class DateUtil {
      * @param days
      */
     public static Date addDay(int days) {
-        return add(new Date(), Calendar.DATE, days);
+        return addDay(new Date(), days);
     }
 
     /**
@@ -421,7 +411,7 @@ public class DateUtil {
      * @param hours
      */
     public static Date addHour(int hours) {
-        return add(new Date(), Calendar.HOUR, hours);
+        return addHour(new Date(), hours);
     }
 
     /**
@@ -440,7 +430,7 @@ public class DateUtil {
      * @param minutes
      */
     public static Date addMinute(int minutes) {
-        return add(new Date(), Calendar.MINUTE, minutes);
+        return addMinute(new Date(), minutes);
     }
 
     /**
@@ -459,7 +449,7 @@ public class DateUtil {
      * @param seconds
      */
     public static Date addSecond(int seconds) {
-        return add(new Date(), Calendar.SECOND, seconds);
+        return addSecond(new Date(), seconds);
     }
 
     /**
@@ -473,14 +463,16 @@ public class DateUtil {
     }
 
 
-    /**
-     * 获取当前日期的开始时间
-     *
-     * @return
-     */
-    public static Date getStartTime() {
-        return getStartTime(new Date());
-    }
+////////////////////////////////////////
+
+//    /**
+//     * 获取当前日期的开始时间
+//     *
+//     * @return
+//     */
+//    public static Date getStartTime() {
+//        return getStartTime(new Date());
+//    }
 
     /**
      * 获取某个日期的开始时间<br/>
@@ -506,21 +498,44 @@ public class DateUtil {
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.add(Calendar.DAY_OF_MONTH, addDays);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
+        initFirst(c);
         return c.getTime();
     }
 
+//    /**
+//     * 获得当前日期的结束时间
+//     *
+//     * @return
+//     */
+//    public static Date getEndTime() {
+//        return getEndTime(new Date());
+//    }
+
     /**
-     * 获得当前日期的结束时间
+     * 获取某个日期的结束时间<br/>
+     * 如"2016-6-6 10:10:10",返回"2016-6-6 23:59:59"
      *
+     * @param date 日期对象
      * @return
      */
-    public static Date getEndTime() {
-        return getEndTime(new Date());
+    public static Date getEndTime(Date date) {
+        return getEndTime(date, 0);
     }
+
+    /**
+     * 获取某个日期加上days 结束时间<br/>
+     * 如"2016-6-6 10:10:10",返回"2016-6-6 23:59:59"
+     *
+     * @param date 日期对象
+     * @return
+     */
+	public static Date getEndTime(Date date, int addDays) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+        c.add(Calendar.DAY_OF_MONTH, addDays);
+		initLast(c);
+		return c.getTime();
+	}
 
     /**
      * 获取某个日期的结束时间<br/>
@@ -530,26 +545,10 @@ public class DateUtil {
      * @param date 日期对象
      * @return
      */
-    public static Date getEndTime(Date date) {
+    public static Date getEndTimeOf24(Date date) {
         //第二天的开始，就是第一天的结束
         return getStartTime(date, 1);
     }
-
-//    /**
-//     * 获取某个日期的结束时间<br/>
-//     * 如"2016-6-6 10:10:10",返回"2016-6-6 23:59:59"
-//     *
-//     * @param date 日期对象
-//     * @return
-//     */
-//	public static Date getEndTimeOf23(Date date) {
-//		Calendar c = Calendar.getInstance();
-//		c.setTime(date);
-//		c.set(Calendar.HOUR_OF_DAY, 23);
-//		c.set(Calendar.MINUTE, 59);
-//		c.set(Calendar.SECOND, 59);
-//		return c.getTime();
-//	}
 
     /**
      * 获取某个日期加上days 的结束时间<br/>
@@ -561,11 +560,10 @@ public class DateUtil {
      * @param addDays
      * @return
      */
-    public static Date getEndTime(Date date, int addDays) {
+    public static Date getEndTimeOf24(Date date, int addDays) {
         //(addDays+1)的开始，就是addDays的结束
         return getStartTime(date, addDays + 1);
     }
-
 
     /**
      * 获取某个日期该周的第一天（周一）<br/>
@@ -581,10 +579,7 @@ public class DateUtil {
         int week2Zh = getWeek2Zh(c);
         //需要减几天
         c.add(Calendar.DAY_OF_MONTH, 1 - week2Zh);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
+        initFirst(c);
         return c.getTime();
     }
 
@@ -601,10 +596,7 @@ public class DateUtil {
         c.setTime(date);
         c.set(Calendar.MONTH, specifiedMonth - 1);
         c.set(Calendar.DAY_OF_MONTH, 1);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
+        initFirst(c);
         return c.getTime();
     }
 
@@ -631,32 +623,60 @@ public class DateUtil {
     }
 
     /**
+     * 获取某个日期 添加月的第一天的开始时间
+     * <pre>
+     * 	getFirstDayByAddMonth(date, 1), 返回下个月的第一天的开始时间
+     * 	getFirstDayByAddMonth(date, -1), 返回上个月的第一天的开始时间
+     * </pre>
+     * 如"2016-6-6 10:10:10" getFirstDayByAddMonth(date, 1), 返回下个月的第一天 即"2016-7-1 0:00:00"
+     * 如"2016-6-6 10:10:10" getFirstDayByAddMonth(date, -1), 返回上个月的第一天 即"2016-5-1 0:00:00"
+     *
+     * @param date     日期对象
+     * @param addMonth 添加的月份数字
+     * @return
+     */
+    public static Date getFirstDayByAddMonth(Date date, int addMonth) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.MONTH, addMonth);
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        initFirst(c);
+        return c.getTime();
+    }
+
+    /**
      * 获取某个日期该月的最后一天<br/>
-     * 如"2016-6-6 10:10:10",返回"2016-7-1 00:00:00"
-     * 获取的不是"2016-6-30 23:59:59",为了避免出现转点的问题
+     * 如"2016-6-6 10:10:10",返回"2016-6-30 23:59:59"
      *
      * @param date 日期对象
+     * @param specifiedMonth 日期对象
      * @return
      */
     public static Date getLastDayOfMonth(Date date, int specifiedMonth) {
-//		Calendar c = Calendar.getInstance();
-//		c.setTime(date);
-//		c.set(Calendar.MONTH, specifiedMonth - 1);
-//		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DATE));
-//		c.set(Calendar.HOUR_OF_DAY, 23);
-//		c.set(Calendar.MINUTE, 59);
-//		c.set(Calendar.SECOND, 59);
-//		return c.getTime();
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        c.set(Calendar.MONTH, specifiedMonth);
-        c.set(Calendar.DAY_OF_MONTH, 1);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
-        return c.getTime();
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.set(Calendar.MONTH, specifiedMonth - 1);
+		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DATE));
+		initLast(c);
+		return c.getTime();
     }
+
+//    /**
+//     * 获取某个日期该月的最后一天<br/>
+//     * 如"2016-6-6 10:10:10",返回"2016-7-1 00:00:00"
+//     * 获取的不是"2016-6-30 23:59:59",为了避免出现转点的问题
+//     *
+//     * @param date 日期对象
+//     * @return
+//     */
+//    public static Date getLastDay2FirstOfMonth(Date date, int specifiedMonth) {
+//        Calendar c = Calendar.getInstance();
+//        c.setTime(date);
+//        c.set(Calendar.MONTH, specifiedMonth);
+//        c.set(Calendar.DAY_OF_MONTH, 1);
+//        initFirst(c);
+//        return c.getTime();
+//    }
 
     /**
      * 获取某个日期该月的最后一天<br/>
@@ -678,40 +698,9 @@ public class DateUtil {
      * @return
      */
     public static Date getLastDayOfMonth(Date date) {
-//		Calendar c = Calendar.getInstance();
-//		c.setTime(date);
-//		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DATE));
-//		c.set(Calendar.HOUR_OF_DAY, 23);
-//		c.set(Calendar.MINUTE, 59);
-//		c.set(Calendar.SECOND, 59);
-//		return c.getTime();
         return getLastDayByAddMonth(date, 0);
     }
 
-    /**
-     * 获取某个日期 添加月的第一天的开始时间
-     * <pre>
-     * 	getFirstDayByAddMonth(date, 1), 返回下个月的第一天的开始时间
-     * 	getFirstDayByAddMonth(date, -1), 返回上个月的第一天的开始时间
-     * </pre>
-     * 如"2016-6-6 10:10:10" getFirstDayByAddMonth(date, 1), 返回下个月的第一天 即"2016-7-1 0:00:00"
-     * 如"2016-6-6 10:10:10" getFirstDayByAddMonth(date, -1), 返回上个月的第一天 即"2016-5-1 0:00:00"
-     *
-     * @param date     日期对象
-     * @param addMonth 添加的月份数字
-     * @return
-     */
-    public static Date getFirstDayByAddMonth(Date date, int addMonth) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        c.add(Calendar.MONTH, addMonth);
-        c.set(Calendar.DAY_OF_MONTH, 1);
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
-        return c.getTime();
-    }
 
     /**
      * 获取某个日期 添加月的最后一天结束时间<br/>
@@ -727,7 +716,36 @@ public class DateUtil {
      * @return
      */
     public static Date getLastDayByAddMonth(Date date, int addMonth) {
-        return getFirstDayByAddMonth(date, (addMonth + 1));
+        Calendar c = Calendar.getInstance();
+		c.setTime(date);
+        c.add(Calendar.MONTH, addMonth);
+		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DATE));
+		initLast(c);
+		return c.getTime();
+    }
+
+//    public static Date getLastDay2FirstByAddMonth(Date date, int addMonth) {
+//        return getFirstDayByAddMonth(date, (addMonth + 1));
+//    }
+
+    /**
+     * 时分秒格式化为 00:00:00
+     */
+    private static void initFirst(Calendar cal) {
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+    }
+
+    /**
+     * 时分秒格式化为 23:59:59
+     */
+    private static void initLast(Calendar cal) {
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
+        cal.set(Calendar.MILLISECOND, 0);
     }
 
     /**
@@ -743,11 +761,9 @@ public class DateUtil {
 //        c.setTime(date);
 //        c.set(Calendar.MONTH, 0);//月份从0开始
 //        c.set(Calendar.DAY_OF_MONTH, 1);
-//        c.set(Calendar.HOUR_OF_DAY, 0);
-//        c.set(Calendar.MINUTE, 0);
-//        c.set(Calendar.SECOND, 0);
-//        c.set(Calendar.MILLISECOND, 0);
+//        initFirst(c);
 //        return c.getTime();
+        // 获得指定月份的开始时间
         return getFirstDayOfMonth(date, 1);
     }
 

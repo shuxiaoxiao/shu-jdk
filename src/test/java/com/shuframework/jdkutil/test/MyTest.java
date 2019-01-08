@@ -1,12 +1,27 @@
 package com.shuframework.jdkutil.test;
 
 import com.shuframework.jdkdemo.json.MyJSON;
+import com.shuframework.jdkutil.enums.DatePatternEnum;
+import com.shuframework.jdkutil.lang.DateUtil;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MyTest {
+
+	@Test
+	public void test6() {
+		String startTimeStr = "2018-11-30";
+		String endTimeStr = "2018-12-01";
+
+		Date startTime = DateUtil.strToDate(startTimeStr, DatePatternEnum.YMD.getCode());
+		Date endTime = DateUtil.strToDate(endTimeStr, DatePatternEnum.YMD.getCode());
+//		int counts = DateUtil.getDayOfYear(endTime) - DateUtil.getDayOfYear(startTime) + 1;
+		int counts = DateUtil.getDayOfMonth(endTime) - DateUtil.getDayOfMonth(startTime);
+		System.out.println(counts);
+	}
 
 	@Test
 	public void test5() {

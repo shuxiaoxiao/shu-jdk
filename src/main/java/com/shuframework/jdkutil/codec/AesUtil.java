@@ -101,8 +101,9 @@ public class AesUtil {
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
 //        String key = DesUtil.initKey();
-        // java.security.InvalidKeyException: Invalid AES key length: 18 bytes 只能是16 bytes
-        String key = Base64Util.encodeBASE64("com.shuframework");
+        // java.security.InvalidKeyException: Invalid AES key length: 18 bytes
+        // key的长度要是8的倍数,从16往上
+        String key = Base64Util.encodeBASE64("com.shuframework.com.shu");
         System.out.println(key);
         String data = "hello world";
 

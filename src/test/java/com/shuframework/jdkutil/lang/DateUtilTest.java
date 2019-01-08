@@ -10,6 +10,20 @@ import org.junit.Test;
 public class DateUtilTest {
 
 	@Test
+	public void strToDate() {
+		Date date1 = DateUtil.strToDate(null);
+		System.out.println(date1);
+
+	}
+
+	@Test
+	public void dateToStr() {
+		String date1 = DateUtil.dateToStr(null);
+		System.out.println(date1);
+
+	}
+
+	@Test
 	public void getTime() {
 		Date date1 = DateFormatUtil.strToDate("2018-01-10 15:10:10");
 		System.out.println(date1.getTime());
@@ -108,24 +122,24 @@ public class DateUtilTest {
 	public void getLastDayOfMonth_test() {
 		Date date = new Date();//2017-01-10 15:10:10  周二 
 		
-		//2017-2-1 0:00:00
+		//2017-01-31 23:59:59
 		Date newDate1 =  DateUtil.getLastDayOfMonth(date, 1);
 		System.out.println(DateFormatUtil.dateToStr(newDate1));
 		
 		Date date2 = DateFormatUtil.strToDate("2016-10-10 11:03:20");
-		//2016-2-1 0:00:00
+		//2016-01-31 23:59:59
 		Date newDate2 =  DateUtil.getLastDayOfMonth(date2, 1);
 		System.out.println(DateFormatUtil.dateToStr(newDate2));
 		
-		//2017-2-1 0:00:00
+		//2017-01-31 23:59:59
 		Date newDate3 =  DateUtil.getLastDayOfMonth(date);
 		System.out.println(DateFormatUtil.dateToStr(newDate3));
 		
-		//2016-11-1 0:00:00
+		//2016-10-31 23:59:59
 		Date newDate4 =  DateUtil.getLastDayOfMonth(date2);
 		System.out.println(DateFormatUtil.dateToStr(newDate4));
 		
-		//2017-2-1 0:00:00
+		//2017-01-31 23:59:59
 		Date newDate5 =  DateUtil.getLastDayOfMonth(1);
 		System.out.println(DateFormatUtil.dateToStr(newDate5));
 	}
@@ -141,6 +155,17 @@ public class DateUtilTest {
 		Date monthEndTime =  DateUtil.getLastDayByAddMonth(date, 0);
 		System.out.println(DateFormatUtil.dateToStr(monthEndTime));
 	}
+
+//	@Test
+//	public void getLastDayByAddMonth_test() {
+//		Date date = DateFormatUtil.strToDate("2017-01-10 15:10:10");//2017-01-10 15:10:10  周二
+//		//2017-1-1 0:00:00
+//		Date monthStartTime =  DateUtil.getLastDayByAddMonth(date, 0);
+//		System.out.println(DateFormatUtil.dateToStr(monthStartTime));
+//		//2017-2-1 0:00:00
+//		Date monthEndTime =  DateUtil.getLastDayByAddMonth(date, 0);
+//		System.out.println(DateFormatUtil.dateToStr(monthEndTime));
+//	}
 
 	@Test
 	public void getFirstDayOfWeek2zh_test() {
