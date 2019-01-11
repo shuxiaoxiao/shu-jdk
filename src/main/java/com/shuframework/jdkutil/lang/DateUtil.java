@@ -16,12 +16,17 @@ import java.util.Date;
  */
 public class DateUtil {
 
-    private DateUtil(){}
+    private DateUtil() {
+    }
 
     /**
      * 日期格式为yyyy-MM-dd HH:mm:ss
      */
     public static final String YMD_HMS = "yyyy-MM-dd HH:mm:ss";
+    /**
+     * 日期格式为yyyy-MM-dd
+     */
+    public static final String YMD = "yyyy-MM-dd";
 
     /**
      * 将指定字符(String)串转换成日期 (Date)<br/>
@@ -37,7 +42,7 @@ public class DateUtil {
      * @return
      */
     public static Date strToDate(String dateStr, String datePattern) {
-        if (StringUtil.isEmpty(dateStr)){
+        if (StringUtil.isEmpty(dateStr)) {
             return null;
         }
         SimpleDateFormat sd = new SimpleDateFormat(datePattern);
@@ -57,6 +62,17 @@ public class DateUtil {
     }
 
     /**
+     * 将指定字符(String)串转换成日期 (Date),格式是yyyy-MM-dd HH:mm:ss <br>
+     * 如果发生错误，则返回 null, 格式不是yyyy-MM-dd HH:mm:ss也会返回null
+     *
+     * @param dateStr String 日期字符串
+     * @return Date
+     */
+    public static Date strToDateShort(String dateStr) {
+        return strToDate(dateStr, YMD);
+    }
+
+    /**
      * 将指定日期(Date)对象转换成 格式化字符串 (String)
      *
      * @param date        Date 日期对象
@@ -64,7 +80,7 @@ public class DateUtil {
      * @return
      */
     public static String dateToStr(Date date, String datePattern) {
-        if (date == null){
+        if (date == null) {
             return "";
         }
         SimpleDateFormat sd = new SimpleDateFormat(datePattern);
@@ -83,20 +99,22 @@ public class DateUtil {
 
     /**
      * 将指定时间戳(timestamp) 转换成 格式化日期(Date),格式是yyyy-MM-dd HH:mm:ss
+     *
      * @param timestamp
      * @return
      */
-    public static Date timestampToDate(long timestamp){
+    public static Date timestampToDate(long timestamp) {
         return timestampToDate(timestamp, YMD_HMS);
     }
 
     /**
      * 将指定时间戳(timestamp) 转换成 格式化日期(Date)
-     * @param timestamp		时间戳
-     * @param datePattern	日期格式
+     *
+     * @param timestamp   时间戳
+     * @param datePattern 日期格式
      * @return
      */
-    public static Date timestampToDate(long timestamp, String datePattern){
+    public static Date timestampToDate(long timestamp, String datePattern) {
         SimpleDateFormat sd = new SimpleDateFormat(datePattern);
         String dateStr = sd.format(timestamp);
         return sd.parse(dateStr, new java.text.ParsePosition(0));
@@ -189,6 +207,31 @@ public class DateUtil {
         }
     }
 
+    /**
+     * 2个日期相差几天（由于底层算法是时间戳相减，所以2个时间是ymd格式的）
+     * 如 01-02与 01-01 相差2天
+     *
+     * @param endTime
+     * @param startTime
+     * @return
+     */
+    public static Integer getBetweenCounts(Date endTime, Date startTime) {
+//        //不能解决跨年的问题
+//        int counts = 0;
+//        if (endTime.getYear() == startTime.getYear()) {
+//            int end = DateUtil.getDayOfYear(endTime);
+//            int start = DateUtil.getDayOfYear(startTime);
+//            counts = end - start + 1;
+//        } else {
+//            Long diffTime = (endTime.getTime() - startTime.getTime()) / (1000L * 3600 * 24);
+//            counts = diffTime.intValue() + 1;
+//        }
+        // 推荐直接减
+        Long diffTime = (endTime.getTime() - startTime.getTime()) / (1000L * 3600 * 24);
+        int counts = diffTime.intValue() + 1;
+        return counts;
+    }
+
 
     /**
      * 获取日期的年份
@@ -243,8 +286,9 @@ public class DateUtil {
 
     /**
      * 如果需要将int 转成 String，请用 String.valueOf()方法
+     *
      * @param date
-     * @param field  日期类型
+     * @param field 日期类型
      * @return
      */
     private static int get(Date date, int field) {
@@ -308,10 +352,10 @@ public class DateUtil {
 
     public static int getWeek2Zh(Calendar c) {
         int week = c.get(Calendar.DAY_OF_WEEK);
-        if(week == 1){
+        if (week == 1) {
             week = 7;
-        }else{
-            week --;
+        } else {
+            week--;
         }
 
         return week;
@@ -338,8 +382,8 @@ public class DateUtil {
      * 指定date 增加天数、小时、分钟或秒数
      *
      * @param date
-     * @param field  日期类型
-     * @param num      数值，天数、小时、分钟或秒数，可以是负值
+     * @param field 日期类型
+     * @param num   数值，天数、小时、分钟或秒数，可以是负值
      */
     private static Date add(Date date, int field, int num) {
         Calendar c = Calendar.getInstance();
@@ -479,7 +523,6 @@ public class DateUtil {
      * 如"2016-6-6 10:10:10",返回"2016-6-6 0:00:00"
      *
      * @param date 日期对象
-     * @return
      */
     public static Date getStartTime(Date date) {
         return getStartTime(date, 0);
@@ -492,7 +535,6 @@ public class DateUtil {
      *
      * @param date
      * @param addDays
-     * @return
      */
     public static Date getStartTime(Date date, int addDays) {
         Calendar c = Calendar.getInstance();
@@ -516,7 +558,6 @@ public class DateUtil {
      * 如"2016-6-6 10:10:10",返回"2016-6-6 23:59:59"
      *
      * @param date 日期对象
-     * @return
      */
     public static Date getEndTime(Date date) {
         return getEndTime(date, 0);
@@ -529,13 +570,13 @@ public class DateUtil {
      * @param date 日期对象
      * @return
      */
-	public static Date getEndTime(Date date, int addDays) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+    public static Date getEndTime(Date date, int addDays) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
         c.add(Calendar.DAY_OF_MONTH, addDays);
-		initLast(c);
-		return c.getTime();
-	}
+        initLast(c);
+        return c.getTime();
+    }
 
     /**
      * 获取某个日期的结束时间<br/>
@@ -648,17 +689,17 @@ public class DateUtil {
      * 获取某个日期该月的最后一天<br/>
      * 如"2016-6-6 10:10:10",返回"2016-6-30 23:59:59"
      *
-     * @param date 日期对象
+     * @param date           日期对象
      * @param specifiedMonth 日期对象
      * @return
      */
     public static Date getLastDayOfMonth(Date date, int specifiedMonth) {
-		Calendar c = Calendar.getInstance();
-		c.setTime(date);
-		c.set(Calendar.MONTH, specifiedMonth - 1);
-		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DATE));
-		initLast(c);
-		return c.getTime();
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.set(Calendar.MONTH, specifiedMonth - 1);
+        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DATE));
+        initLast(c);
+        return c.getTime();
     }
 
 //    /**
@@ -717,11 +758,11 @@ public class DateUtil {
      */
     public static Date getLastDayByAddMonth(Date date, int addMonth) {
         Calendar c = Calendar.getInstance();
-		c.setTime(date);
+        c.setTime(date);
         c.add(Calendar.MONTH, addMonth);
-		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DATE));
-		initLast(c);
-		return c.getTime();
+        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DATE));
+        initLast(c);
+        return c.getTime();
     }
 
 //    public static Date getLastDay2FirstByAddMonth(Date date, int addMonth) {

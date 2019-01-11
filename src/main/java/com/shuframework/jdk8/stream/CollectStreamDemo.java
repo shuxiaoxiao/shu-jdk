@@ -126,41 +126,68 @@ public class CollectStreamDemo {
 
     @Test
     public void test3(){
-        Map<Integer, List<Integer>> map = initDistinctMapData();
-        System.out.println("去重前:" + map);
-        //冒泡比较
-        //java.util.ConcurrentModificationException
-//        map.forEach((k,v) -> {
-////            System.out.println(k +","+v);
-//            Set<Integer> keys =  map.keySet();
-//            for(Integer i : keys){
-//                if(!i.equals(k) && v.contains(i)){
-//                    map.remove(i);
-//                }
-//            }
-//        });
-        map.entrySet().iterator();
+        //查询出来的数据
+        List<Map<String, Object>> list = initGameListData();
+//        System.out.println("list:" + list);
+        Map<String, List<Map<String, Object>>> objectListMap = list.stream().collect(Collectors.groupingBy(tmap -> tmap.get("day").toString()));
+        System.out.println("day分组:" + objectListMap);
 
-        System.out.println("去重后:" + map);
+        List<Map<String, Object>> reList = new ArrayList<>();
+        objectListMap.forEach((k, v) -> {
+            Map<String, List<Map<String, Object>>> hour = v.stream().collect(Collectors.groupingBy(hmap -> hmap.get("hour").toString()));
+            System.out.println("hour分组:" + hour);
+            hour.forEach((hk, hv) -> {
+                Map<String, Object> reHourMap = new HashMap<>();
+                reHourMap.put("hour", hk);
+                reHourMap.put("hourList", hv);
+
+                Map<String, Object> reMap = new HashMap<>();
+                reMap.put("day", k);
+                reMap.put("dayList", reHourMap);
+
+                reList.add(reMap);
+            });
+        });
+        System.out.println("结果:" + reList);
     }
 
-    private Map<Integer, List<Integer>> initDistinctMapData() {
-        List<Integer> list1 = new ArrayList<>();
-        list1.add(1);
-        list1.add(11);
-        list1.add(111);
-        List<Integer> list2 = new ArrayList<>();
-        list2.add(11);
-        list2.add(111);
-        List<Integer> list3 = new ArrayList<>();
-        list3.add(12);
-        list3.add(121);
-        Map<Integer, List<Integer>> map = new TreeMap<>();
-//        Map<Integer, List<Integer>> map = new HashMap<>();
-        map.put(1, list1);
-        map.put(11, list2);
-        map.put(12, list3);
-        return map;
+    //模拟游戏区服列表
+    private List<Map<String, Object>> initGameListData() {
+        List<Map<String, Object>> list = new ArrayList<>();
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("day", "2018/07/01");
+        map1.put("hour", "08:00");
+        map1.put("gameName", "11");
+        Map<String, Object> map11 = new HashMap<>();
+        map11.put("day", "2018/07/01");
+        map11.put("hour", "08:00");
+        map11.put("gameName", "12");
+        Map<String, Object> map2 = new HashMap<>();
+        map2.put("day", "2018/07/01");
+        map2.put("hour", "09:00");
+        map2.put("gameName", "21");
+        Map<String, Object> map22 = new HashMap<>();
+        map22.put("day", "2018/07/01");
+        map22.put("hour", "10:00");
+        map22.put("gameName", "22");
+
+        Map<String, Object> map3 = new HashMap<>();
+        map3.put("day", "2018/07/02");
+        map3.put("hour", "18:00");
+        map3.put("gameName", "31");
+        Map<String, Object> map33 = new HashMap<>();
+        map33.put("day", "2018/07/02");
+        map33.put("hour", "18:00");
+        map33.put("gameName", "33");
+
+
+        list.add(map1);
+        list.add(map11);
+        list.add(map2);
+        list.add(map22);
+        list.add(map3);
+        list.add(map33);
+        return list;
     }
 
 }

@@ -64,6 +64,17 @@ public class DateUtilTest {
 		boolean flag = DateUtil.isBefore(date1, date2);
 		System.out.println(flag);//false
 	}
+
+	@Test
+	public void getBetweenCounts_test1() {
+//		Date startTime = DateUtil.strToDateShort("2018-10-12");
+//		Date endTime = DateUtil.strToDateShort("2018-12-31"); //81 + 12
+		Date startTime = DateUtil.strToDateShort("2019-01-01");
+		Date endTime = DateUtil.strToDateShort("2019-01-12");
+	//93
+		Integer counts = DateUtil.getBetweenCounts(endTime, startTime);
+		System.out.println(counts);
+	}
 	
 	@Test
 	public void addDay_test1() {

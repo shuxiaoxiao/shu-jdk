@@ -3,6 +3,8 @@ package com.shuframework.jdkutil.collection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,7 @@ import java.util.Set;
 
 import com.shuframework.jdkutil.SystemUtil;
 import com.shuframework.jdkutil.ValidateUtil;
+import com.shuframework.jdkutil.lang.DateUtil;
 
 /**
  * map的常用操作，map与bean的转换见MyBeanUtil
@@ -203,5 +206,12 @@ public class MapUtil {
 			System.out.println(key + "--" + value);
 		}
 	}
+
+	public static Integer getBetweenCounts(Date endTime, Date startTime) {
+//		Map<String, String> map = new HashMap<>();
+		int counts = DateUtil.getDayOfYear(endTime) - DateUtil.getDayOfYear(startTime) + 1;
+		return counts;
+	}
+
 
 }

@@ -1,6 +1,7 @@
 package com.shuframework.jdkutil.collection;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 /**
  * 数组工具类, 可以直接使用java.util.Arrays
@@ -12,6 +13,7 @@ public class ArrayUtil {
 
     /**
      * 数组复制,如果长度比之前大，多的长度内容赋值为空
+     * Arrays.copyOf(T[] original, int newLength) 的底层实现与这个实现是一样的
      *
      * @param original
      * @param newLength
@@ -39,11 +41,9 @@ public class ArrayUtil {
                 : (T[]) Array.newInstance(newType.getComponentType(), newLength);
 
         int length = Math.min(original.length, newLength);
-//    	for (int i = 0; i < length; i++) {
-//    		newArr[i] = original[i];
-//		}
         System.arraycopy(original, 0, newArr, 0, length);
         return newArr;
+
     }
 
     /**

@@ -75,13 +75,14 @@ public class ArrayUtilTest {
 	
 	@Test
 	public void test2() {
-		String[] newStrArr = ArrayUtil.copyArr(strArr, 8);
-		Integer[] newIntArr = ArrayUtil.copyArr(intArr, 8);
-		Object[] newObjArr = ArrayUtil.copyArr(objArr, 8);
-		System.out.println(Arrays.toString(newStrArr));
-		System.out.println(Arrays.toString(newIntArr));
-		System.out.println(Arrays.toString(newObjArr));
+//		String[] newStrArr = ArrayUtil.copyArr(strArr, 8);
+//		Integer[] newIntArr = ArrayUtil.copyArr(intArr, 8);
+//		Object[] newObjArr = ArrayUtil.copyArr(objArr, 8);
+//		System.out.println(Arrays.toString(newStrArr));
+//		System.out.println(Arrays.toString(newIntArr));
+//		System.out.println(Arrays.toString(newObjArr));
 		System.out.println("--------------");
+		//Arrays.copyOf(T[] original, int newLength) 的底层实现与ArrayUtil.copyArr(T[] original, int newLength)实现是一样的
 		Integer[] newIntArr2 = Arrays.copyOf(intArr, 3);
 		Integer[] newIntArr3 = Arrays.copyOf(intArr, 8);
 		System.out.println(Arrays.toString(intArr));
