@@ -4,7 +4,7 @@ jdk8+ 新特性,主要是lambda(函数式)、 stream、 time（类似jodatime）
 
 # 版本：0.0.1-1.0.x
 
-## 第三方jar实现jdk不用去实现
+## 第三方jar实现, jdk不用去实现
 excel(poi操作Excel); xml(dom4j解析xml); json(fastjson解析json); protocol(协议): net、ftp、http等; jmail(邮件);
 itext(操作Word、pdf)【了解】
 
@@ -25,7 +25,6 @@ itext(操作Word、pdf)【了解】
 
 
 ###   enums 枚举
-
   ExceptionCodeEnum  异常编码枚举
 
 ###    io IO流
@@ -37,20 +36,21 @@ itext(操作Word、pdf)【了解】
   CodeConvertUtil ： 编码转换
   NumberSystemConvert ：数据进制转换
   DateUtil、DateFormatUtil：jdk7之前的日期工具类，jdk8后用java.time.*包详见jdk8的特性例子。
-  StringUtil：字符串工具类。
-  MathUtil ：数学工具类，随机单独提出了
+  StringUtil：字符串工具类
 
 ###   random 随机数
   RandomUtil：产生随机数，多线程性能低
   SecureRandomUtil：安全性很高的随机数
   ThreadRandomUtil：多线程并发生成随机数
 
+随机数具体文章 http://blog.csdn.net/admin1973/article/details/55095692
+
 ###    reflect 反射
-  常见是对bean的属性进行get/set操作、
-  bean与map的转换、对象copy
+  常见是对bean的属性进行get/set操作、bean与map的转换、对象copy
 
 ###   其他
-  SystemUtil 系统工具类,  主要是生成code
+  SystemUtil 系统工具类, 主要是生成code;
+  SystemUtil 系统工具类, 主要是生成code;
   ValidateUtil  参数检查
 
 
