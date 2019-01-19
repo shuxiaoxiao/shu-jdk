@@ -34,12 +34,19 @@ public class MaxLengthCollectStreamDemo {
         System.out.println(list);
         StringBuilder gameIds = new StringBuilder();
         for (String str : list){
-            gameIds.append(str);
-            gameIds.append(",");
+            gameIds.append(str).append(",");
         }
         gameIds = gameIds.deleteCharAt(gameIds.length()-1);
         System.out.println(gameIds.toString());
+        System.out.println("-------");
+        StringBuilder gameIds2 = new StringBuilder();
+        for (String str : list){
+            gameIds2.append(",").append(str);
+        }
+        gameIds2 = gameIds2.deleteCharAt(0);
+        System.out.println(gameIds2.toString());
     }
+
 
 
     @Test

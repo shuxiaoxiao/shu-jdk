@@ -67,10 +67,13 @@ public class DateUtilTest {
 
 	@Test
 	public void getBetweenCounts_test1() {
-//		Date startTime = DateUtil.strToDateShort("2018-10-12");
-//		Date endTime = DateUtil.strToDateShort("2018-12-31"); //81 + 12
-		Date startTime = DateUtil.strToDateShort("2019-01-01");
-		Date endTime = DateUtil.strToDateShort("2019-01-12");
+		Date startTime = DateUtil.strToDateShort("2018-10-12");
+		Date endTime = DateUtil.strToDateShort("2018-10-28");
+//		Date endTime = DateUtil.strToDateShort("2019-01-19");
+//		Date endTime = DateUtil.addDay(startTime, 100);
+//		System.out.println(DateUtil.dateToStr(endTime));
+//		Date startTime = DateUtil.strToDateShort("2019-01-01");
+//		Date endTime = DateUtil.strToDateShort("2019-01-12");
 	//93
 		Integer counts = DateUtil.getBetweenCounts(endTime, startTime);
 		System.out.println(counts);

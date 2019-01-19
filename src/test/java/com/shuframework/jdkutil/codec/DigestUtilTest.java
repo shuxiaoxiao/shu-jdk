@@ -6,9 +6,10 @@ public class DigestUtilTest {
 
 	@Test
 	public void md5_test() {
-		String md5Str = DigestUtil.md5Hex("test");
+		String md5Str = DigestUtil.md5Hex("mm123456");
 		//098f6bcd4621d373cade4e832627b4f6
 		System.out.println(md5Str);
+
 	}
 	
 	@Test
