@@ -101,7 +101,7 @@ public class ValidateUtil {
 	private static final String V_ZIPCODE = "\\d{6}";
 
 	/** 手机 */
-	private static final String V_MOBILE_PHONE = "(1)[0-9]{10}";
+	private static final String V_MOBILE_PHONE = "(1[3-9])\\d{9}";
 
 	/** ip地址 */
 	private static final String V_IP4 = "(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)\\.(25[0-5]|2[0-4]\\d|[0-1]\\d{2}|[1-9]?\\d)";

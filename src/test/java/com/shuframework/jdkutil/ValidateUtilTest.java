@@ -27,6 +27,12 @@ public class ValidateUtilTest {
 		String str = "2017-01-01";
 		System.out.println(ValidateUtil.isDate(str));
 	}
+
+	@Test
+	public void isMobilePhone_test1() {
+		String str = "13354484988";
+		System.out.println(ValidateUtil.isMobilePhone(str));
+	}
 	
 	@Test
 	public void matchRegex_test() {

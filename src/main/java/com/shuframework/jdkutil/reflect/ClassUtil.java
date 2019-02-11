@@ -30,6 +30,12 @@ public class ClassUtil {
         return false;
     }
 
+    public static ClassLoader getClassLoader(Object obj){
+        ClassLoader classLoader = obj.getClass().getClassLoader();
+        return classLoader;
+    }
+
+
     /**
      * 获取当前对象的class
      *
