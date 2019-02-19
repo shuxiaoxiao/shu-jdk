@@ -1,12 +1,12 @@
-target/
+/target/
 
-logs/
-work/
+/logs/
+/work/
 
-.idea/
-*.iml
+/.idea/
+/*.iml
 
 #eclipse#
-.settings/
-.classpath
-.project
+/.settings/
+/.classpath
+/.project
